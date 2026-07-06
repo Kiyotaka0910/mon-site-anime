@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tier List - Personnages d'Animés</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles spécifiques à la Tier List */
+        .tierlist-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #a29bfe;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Tableau de la Tier List */
+        .tier-table {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background-color: #111;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .tier-row {
+            display: flex;
+            min-height: 100px;
+            background-color: #23272a;
+            align-items: center;
+        }
+
+        .tier-label {
+            width: 100px;
+            min-width: 100px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        /* Couleurs classiques des rangs */
+        .tier-s { background-color: #ff7f7f; }
+        .tier-a { background-color: #ffbf7f; }
+        .tier-b { background-color: #ffdf7f; }
+        .tier-c { background-color: #ffff7f; }
+        .tier-d { background-color: #bfff7f; }
+
+        .tier-zone {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            min-height: 80px;
+        }
+
+        /* Zone de réserve des personnages */
+        .character-bank {
+            margin-top: 40px;
+            background-color: #2f3542;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .character-bank h3 {
+            margin-top: 0;
+            color: #eccc68;
+        }
+
+        .bank-zone {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-height: 100px;
+            padding: 10px;
+            background-color: #1a1a24;
+            border-radius: 6px;
+        }
+
+        /* Style des images de personnages */
+        .character {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            cursor: grab;
+            object-fit: cover;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .character:active {
+            cursor: grabbing;
+        }
+
+        .character.dragging {
+            opacity: 0.5;
+            border-color: #6c5ce7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tierlist-container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+        
+        <h2>Classe tes personnages préférés</h2>
+        <p>Glisse et dépose les images dans les différentes catégories.</p>
+
+        <div class="tier-table">
+            <div class="tier-row">
+                <div class="tier-label tier-s">S</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-a">A</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-b">B</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-c">C</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-d">D</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+        </div>
+
+        <div class="character-bank">
+            <h3>Personnages disponibles</h3>
+            <div class="bank-zone" ondragover="allowDrop(event)" ondrop="drop(event)">
+                <img src="https://placeholder.pics/svg/80x80/ff4757/FFFFFF/Luffy" id="perso1" class="character" draggable="true" ondragstart="drag(event)">
+                <img src="https://placeholder.pics/svg/80x80/2e90ff/FFFFFF/Naruto" id="perso2" class="character" draggable="true" ondragstart="drag(event)">
+                <img src="https://placeholder.pics/svg/80x80/2ed573/FFFFFF/Goku" id="perso3" class="character" draggable="true" ondragstart="drag(event)">
+                <img src="https://placeholder.pics/svg/80x80/ffa502/FFFFFF/Zoro" id="perso4" class="character" draggable="true" ondragstart="drag(event)">
+                <img src="https://placeholder.pics/svg/80x80/70a1ff/FFFFFF/Killua" id="perso5" class="character" draggable="true" ondragstart="drag(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Permet d'autoriser le dépôt d'un élément sur la zone
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        // Déclenché quand l'utilisateur commence à glisser une image
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.classList.add('dragging');
+        }
+
+        // Déclenché quand l'utilisateur lâche l'image dans une zone
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            draggedElement.classList.remove('dragging');
+
+            // On vérifie si on dépose bien dans une zone de réception (tier-zone ou bank-zone)
+            // Si on survole une autre image, on remonte au parent pour trouver la zone
+            let targetZone = ev.target;
+            if (targetZone.classList.contains('character')) {
+                targetZone = targetZone.parentElement;
+            }
+
+            if (targetZone.classList.contains('tier-zone') || targetZone.classList.contains('bank-zone')) {
+                targetZone.appendChild(draggedElement);
+            }
+        }
+    </script>
+
+</body>
+</html>
