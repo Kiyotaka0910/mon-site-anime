@@ -68,3 +68,14 @@ footer {
     font-size: 0.9rem;
     color: #747d8c;
 }
+
+.character {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    cursor: grab;
+    object-fit: cover; /* Cette ligne est magique : elle centre la photo du perso proprement */
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+    background-color: #2f3542; /* Met un fond gris pendant que l'image charge */
+}
