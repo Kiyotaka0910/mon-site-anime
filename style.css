@@ -6,8 +6,15 @@
     font-family: 'Poppins', sans-serif;
 }
 
+```css
+/* --- NOUVEAU STYLE DU FOND ANIMÉ --- */
 body {
     background-color: #0d0e12;
+    /* Remplace 'fuji.jpg' par le nom de ta photo du Mont Fuji dans ton dossier images */
+    background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.8), rgba(13, 14, 18, 0.9)), url('images/fuji.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: #f5f6fa;
     min-height: 100vh;
     display: flex;
@@ -15,6 +22,85 @@ body {
     justify-content: space-between;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Conteneur des éléments qui bougent */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Style de base des nuages */
+.cloud {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+}
+
+/* Nuage 1 : Gros et lent */
+.cloud-1 {
+    top: 15%;
+    width: 600px;
+    height: 200px;
+    animation: drift 60s linear infinite;
+}
+
+/* Nuage 2 : Plus bas et vitesse différente */
+.cloud-2 {
+    top: 35%;
+    width: 400px;
+    height: 150px;
+    animation: drift 45s linear infinite reverse;
+}
+
+/* Nuage 3 : Petit et plus haut */
+.cloud-3 {
+    top: 5%;
+    width: 300px;
+    height: 100px;
+    animation: drift 80s linear infinite;
+}
+
+/* Brume Japonaise au sol qui pulse doucement */
+.mist {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35vh;
+    background: linear-gradient(to top, rgba(255, 71, 87, 0.05), rgba(0,0,0,0));
+    animation: pulseMist 8s ease-in-out infinite alternate;
+}
+
+/* --- LES ANIMATIONS (KEYFRAMES) --- */
+
+/* Animation de déplacement horizontal des nuages */
+@keyframes drift {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+/* Animation de respiration de la brume */
+@keyframes pulseMist {
+    0% {
+        opacity: 0.3;
+        transform: scaleY(0.9);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scaleY(1.1);
+    }
 }
 
 /* Ambiance lumineuse en arrière-plan */
