@@ -217,28 +217,177 @@
         </div>
 
         <div class="character-bank">
-            <h3>Personnages disponibles (500)</h3>
+            <h3>Personnages disponibles (501)</h3>
             <div class="bank-zone" id="bankZone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
         </div>
     </div>
 
     <script>
+        // --- BASE DE DONNÉES DES PERSONNAGES ---
+        const nomsPersonnages = {
+            // --- One Piece (1 à 30) ---
+            1: "Monkey D. Luffy", 2: "Roronoa Zoro", 3: "Nami", 4: "Usopp", 5: "Sanji Vinsmoke",
+            6: "Tony Tony Chopper", 7: "Nico Robin", 8: "Franky", 9: "Brook", 10: "Jinbe",
+            11: "Portgas D. Ace", 12: "Sabo", 13: "Shanks le Roux", 14: "Trafalgar D. Water Law", 15: "Eustass \"Captain\" Kid",
+            16: "Yamato", 17: "Kozuki Oden", 18: "Donquixote Doflamingo", 19: "Crocodile", 20: "Rob Lucci",
+            21: "Kaido", 22: "Charlotte Linlin (Big Mom)", 23: "Marshall D. Teach (Barbe Noire)", 24: "Edward Newgate (Barbe Blanche)", 25: "Gol D. Roger",
+            26: "Dracule Mihawk", 27: "Boa Hancock", 28: "Buggy le Clown", 29: "Marco le Phénix", 30: "Katakuri Charlotte",
+
+            // --- Naruto (31 à 75) ---
+            31: "Naruto Uzumaki", 32: "Sasuke Uchiha", 33: "Sakura Haruno", 34: "Kakashi Hatake", 35: "Itachi Uchiha",
+            36: "Gaara", 37: "Jiraiya", 38: "Tsunade", 39: "Orochimaru", 40: "Shikamaru Nara",
+            41: "Hinata Hyuga", 42: "Neji Hyuga", 43: "Rock Lee", 44: "Might Guy", 45: "Minato Namikaze",
+            46: "Kyuubi", 47: "Obito Uchiha (Tobi)", 48: "Madara Uchiha", 49: "Pain (Nagato)", 50: "Konan",
+            51: "Deidara", 52: "Sasori", 53: "Hidan", 54: "Kakuzu", 55: "Kisame Hoshigaki",
+            56: "Zetsu", 57: "Hashirama Senju", 58: "Tobirama Senju", 59: "Hiruzen Sarutobi", 60: "Sai",
+            61: "Yamato (Tenzō)", 62: "Kiba Inuzuka", 63: "Shino Aburame", 64: "Choji Akimichi", 65: "Ino Yamanaka",
+            66: "Temari", 67: "Kankuro", 68: "Killer Bee", 69: "Zabuza Momochi", 70: "Kabuto",
+            71: "Asuma", 72: "Boruto Uzumaki", 73: "Sarada Uchiha", 74: "Mitsuki", 75: "Kawaki",
+
+            // --- Dragon Ball (76 à 105) ---
+            76: "Son Goku", 77: "Vegeta", 78: "Son Gohan", 79: "Trunks (Futur)", 80: "Piccolo",
+            81: "Krillin", 82: "Bulma", 83: "Yamcha", 84: "Tenshinhan", 85: "Chaozu",
+            86: "Kamé Sennin (Tortue Géniale)", 87: "Chichi", 88: "Videl", 89: "Son Goten", 90: "Trunks (Enfant)",
+            91: "Frieza (Freezer)", 92: "Cell", 93: "Majin Buu (Boubou)", 94: "Beerus", 95: "Whis",
+            96: "Broly", 97: "Bardock", 98: "Jiren", 99: "Hit", 100: "Goku Black",
+            101: "Zamasu", 102: "Caulifla", 103: "Kale", 104: "Cabba", 105: "C-17 (Android 17)",
+
+            // --- L'Attaque des Titans / SNK (106 à 135) ---
+            106: "Eren Jaeger", 107: "Mikasa Ackerman", 108: "Levi Ackerman", 109: "Armin Arlert", 110: "Erwin Smith",
+            111: "Hange Zoë", 112: "Reiner Braun", 113: "Bertholdt Hoover", 114: "Annie Leonhart", 115: "Sasha Blouse",
+            116: "Jean Kirschtein", 117: "Connie Springer", 118: "Historia Reiss (Christa)", 119: "Ymir", 120: "Ymir (Le Titan Originel)",
+            121: "Zeke Jaeger", 122: "Oluo Bozado", 123: "Floch Forster", 124: "Gabi Braun", 125: "Falco Grice",
+            126: "Pieck Finger", 127: "Porco Galliard", 128: "Kenny Ackerman", 129: "Grisha Jaeger", 130: "Carla Jaeger",
+            131: "Rod Reiss", 132: "Dot Pixis", 133: "Keith Shadis", 134: "Marco Bott", 135: "Petra Ral",
+
+            // --- Jujutsu Kaisen (136 à 164) ---
+            136: "Yuji Itadori", 137: "Megumi Fushiguro", 138: "Nobara Kugisaki", 139: "Satoru Gojo", 140: "Ryomen Sukuna",
+            141: "Kento Nanami", 142: "Suguru Geto", 143: "Mahito", 144: "Jogo", 145: "Hanami",
+            146: "Toji Fushiguro", 147: "Maki Zenin", 148: "Kasumi Miwa", 149: "Toge Inumaki", 150: "Panda",
+            151: "Yuta Okkotsu", 152: "Aoi Todo", 153: "Mai Zenin", 154: "Kokichi Muta (Mechamaru)", 155: "Noritoshi Kamo",
+            156: "Momo Nishimiya", 157: "Utahime Iori", 158: "Mei Mei", 159: "Naobito Zenin", 160: "Choso",
+            161: "Eso", 162: "Rika Orimoto", 163: "Hiromi Higuruma", 164: "Hajime Kashimo",
+
+            // --- Demon Slayer (165 à 195) ---
+            165: "Tanjiro Kamado", 166: "Nezuko Kamado", 167: "Zenitsu Agatsuma", 168: "Inosuke Hashibira", 169: "Giyu Tomioka",
+            170: "Shinobu Kocho", 171: "Kyojuro Rengoku", 172: "Tengen Uzui", 173: "Muichiro Tokito", 174: "Mitsuri Kanroji",
+            175: "Gyomei Himejima", 176: "Obanai Iguro", 177: "Sanemi Shinazugawa", 178: "Genya Shinazugawa", 179: "Muzan Kibutsuji",
+            180: "Kokushibo", 181: "Doma", 182: "Akaza", 183: "Hantengu", 184: "Gyokko",
+            185: "Daki", 186: "Gyutaro", 187: "Kaigaku", 188: "Enmu", 189: "Rui",
+            190: "Kagaya Ubuyashiki", 191: "Sakonji Urokodaki", 192: "Sabito", 193: "Makomo", 194: "Hotaru Haganezuka",
+            195: "Yoriichi Tsugikuni",
+
+            // --- My Hero Academia (196 à 229) ---
+            196: "Izuku Midoriya (Deku)", 197: "Katsuki Bakugo", 198: "Shoto Todoroki", 199: "Ochaco Uraraka", 200: "Tenya Iida",
+            201: "Tsuyu Asui", 202: "Eijiro Kirishima", 203: "Mina Ashido", 204: "Denki Kaminari", 205: "Kyoka Jiro",
+            206: "Fumikage Tokoyami", 207: "Momo Yaoyorozu", 208: "Mezou Shoji", 209: "Hanta Sero", 210: "All Might (Toshinori Yagi)",
+            211: "Shota Aizawa (Eraser Head)", 212: "Endeavor", 213: "Hawks", 214: "Mirko", 215: "Nejire Hado",
+            216: "Tamaki Amajiki", 217: "Tomura Shigaraki", 218: "Mirio Togata", 219: "All For One", 220: "Himiko Toga",
+            221: "Dabi", 222: "Twice", 223: "Mr. Compress", 224: "Spinner", 225: "Overhaul (Kai Chisaki)",
+            226: "Stain", 227: "Gran Torino", 228: "Mount Lady", 229: "Present Mic",
+
+            // --- Hunter x Hunter (230 à 261) ---
+            230: "Gon Freecss", 231: "Killua Zoldyck", 232: "Kurapika", 233: "Leorio Paradinight", 234: "Hisoka Morow",
+            235: "Illumi Zoldyck", 236: "Chrollo Lucilfer", 237: "Feitan Portor", 238: "Phinks Magcub", 239: "Machi Komacine",
+            240: "Nobunaga Hazama", 241: "Shizuku Murasaki", 242: "Shalnak", 243: "Uvogin", 244: "Pakunoda",
+            245: "Franklin Bordeau", 246: "Bonolenov Ndongo", 247: "Meruem (Le Roi)", 248: "Neferpitou", 249: "Shaiapouf",
+            250: "Menthuthuyoupi", 251: "Isaac Netero", 252: "Biscuit Krueger", 253: "Kite", 254: "Ging Freecss",
+            255: "Silva Zoldyck", 256: "Zeno Zoldyck", 257: "Alluka Zoldyck", 258: "Kalluto Zoldyck", 259: "Razor",
+            260: "Genthru", 261: "Knuckle Bine",
+
+            // --- Bleach (262 à 296) ---
+            262: "Rukia Kuchiki", 263: "Ichigo Kurosaki", 264: "Yasutora Sado (Chad)", 265: "Orihime Inoue", 266: "Uryu Ishida",
+            267: "Renji Abarai", 268: "Kisuke Urahara", 269: "Yoruichi Shihoin", 270: "Sosuke Aizen", 271: "Gin Ichimaru",
+            272: "Kaname Tosen", 273: "Byakuya Kuchiki", 274: "Kenpachi Zaraki", 275: "Toshiro Hitsugaya", 276: "Shunsui Kyoraku",
+            277: "Jushiro Ukitake", 278: "Genryusai Shigekuni Yamamoto", 279: "Retsu Unohana", 280: "Mayuri Kurotsuchi", 281: "Soi Fon",
+            282: "Rangiku Matsumoto", 283: "Ikkaku Madarame", 284: "Yumichika Ayasegawa", 285: "Nelliel Tu Odelschwanck", 286: "Grimmjow Jaegerjaquez",
+            287: "Ulquiorra Cifer", 288: "Coyote Starrk", 289: "Baraggan Louisenbairn", 290: "Tier Harribel", 291: "Nnoitra Gilga",
+            292: "Szayelaporro Granz", 293: "Aaroniero Arruruerie", 294: "Yammy Llargo", 295: "Yhwach", 296: "Shinji Hirako",
+
+            // --- Death Note (297 à 306) ---
+            297: "Light Yagami (Kira)", 298: "L Lawliet", 299: "Ryuk", 300: "Misa Amane", 301: "Near",
+            302: "Mello", 303: "Teru Mikami", 304: "Soichiro Yagami", 305: "Touta Matsuda", 306: "Rem",
+
+            // --- Fullmetal Alchemist (307 à 321) ---
+            307: "Edward Elric", 308: "Alphonse Elric", 309: "Winry Rockbell", 310: "Roy Mustang", 311: "Riza Hawkeye",
+            312: "Maes Hughes", 313: "Alex Louis Armstrong", 314: "Olivier Mira Armstrong", 315: "Ling Yao", 316: "Scar",
+            317: "Envy", 318: "Lust", 319: "Greed", 320: "Wrath (King Bradley)", 321: "Pride (Selim Bradley)",
+
+            // --- Blue Lock (322 à 356) ---
+            322: "Yoichi Isagi", 323: "Meguru Bachira", 324: "Rensuke Kunigami", 325: "Hyoma Chigiri", 326: "Seishiro Nagi",
+            327: "Reo Mikage", 328: "Rin Itoshi", 329: "Sae Itoshi", 330: "Ryusei Shido", 331: "Shouei Barou",
+            332: "Eita Otoya", 333: "Kenyu Yukimiya", 334: "Jinpachi Ego", 335: "Anri Teieri", 336: "Gurimu Igarashi",
+            337: "Jingo Raichi", 338: "Gin Gagamaru", 339: "Asahi Naruhaya", 340: "Okuhito Iemon", 341: "Wataru Kuon",
+            342: "Ikki Niko", 343: "Junichi Wanima", 344: "Keisuke Wanima", 345: "Tabito Karasu", 346: "Zantetsu Tsurugi",
+            347: "Yo Hiyori", 348: "Nijiro Nanase", 349: "Kurona Ranze", 350: "Gen Fukaku", 351: "Oliver Aiku",
+            352: "Shuto Sendo", 353: "Kazuma Niou", 354: "Teppei Neru", 355: "Miroku Darai", 356: "Michael Kaiser",
+
+            // --- Kuroko no Basket (357 à 386) ---
+            357: "Tetsuya Kuroko", 358: "Taiga Kagami", 359: "Ryota Kise", 360: "Shintaro Midorima", 361: "Daiki Aomine",
+            362: "Atsushi Murasakibara", 363: "Seijuro Akashi", 364: "Satsuki Momoi", 365: "Junpei Hyuga", 366: "Shun Izuki",
+            367: "Shinji Koganei", 368: "Rinnosuke Mitobe", 369: "Teppei Kiyoshi", 370: "Yukio Kasamatsu", 371: "Kazunari Takao",
+            372: "Tatsuya Himuro", 373: "Shogo Haizaki", 374: "Makoto Hanamiya", 375: "Reo Mibuchi", 376: "Kotaro Hayama",
+            377: "Eikichi Nebuya", 378: "Chihiro Mayuzumi", 379: "Kagetora Aida", 380: "Alexandra Garcia", 381: "Yoshitaka Moriyama",
+            382: "Mitsuhiro Hayakawa", 383: "Nash", 384: "Shoichi Imayoshi", 385: "Kosuke Wakamatsu", 386: "Kuroko Junior",
+
+            // --- Classroom of the Elite (387 à 415) ---
+            387: "Kiyotaka Ayanokoji", 388: "Suzune Horikita", 389: "Kikyo Kushida", 390: "Airi Sakura", 391: "Kei Karuizawa",
+            392: "Yosuke Hirata", 393: "Rokusuke Koenji", 394: "Ken Sudo", 395: "Kanji Ike", 396: "Haruki Yamauchi",
+            397: "Kakeru Ryuen", 398: "Mio Ibuki", 399: "Albert Yamada", 400: "Daichi Ishizaki", 401: "Honami Ichinose",
+            402: "Arisu Sakayanagi", 403: "Kohei Katsuragi", 404: "Masayoshi Hashimoto", 405: "Manabu Horikita", 406: "Akane Tachibana",
+            407: "Sae Chabashira", 408: "Chie Hoshinomiya", 409: "Miyabi Nagumo", 410: "Takuya Yagami", 411: "Ichika Amasawa",
+            412: "Fuka Kiryuin", 413: "Hosen", 414: "Tsukishiro", 415: "Nanasse",
+
+            // --- Fire Force (416 à 444) ---
+            416: "Shinra Kusakabe", 417: "Arthur Boyle", 418: "Akitaru Obi", 419: "Takehisa Hinawa", 420: "Maki Oze",
+            421: "Iris", 422: "Tamaki Kotatsu", 423: "Viktor Licht", 424: "Vulcan Joseph", 425: "Lisa Isaribi",
+            426: "Yu", 427: "Benimaru Shinmon", 428: "Konro Sagamiya", 429: "Leonard Burns", 430: "Karim Flam",
+            431: "Rekka Hoshimiya", 432: "Foien Li", 433: "Takeru Noto (Juggernaut)", 434: "Princess Hibana", 435: "Joker",
+            436: "Sho Kusakabe", 437: "Haumea", 438: "Charon", 439: "Arrow", 440: "Yona",
+            441: "Giovanni", 442: "Inca Kasugatani", 443: "Ogun Montgomery", 444: "Le Grand Évangéliste",
+
+            // --- Haikyu!! (445 à 469) ---
+            445: "Shoyo Hinata", 446: "Tobio Kageyama", 447: "Kei Tsukishima", 448: "Daichi Sawamura", 449: "Koshi Sugawara",
+            450: "Asahi Azumane", 451: "Yu Nishinoya", 452: "Ryunosuke Tanaka", 453: "Tetsuro Kuroo", 454: "Kenma Kozume",
+            455: "Kotaro Bokuto", 456: "Keiji Akaashi", 457: "Toru Oikawa", 458: "Hajime Iwaizumi", 459: "Wakatoshi Ushijima",
+            460: "Satori Tendo (Rajouté)", 461: "Atsumu Miya (Rajouté)", 462: "Osamu Miya (Rajouté)", 463: "Kiyoomi Sakusa (Rajouté)", 464: "Korai Hoshiumi (Rajouté)",
+            465: "Morisuke Yaku (Rajouté)", 466: "Lev Haiba (Rajouté)", 467: "Shinsuke Kita (Rajouté)", 468: "Hitoka Yachi (Manager) (Rajouté)", 469: "Kiyoko Shimizu (Manager) (Rajouté)",
+
+            // --- Tokyo Ghoul (470) ---
+            470: "Ken Kaneki",
+
+            // --- Solo Leveling (471 à 497) ---
+            471: "Sung Jin-Woo", 472: "Sung Il-Hwan", 473: "Yoo Jin-Ho", 474: "Han Song-Yi", 475: "Go Gun-Hee",
+            476: "Woo Jin-Chul", 477: "Cha Hae-In", 478: "Choi Jong-In", 479: "Baek Yoon-Ho", 480: "Min Byung-Gu",
+            481: "Ma Dong-Wook", 482: "Lee Ju-Hee", 483: "Song Chi-Yul", 484: "Kim Chul", 485: "Hwang Dong-Suk",
+            486: "Thomas Andre", 487: "Ashborn", 488: "L'Architecte", 489: "Le Monarque du Gel (Sillad)", 490: "Igris",
+            491: "Beru", 492: "Liu Zhigang", 493: "Christopher Reed", 494: "Goto Ryuji", 495: "Hwang Dong-Su",
+            496: "Yuri Orlov", 497: "Lennart Niermann",
+
+            // --- Autres Séries (498 à 501) ---
+            498: "Lelouch", 499: "Yurichi Kataguri", 500: "Shadow", 501: "Guts"
+        };
+
         const bankZone = document.getElementById('bankZone');
-        const totalCharacters = 500;
+        const totalCharacters = 501; // Changé à 501 pour inclure Guts !
         const imageExtension = 'jpg'; 
 
-        // Génération automatique des 500 emplacements
+        // Génération automatique des 501 emplacements avec les vrais noms couplés !
         for (let i = 1; i <= totalCharacters; i++) {
             const img = document.createElement('img');
             img.src = `images/${i}.${imageExtension}`; 
             img.id = `perso-${i}`;
             img.className = 'character';
-            img.title = `Personnage ${i}`;
+            
+            // Attribution dynamique du vrai nom du personnage pour l'accessibilité et le survol
+            const nomPerso = nomsPersonnages[i] || `Personnage ${i}`;
+            img.title = nomPerso;
+            img.alt = nomPerso; 
+            
             img.setAttribute('draggable', 'true');
-            img.alt = `N°${i}`; 
             
             img.addEventListener('dragstart', drag);
-            img.addEventListener('dragend', dragEnd); // Ajout pour nettoyer l'effet
+            img.addEventListener('dragend', dragEnd); 
             
             bankZone.appendChild(img);
         }
