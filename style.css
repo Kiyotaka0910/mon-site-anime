@@ -9,7 +9,7 @@
 /* --- STYLE DU FOND ANIMÉ --- */
 body {
     background-color: #0d0e12;
-    /* On a diminué l'opacité du dégradé noir pour laisser apparaître le Mont Fuji */
+    /* Opacité diminuée pour bien voir le Mont Fuji */
     background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.45), rgba(13, 14, 18, 0.65)), url('images/fuji.jpg');
     background-size: cover;
     background-position: center;
@@ -82,24 +82,14 @@ body {
 
 /* Animation de déplacement horizontal des nuages */
 @keyframes drift {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100vw);
-    }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100vw); }
 }
 
 /* Animation de respiration de la brume */
 @keyframes pulseMist {
-    0% {
-        opacity: 0.3;
-        transform: scaleY(0.9);
-    }
-    100% {
-        opacity: 0.7;
-        transform: scaleY(1.1);
-    }
+    0% { opacity: 0.3; transform: scaleY(0.9); }
+    100% { opacity: 0.7; transform: scaleY(1.1); }
 }
 
 /* Ambiance lumineuse en arrière-plan */
@@ -116,29 +106,10 @@ body {
 }
 
 /* --- HEADER / HERO SECTION --- */
-.hero-section h1 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-    /* Ombre ajoutée pour détacher le titre du fond */
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-}
-
-.hero-section h1 span {
-    background: linear-gradient(45deg, #ff4757, #ff6b81);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-section p {
-    color: #f5f6fa; /* On l'éclaircit un poil pour compenser le fond */
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-    /* Ombre ajoutée pour que la description reste parfaitement lisible */
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+.hero-section {
+    text-align: center;
+    padding: 60px 20px 40px;
+    z-index: 1;
 }
 
 .logo-badge {
@@ -159,6 +130,8 @@ body {
     font-weight: 800;
     margin-bottom: 10px;
     letter-spacing: -1px;
+    /* Ombre ajoutée pour détacher le titre du fond */
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 .hero-section h1 span {
@@ -168,11 +141,13 @@ body {
 }
 
 .hero-section p {
-    color: #a4b0be;
+    color: #f5f6fa; /* Éclairci pour compenser le fond */
     font-size: 1.1rem;
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    /* Ombre ajoutée pour une lisibilité parfaite */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 /* --- CONTENEUR DES CARTES --- */
@@ -277,10 +252,7 @@ body {
 .card-opening:hover { border-color: rgba(46, 144, 255, 0.4); }
 .card-genre:hover { border-color: rgba(46, 213, 115, 0.4); }
 
-.card:hover .card-content h3 {
-    color: #ffffff;
-}
-
+.card:hover .card-content h3 { color: #ffffff; }
 .card-character:hover .card-content h3 { color: #ff4757; }
 .card-opening:hover .card-content h3 { color: #2e90ff; }
 .card-genre:hover .card-content h3 { color: #2ed573; }
@@ -302,14 +274,7 @@ footer {
 
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 600px) {
-    .hero-section h1 {
-        font-size: 2rem;
-    }
-    .hero-section p {
-        font-size: 0.95rem;
-    }
-    .hub-container {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
+    .hero-section h1 { font-size: 2rem; }
+    .hero-section p { font-size: 0.95rem; }
+    .hub-container { grid-template-columns: 1fr; gap: 20px; }
 }
