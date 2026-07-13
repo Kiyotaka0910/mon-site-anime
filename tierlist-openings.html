@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tier List - Openings d'Animés</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- STYLES SPÉCIFIQUES ET MODERNISATION --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tierlist-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Bouton Retour ultra-stylisé */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #ff4757;
+            border-color: #ff4757;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Titres */
+        .tierlist-container h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .tierlist-container p {
+            color: #a4b0be;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Tableau de la Tier List */
+        .tier-table {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(20, 22, 33, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .tier-row {
+            display: flex;
+            min-height: 95px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: background 0.3s ease;
+        }
+
+        .tier-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Étiquettes de rangs */
+        .tier-label {
+            width: 95px;
+            min-width: 95px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .tier-s { background: linear-gradient(135deg, #ff4757, #ff6b81); }
+        .tier-a { background: linear-gradient(135deg, #ff7f50, #ffa502); }
+        .tier-b { background: linear-gradient(135deg, #ffa801, #ffd32a); }
+        .tier-c { background: linear-gradient(135deg, #fed330, #ffee55); color: #1e272e; text-shadow: none; }
+        .tier-d { background: linear-gradient(135deg, #2ed573, #7bed9f); color: #1e272e; text-shadow: none; }
+
+        /* Zone de dépôt */
+        .tier-zone {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Zone de réserve des openings */
+        .character-bank {
+            margin-top: 40px;
+            background: rgba(22, 24, 34, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .character-bank h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .bank-zone {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            min-height: 120px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style des jaquettes d'openings */
+        .character {
+            width: 75px;
+            height: 75px;
+            border-radius: 10px;
+            cursor: grab;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        border-color 0.2s ease, 
+                        box-shadow 0.2s ease;
+        }
+
+        .character:hover {
+            transform: scale(1.08);
+            border-color: #ff4757;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Effet d'animation quand la musique joue sur cet opening */
+        .character.playing {
+            border-color: #2ed573;
+            box-shadow: 0 0 15px rgba(46, 213, 115, 0.8);
+            animation: pulse-green 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        .character:active {
+            cursor: grabbing;
+        }
+
+        .character.dragging {
+            opacity: 0.4;
+            transform: scale(0.9);
+            border-color: #2e90ff;
+            box-shadow: 0 0 15px rgba(46, 144, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tierlist-container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+        
+        <h2>Classe tes Openings préférés</h2>
+        <p>Glisse les jaquettes dans les catégories. <strong>Clique sur une image pour écouter un extrait !</strong></p>
+
+        <div class="tier-table">
+            <div class="tier-row">
+                <div class="tier-label tier-s">S</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-a">A</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-b">B</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-c">C</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+            <div class="tier-row">
+                <div class="tier-label tier-d">D</div>
+                <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+            </div>
+        </div>
+
+        <div class="character-bank">
+            <h3>Openings disponibles</h3>
+            <div class="bank-zone" id="bankZone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- BASE DE DONNÉES DES OPENINGS ---
+        // Tu pourras ajouter les titres ici au fur et à mesure !
+        const nomsOpenings = {
+            1: "Naruto Shippuden OP 16 - Silhouette",
+            2: "Shingeki no Kyojin OP 1 - Guren no Yumiya",
+            3: "Tokyo Ghoul OP 1 - Unravel",
+            4: "Jujutsu Kaisen OP 1 - Kaikai Kitan",
+            5: "Neon Genesis Evangelion - A Cruel Angel's Thesis",
+            6: "One Piece OP 1 - We Are!",
+            7: "Demon Slayer OP 1 - Gurenge",
+            8: "Hunter x Hunter 2011 OP - Departure!",
+            9: "Blue Lock OP 1 - Chaos Ga Kiwamaru",
+            10: "Death Note OP 1 - The World"
+        };
+
+        const bankZone = document.getElementById('bankZone');
+        const totalOpenings = 10; // Change ce nombre quand tu ajouteras de nouvelles musiques !
+        const imageExtension = 'jpg'; 
+        
+        // Variable globale pour suivre le morceau en cours de lecture
+        let currentAudio = null;
+        let currentPlayingImg = null;
+
+        // Génération automatique des jaquettes
+        for (let i = 1; i <= totalOpenings; i++) {
+            const img = document.createElement('img');
+            img.src = `images/openings/${i}.${imageExtension}`; 
+            img.id = `opening-${i}`;
+            img.className = 'character';
+            
+            const nomOp = nomsOpenings[i] || `Opening ${i}`;
+            img.title = nomOp;
+            img.alt = nomOp; 
+            img.setAttribute('draggable', 'true');
+            
+            // Événements pour le Drag & Drop
+            img.addEventListener('dragstart', drag);
+            img.addEventListener('dragend', dragEnd); 
+            
+            // Événement pour la lecture audio au clic !
+            img.addEventListener('click', function() {
+                gererAudio(i, img);
+            });
+            
+            bankZone.appendChild(img);
+        }
+
+        // --- GESTION DE L'AUDIO ---
+        function gererAudio(id, imgElement) {
+            const pistoletAudioSrc = `audio/openings/${id}.mp3`;
+
+            // Si on clique sur l'opening déjà en cours de lecture : on fait pause
+            if (currentAudio && currentPlayingImg === imgElement) {
+                if (!currentAudio.paused) {
+                    currentAudio.pause();
+                    imgElement.classList.remove('playing');
+                } else {
+                    currentAudio.play();
+                    imgElement.classList.add('playing');
+                }
+                return;
+            }
+
+            // Si une autre musique tournait, on l'arrête proprement
+            if (currentAudio) {
+                currentAudio.pause();
+                if (currentPlayingImg) {
+                    currentPlayingImg.classList.remove('playing');
+                }
+            }
+
+            // On lance le nouvel extrait audio
+            currentAudio = new Audio(pistoletAudioSrc);
+            currentPlayingImg = imgElement;
+            
+            currentAudio.play().then(() => {
+                imgElement.classList.add('playing');
+            }).catch(err => {
+                console.log("Erreur de lecture (souvent bloqué par le navigateur au premier clic) :", err);
+            });
+
+            // Quand l'extrait se termine, on retire l'effet visuel vert
+            currentAudio.addEventListener('ended', function() {
+                imgElement.classList.remove('playing');
+                currentAudio = null;
+                currentPlayingImg = null;
+            });
+        }
+
+        // --- FONCTIONS DE DRAG & DROP ---
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.classList.add('dragging');
+        }
+
+        function dragEnd(ev) {
+            ev.target.classList.remove('dragging');
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            
+            if (draggedElement) {
+                draggedElement.classList.remove('dragging');
+            }
+
+            let targetZone = ev.target;
+            
+            if (targetZone.classList.contains('character')) {
+                targetZone = targetZone.parentElement;
+            }
+
+            if (targetZone.classList.contains('tier-zone') || targetZone.classList.contains('bank-zone')) {
+                targetZone.appendChild(draggedElement);
+            }
+        }
+    </script>
+
+</body>
+</html>
