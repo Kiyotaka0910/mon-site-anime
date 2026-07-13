@@ -6,11 +6,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
-```css
-/* --- NOUVEAU STYLE DU FOND ANIMÉ --- */
+/* --- STYLE DU FOND ANIMÉ --- */
 body {
     background-color: #0d0e12;
-    /* Remplace 'fuji.jpg' par le nom de ta photo du Mont Fuji dans ton dossier images */
+    /* Assure-toi que fuji.jpg est bien dans ton dossier images/ */
     background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.8), rgba(13, 14, 18, 0.9)), url('images/fuji.jpg');
     background-size: cover;
     background-position: center;
