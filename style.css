@@ -9,8 +9,8 @@
 /* --- STYLE DU FOND ANIMÉ --- */
 body {
     background-color: #0d0e12;
-    /* Assure-toi que fuji.jpg est bien dans ton dossier images/ */
-    background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.8), rgba(13, 14, 18, 0.9)), url('images/fuji.jpg');
+    /* On a diminué l'opacité du dégradé noir pour laisser apparaître le Mont Fuji */
+    background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.45), rgba(13, 14, 18, 0.65)), url('images/fuji.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -116,10 +116,29 @@ body {
 }
 
 /* --- HEADER / HERO SECTION --- */
-.hero-section {
-    text-align: center;
-    padding: 60px 20px 40px;
-    z-index: 1;
+.hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    /* Ombre ajoutée pour détacher le titre du fond */
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.hero-section h1 span {
+    background: linear-gradient(45deg, #ff4757, #ff6b81);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-section p {
+    color: #f5f6fa; /* On l'éclaircit un poil pour compenser le fond */
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    /* Ombre ajoutée pour que la description reste parfaitement lisible */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .logo-badge {
