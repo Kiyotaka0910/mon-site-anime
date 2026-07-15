@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tier List - Openings d'Animés</title>
+    <title>Tier List - Openings d'Animés (50)</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -202,7 +202,7 @@
         <a href="index.html" class="back-button">← Retour à l'accueil</a>
         
         <h2>Classe tes Openings préférés</h2>
-        <p>Glisse les jaquettes dans les catégories. <strong>Clique sur une image pour écouter un extrait !</strong></p>
+        <p>Glisse les jaquettes dans les catégories. <strong>Clique sur une image pour écouter/mettre en pause l'opening !</strong></p>
 
         <div class="tier-table">
             <div class="tier-row">
@@ -228,13 +228,13 @@
         </div>
 
         <div class="character-bank">
-            <h3>Openings disponibles</h3>
+            <h3>Openings disponibles (50)</h3>
             <div class="bank-zone" id="bankZone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
         </div>
     </div>
 
-   <script>
-        // --- BASE DE DONNÉES DES OPENINGS ---
+    <script>
+        // --- BASE DE DONNÉES DES OPENINGS (50 Titres) ---
         const nomsOpenings = {
             1: "Naruto Shippuden OP 16 - Silhouette",
             2: "Shingeki no Kyojin OP 1 - Guren no Yumiya",
@@ -245,17 +245,56 @@
             7: "Demon Slayer OP 1 - Gurenge",
             8: "Hunter x Hunter 2011 OP - Departure!",
             9: "Blue Lock OP 1 - Chaos Ga Kiwamaru",
-            10: "Death Note OP 1 - The World"
+            10: "Death Note OP 1 - The World",
+            11: "Shingeki no Kyojin OP 6 - My War",
+            12: "Shingeki no Kyojin OP 7 - The Rumbling",
+            13: "Jujutsu Kaisen OP 2 - Vivid Vice",
+            14: "Jujutsu Kaisen S2 OP 1 - Ao no Sumika",
+            15: "Demon Slayer S2 OP - Zankyou Sanka",
+            16: "Demon Slayer S3 OP - Kizuna no Kiseki",
+            17: "Chainsaw Man OP 1 - KICK BACK",
+            18: "Fullmetal Alchemist: Brotherhood OP 1 - Again",
+            19: "Naruto OP 2 - Haruka Kanata",
+            20: "Naruto Shippuden OP 6 - Sign",
+            21: "My Hero Academia OP 1 - The Day",
+            22: "My Hero Academia OP 11 - Bokurano",
+            23: "Bleach OP 13 - Ranbu no Melody",
+            24: "Bleach: TYBW OP 1 - Scar",
+            25: "Black Clover OP 3 - Black Rover",
+            26: "Black Clover OP 10 - Black Catcher",
+            27: "Sword Art Online OP 1 - Crossing Field",
+            28: "Code Geass OP 1 - Colors",
+            29: "Kuroko no Basket OP 1 - Can Do",
+            30: "Oshi no Ko OP 1 - Idol",
+            31: "Naruto Shippuden OP 3 - Blue Bird",
+            32: "Bleach OP 1 - *Asterisk",
+            33: "Bleach OP 3 - Ichirin no Hana",
+            34: "Mob Psycho 100 OP 1 - 99",
+            35: "Mob Psycho 100 S3 OP - 1",
+            36: "One Piece OP 20 - Hope",
+            37: "One Piece OP 23 - Dreamin' On",
+            38: "Spy x Family OP 1 - Mixed Nuts",
+            39: "Spy x Family OP 2 - SOUVENIR",
+            40: "Tokyo Revengers OP 1 - Cry Baby",
+            41: "Vinland Saga OP 1 - MUKANJYO",
+            42: "Vinland Saga S2 OP 1 - River",
+            43: "Kaiju No. 8 OP 1 - Abyss",
+            44: "Solo Leveling OP 1 - LEveL",
+            45: "Fire Force OP 1 - Inferno",
+            46: "Mashle S2 OP - Bling-Bang-Bang-Born",
+            47: "Frieren: Beyond Journey's End OP 1 - Yuusha",
+            48: "Cyberpunk: Edgerunners OP - This Ffire",
+            49: "Haikyu!! OP 1 - Imagination",
+            50: "Haikyu!! OP 5 - Hikari Are"
         };
 
         const bankZone = document.getElementById('bankZone');
-        const totalOpenings = 10; 
+        const totalOpenings = 50; 
         const imageExtension = 'jpg'; 
         
-        // Variables globales pour l'audio et le chrono
+        // Variables globales pour gérer l'audio unique
         let currentAudio = null;
         let currentPlayingImg = null;
-        let audioTimeout = null; // Stocke le minuteur des 15 secondes
 
         // Génération automatique des jaquettes
         for (let i = 1; i <= totalOpenings; i++) {
@@ -279,68 +318,46 @@
             bankZone.appendChild(img);
         }
 
-        // --- GESTION DE L'AUDIO (LIMITE 15 SECONDES) ---
+        // --- GESTION DE L'AUDIO (LANCEMENT COMPLET ET PAUSE) ---
         function gererAudio(id, imgElement) {
-            const pistoletAudioSrc = `audio/openings/${id}.mp3`;
+            const audioSrc = `audio/openings/${id}.mp3`;
 
-            // 1. Si on clique sur l'opening déjà en cours de lecture : on fait pause
+            // 1. Si on clique sur l'opening qui est déjà en train de jouer : on le met en pause
             if (currentAudio && currentPlayingImg === imgElement) {
                 if (!currentAudio.paused) {
                     currentAudio.pause();
                     imgElement.classList.remove('playing');
-                    if (audioTimeout) clearTimeout(audioTimeout); // On stoppe le chrono
                 } else {
                     currentAudio.play();
                     imgElement.classList.add('playing');
-                    lancerMinuteur(imgElement); // On relance un chrono de 15s
                 }
                 return;
             }
 
-            // 2. Si une autre musique tournait, on l'arrête et on détruit son chrono
+            // 2. Si une autre musique tournait, on l'arrête proprement
             if (currentAudio) {
                 currentAudio.pause();
                 if (currentPlayingImg) {
                     currentPlayingImg.classList.remove('playing');
                 }
-                if (audioTimeout) clearTimeout(audioTimeout);
             }
 
-            // 3. On lance la nouvelle musique
-            currentAudio = new Audio(pistoletAudioSrc);
+            // 3. On lance la nouvelle musique en entier
+            currentAudio = new Audio(audioSrc);
             currentPlayingImg = imgElement;
             
             currentAudio.play().then(() => {
                 imgElement.classList.add('playing');
-                lancerMinuteur(imgElement); // Décollage du chrono !
             }).catch(err => {
                 console.log("Erreur de lecture :", err);
             });
 
-            // Si la musique se termine d'elle-même avant les 15 secondes
+            // Quand la musique se termine d'elle-même (fin de l'opening)
             currentAudio.addEventListener('ended', function() {
-                reinitialiserAudio(imgElement);
+                imgElement.classList.remove('playing');
+                currentAudio = null;
+                currentPlayingImg = null;
             });
-        }
-
-        // Fonction pour lancer le compte à rebours de 15 secondes
-        function lancerMinuteur(imgElement) {
-            if (audioTimeout) clearTimeout(audioTimeout); // Sécurité anti-doublon
-            
-            audioTimeout = setTimeout(() => {
-                if (currentAudio) {
-                    currentAudio.pause();
-                }
-                reinitialiserAudio(imgElement);
-            }, 15000); // 15000 millisecondes = 15 secondes
-        }
-
-        // Fonction pour tout remettre à zéro proprement
-        function reinitialiserAudio(imgElement) {
-            imgElement.classList.remove('playing');
-            if (audioTimeout) clearTimeout(audioTimeout);
-            currentAudio = null;
-            currentPlayingImg = null;
         }
 
         // --- FONCTIONS DE DRAG & DROP ---
