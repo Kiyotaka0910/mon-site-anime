@@ -233,9 +233,8 @@
         </div>
     </div>
 
-    <script>
+   <script>
         // --- BASE DE DONNÉES DES OPENINGS ---
-        // Tu pourras ajouter les titres ici au fur et à mesure !
         const nomsOpenings = {
             1: "Naruto Shippuden OP 16 - Silhouette",
             2: "Shingeki no Kyojin OP 1 - Guren no Yumiya",
@@ -250,12 +249,13 @@
         };
 
         const bankZone = document.getElementById('bankZone');
-        const totalOpenings = 10; // Change ce nombre quand tu ajouteras de nouvelles musiques !
+        const totalOpenings = 10; 
         const imageExtension = 'jpg'; 
         
-        // Variable globale pour suivre le morceau en cours de lecture
+        // Variables globales pour l'audio et le chrono
         let currentAudio = null;
         let currentPlayingImg = null;
+        let audioTimeout = null; // Stocke le minuteur des 15 secondes
 
         // Génération automatique des jaquettes
         for (let i = 1; i <= totalOpenings; i++) {
@@ -269,11 +269,9 @@
             img.alt = nomOp; 
             img.setAttribute('draggable', 'true');
             
-            // Événements pour le Drag & Drop
             img.addEventListener('dragstart', drag);
             img.addEventListener('dragend', dragEnd); 
             
-            // Événement pour la lecture audio au clic !
             img.addEventListener('click', function() {
                 gererAudio(i, img);
             });
@@ -281,46 +279,68 @@
             bankZone.appendChild(img);
         }
 
-        // --- GESTION DE L'AUDIO ---
+        // --- GESTION DE L'AUDIO (LIMITE 15 SECONDES) ---
         function gererAudio(id, imgElement) {
             const pistoletAudioSrc = `audio/openings/${id}.mp3`;
 
-            // Si on clique sur l'opening déjà en cours de lecture : on fait pause
+            // 1. Si on clique sur l'opening déjà en cours de lecture : on fait pause
             if (currentAudio && currentPlayingImg === imgElement) {
                 if (!currentAudio.paused) {
                     currentAudio.pause();
                     imgElement.classList.remove('playing');
+                    if (audioTimeout) clearTimeout(audioTimeout); // On stoppe le chrono
                 } else {
                     currentAudio.play();
                     imgElement.classList.add('playing');
+                    lancerMinuteur(imgElement); // On relance un chrono de 15s
                 }
                 return;
             }
 
-            // Si une autre musique tournait, on l'arrête proprement
+            // 2. Si une autre musique tournait, on l'arrête et on détruit son chrono
             if (currentAudio) {
                 currentAudio.pause();
                 if (currentPlayingImg) {
                     currentPlayingImg.classList.remove('playing');
                 }
+                if (audioTimeout) clearTimeout(audioTimeout);
             }
 
-            // On lance le nouvel extrait audio
+            // 3. On lance la nouvelle musique
             currentAudio = new Audio(pistoletAudioSrc);
             currentPlayingImg = imgElement;
             
             currentAudio.play().then(() => {
                 imgElement.classList.add('playing');
+                lancerMinuteur(imgElement); // Décollage du chrono !
             }).catch(err => {
-                console.log("Erreur de lecture (souvent bloqué par le navigateur au premier clic) :", err);
+                console.log("Erreur de lecture :", err);
             });
 
-            // Quand l'extrait se termine, on retire l'effet visuel vert
+            // Si la musique se termine d'elle-même avant les 15 secondes
             currentAudio.addEventListener('ended', function() {
-                imgElement.classList.remove('playing');
-                currentAudio = null;
-                currentPlayingImg = null;
+                reinitialiserAudio(imgElement);
             });
+        }
+
+        // Fonction pour lancer le compte à rebours de 15 secondes
+        function lancerMinuteur(imgElement) {
+            if (audioTimeout) clearTimeout(audioTimeout); // Sécurité anti-doublon
+            
+            audioTimeout = setTimeout(() => {
+                if (currentAudio) {
+                    currentAudio.pause();
+                }
+                reinitialiserAudio(imgElement);
+            }, 15000); // 15000 millisecondes = 15 secondes
+        }
+
+        // Fonction pour tout remettre à zéro proprement
+        function reinitialiserAudio(imgElement) {
+            imgElement.classList.remove('playing');
+            if (audioTimeout) clearTimeout(audioTimeout);
+            currentAudio = null;
+            currentPlayingImg = null;
         }
 
         // --- FONCTIONS DE DRAG & DROP ---
