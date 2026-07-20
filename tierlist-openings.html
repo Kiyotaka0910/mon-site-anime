@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tier List - Openings d'Animés (50)</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         /* --- STYLES SPÉCIFIQUES ET MODERNISATION --- */
@@ -12,6 +11,8 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #0f111a; /* Fond sombre par défaut */
+            color: white;
         }
 
         .tierlist-container {
@@ -299,6 +300,7 @@
         // Génération automatique des jaquettes
         for (let i = 1; i <= totalOpenings; i++) {
             const img = document.createElement('img');
+            // Le chemin cherche dans le sous-dossier "images/openings/"
             img.src = `images/openings/${i}.${imageExtension}`; 
             img.id = `opening-${i}`;
             img.className = 'character';
@@ -322,6 +324,7 @@
 
         // --- GESTION DE L'AUDIO ---
         function gererAudio(id, imgElement) {
+            // Le chemin cherche dans le sous-dossier "audio/openings/"
             const audioSrc = `audio/openings/${id}.mp3`;
 
             // 1. Pause / Reprise si c'est la même musique
@@ -351,7 +354,7 @@
             currentAudio.play().then(() => {
                 imgElement.classList.add('playing');
             }).catch(err => {
-                console.log("Erreur de lecture audio :", err);
+                console.error("Erreur de lecture audio : Vérifie que le fichier " + audioSrc + " existe bien ! Erreur complète :", err);
             });
 
             currentAudio.addEventListener('ended', function() {
