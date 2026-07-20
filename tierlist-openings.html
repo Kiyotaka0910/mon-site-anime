@@ -282,19 +282,19 @@
             44: "Solo Leveling OP 1 - LEveL",
             45: "Fire Force OP 1 - Inferno",
             46: "Mashle S2 OP - Bling-Bang-Bang-Born",
-            47: "Frieren: Beyond Journey's End OP 1 - Yuusha",
-            48: "Cyberpunk: Edgerunners OP - This Ffire",
+            47: "Solo Leveling S2 OP",
+            48: "Classroom of the Elite S2 OP - Dance in the Game",
             49: "Haikyu!! OP 1 - Imagination",
-            50: "Haikyu!! OP 5 - Hikari Are"
+            50: "Haikyu!! OP 4 - Fly High!!"
         };
 
         const bankZone = document.getElementById('bankZone');
         const totalOpenings = 50; 
         const imageExtension = 'jpg'; 
         
-        // Variables globales pour gérer l'audio unique
         let currentAudio = null;
         let currentPlayingImg = null;
+        let isDragging = false;
 
         // Génération automatique des jaquettes
         for (let i = 1; i <= totalOpenings; i++) {
@@ -312,17 +312,19 @@
             img.addEventListener('dragend', dragEnd); 
             
             img.addEventListener('click', function() {
-                gererAudio(i, img);
+                if (!isDragging) {
+                    gererAudio(i, img);
+                }
             });
             
             bankZone.appendChild(img);
         }
 
-        // --- GESTION DE L'AUDIO (LANCEMENT COMPLET ET PAUSE) ---
+        // --- GESTION DE L'AUDIO ---
         function gererAudio(id, imgElement) {
             const audioSrc = `audio/openings/${id}.mp3`;
 
-            // 1. Si on clique sur l'opening qui est déjà en train de jouer : on le met en pause
+            // 1. Pause / Reprise si c'est la même musique
             if (currentAudio && currentPlayingImg === imgElement) {
                 if (!currentAudio.paused) {
                     currentAudio.pause();
@@ -334,7 +336,7 @@
                 return;
             }
 
-            // 2. Si une autre musique tournait, on l'arrête proprement
+            // 2. Arrêt de l'ancienne musique
             if (currentAudio) {
                 currentAudio.pause();
                 if (currentPlayingImg) {
@@ -342,17 +344,16 @@
                 }
             }
 
-            // 3. On lance la nouvelle musique en entier
+            // 3. Lancement de la nouvelle musique
             currentAudio = new Audio(audioSrc);
             currentPlayingImg = imgElement;
             
             currentAudio.play().then(() => {
                 imgElement.classList.add('playing');
             }).catch(err => {
-                console.log("Erreur de lecture :", err);
+                console.log("Erreur de lecture audio :", err);
             });
 
-            // Quand la musique se termine d'elle-même (fin de l'opening)
             currentAudio.addEventListener('ended', function() {
                 imgElement.classList.remove('playing');
                 currentAudio = null;
@@ -366,12 +367,16 @@
         }
 
         function drag(ev) {
+            isDragging = true;
             ev.dataTransfer.setData("text", ev.target.id);
             ev.target.classList.add('dragging');
         }
 
         function dragEnd(ev) {
             ev.target.classList.remove('dragging');
+            setTimeout(() => {
+                isDragging = false;
+            }, 100);
         }
 
         function drop(ev) {
