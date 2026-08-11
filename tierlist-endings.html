@@ -26,7 +26,7 @@
             z-index: 1;
         }
 
-        /* Bouton Retour ultra-stylisé */
+        /* Bouton Retour */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -49,7 +49,7 @@
             box-shadow: 0 4px 15px rgba(46, 144, 255, 0.4);
         }
 
-        /* 2. STYLE DU BOUTON TÉLÉCHARGER */
+        /* Bouton Télécharger */
         .download-btn {
             background: linear-gradient(135deg, #2ed573, #1e90ff);
             color: white;
@@ -422,18 +422,21 @@
             }
         }
 
-        // 4. FONCTION DE TÉLÉCHARGEMENT DE LA TIER LIST EN PNG
+        // --- EXPORT EN IMAGE (html2canvas) ---
         function downloadTierList() {
             const tierTable = document.querySelector('.tier-table');
             
             html2canvas(tierTable, {
                 backgroundColor: '#0f111a',
-                scale: 2
+                scale: 2,
+                useCORS: true
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'ma-tierlist-endings.png';
-                link.href = canvas.toDataURL();
+                link.href = canvas.toDataURL('image/png');
                 link.click();
+            }).catch(err => {
+                console.error("Erreur lors de la capture d'écran :", err);
             });
         }
     </script>
