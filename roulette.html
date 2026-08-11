@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roulette Anime & Music</title>
+    <title>Roulette Suprême - Otaku Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0b0c10;
+            --panel-bg: rgba(20, 22, 33, 0.75);
+            --accent-blue: #2e90ff;
+            --accent-green: #2ed573;
+            --accent-pink: #ff4757;
+            --border-glow: rgba(46, 144, 255, 0.3);
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0f111a;
+            background-color: var(--bg-color);
             color: white;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(46, 144, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 71, 87, 0.08) 0%, transparent 40%);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
             text-align: center;
@@ -32,122 +44,149 @@
             font-weight: 600;
             font-size: 0.9rem;
             background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
         .back-button:hover {
-            background: #2e90ff;
-            border-color: #2e90ff;
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             transform: translateX(-5px);
             box-shadow: 0 4px 15px rgba(46, 144, 255, 0.4);
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff, #a4b0be);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        p {
+        p.subtitle {
             color: #a4b0be;
             margin-bottom: 30px;
+            font-size: 1.05rem;
         }
 
-        /* Sélecteur de catégorie */
+        /* Sélecteur de catégorie stylisé */
         .category-selector {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
 
         .cat-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 20px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #a4b0be;
+            padding: 10px 22px;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .cat-btn.active, .cat-btn:hover {
-            background: #2e90ff;
-            border-color: #2e90ff;
-            box-shadow: 0 4px 15px rgba(46, 144, 255, 0.4);
+        .cat-btn:hover {
+            color: white;
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
         }
 
-        /* Zone de la roulette */
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--accent-blue), #1e6091);
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: 0 6px 20px rgba(46, 144, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Zone de la roulette avec design cyberpunk */
+        .wheel-container-wrapper {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px;
+            display: inline-block;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+        }
+
         .wheel-wrapper {
             position: relative;
             display: inline-block;
-            margin: 20px 0;
         }
 
-        /* Curseur / Flèche */
+        /* Curseur / Flèche néon */
         .pointer {
             position: absolute;
-            top: -15px;
+            top: -18px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 30px solid #ff4757;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 34px solid var(--accent-pink);
             z-index: 10;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 4px 8px rgba(255, 71, 87, 0.6));
         }
 
         canvas {
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 0 6px rgba(255, 255, 255, 0.04);
             max-width: 100%;
             height: auto;
         }
 
-        /* Bouton Lancer */
+        /* Bouton Lancer moderne */
         .spin-btn {
             display: block;
             margin: 30px auto 0;
-            background: linear-gradient(135deg, #2ed573, #1e90ff);
+            background: linear-gradient(135deg, var(--accent-green), #10ac84);
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 16px 45px;
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             border-radius: 50px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 6px 20px rgba(46, 213, 115, 0.3);
+            box-shadow: 0 6px 25px rgba(46, 213, 115, 0.35);
+            letter-spacing: 0.5px;
         }
 
         .spin-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(46, 213, 115, 0.5);
+            transform: scale(1.06);
+            box-shadow: 0 8px 30px rgba(46, 213, 115, 0.55);
         }
 
         .spin-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
-        /* Popup résultat (Modal) */
+        /* Popup résultat (Modal) ultra soignée */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -155,50 +194,55 @@
 
         .modal-content {
             background: #141621;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 45px 35px;
+            border-radius: 24px;
             text-align: center;
-            max-width: 400px;
+            max-width: 440px;
             width: 90%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(46, 144, 255, 0.15);
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
+            0% { transform: scale(0.6); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-content h3 {
             color: #a4b0be;
             margin-top: 0;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .result-text {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: #2e90ff;
-            margin: 20px 0;
+            color: var(--accent-blue);
+            margin: 20px 0 30px;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(46, 144, 255, 0.3);
         }
 
         .close-btn {
-            background: #ff4757;
+            background: linear-gradient(135deg, var(--accent-pink), #ff6b81);
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
         }
 
         .close-btn:hover {
-            background: #ff6b81;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
         }
     </style>
 </head>
@@ -207,58 +251,128 @@
     <div class="container">
         <a href="index.html" class="back-button">← Retour à l'accueil</a>
 
-        <h1>La Roulette Anime</h1>
-        <p>Tu ne sais pas quoi regarder ou écouter ? Laisse le hasard décider !</p>
+        <h1>Roulette Suprême 🎯</h1>
+        <p class="subtitle">Toutes tes catégories d'animés, openings, endings et OSTs réunies au même endroit !</p>
 
         <div class="category-selector">
             <button class="cat-btn active" onclick="changeCategory('animes')">📺 Animés</button>
+            <button class="cat-btn" onclick="changeCategory('personnages')">👤 Personnages</button>
             <button class="cat-btn" onclick="changeCategory('openings')">🎵 Openings</button>
-            <button class="cat-btn" onclick="changeCategory('endings')">🎶 Endings</button>
+            <button class="cat-btn" onclick="changeCategory('endings')">🎶 Endings (50)</button>
+            <button class="cat-btn" onclick="changeCategory('osts')">⚡ OSTs</button>
         </div>
 
-        <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="wheelCanvas" width="450" height="450"></canvas>
+        <div class="wheel-container-wrapper">
+            <div class="wheel-wrapper">
+                <div class="pointer"></div>
+                <canvas id="wheelCanvas" width="460" height="460"></canvas>
+            </div>
+            <button id="spinBtn" class="spin-btn" onclick="spin()">Lancer la roulette !</button>
         </div>
-
-        <button id="spinBtn" class="spin-btn" onclick="spin()">Lancer la roulette !</button>
     </div>
 
     <div id="resultModal" class="modal">
         <div class="modal-content">
-            <h3>Le destin a parlé !</h3>
+            <h3>Le destin a choisi :</h3>
             <div id="resultText" class="result-text">...</div>
-            <button class="close-btn" onclick="closeModal()">Fermer</button>
+            <button class="close-btn" onclick="closeModal()">Parfait !</button>
         </div>
     </div>
 
     <script>
-        // Banques de données pour la roulette
+        // Banques de données complètes intégrant tous tes éléments
         const datasets = {
             animes: [
                 "Jujutsu Kaisen", "Attack on Titan", "Hunter x Hunter", 
                 "Chainsaw Man", "Demon Slayer", "Naruto", 
-                "Death Note", "Fullmetal Alchemist", "One Piece", 
-                "Bleach", "Spy x Family", "Vinland Saga"
+                "Death Note", "Fullmetal Alchemist: Brotherhood", "One Piece", 
+                "Bleach", "Spy x Family", "Vinland Saga", "Code Geass",
+                "Mob Psycho 100", "Fire Force", "Haikyu!!", "Re:Zero", "Solo Leveling"
+            ],
+            personnages: [
+                "Gojo Satoru", "Eren Jaeger", "Killua Zoldyck", 
+                "Denji", "Tanjiro Kamado", "Naruto Uzumaki", 
+                "Light Yagami", "Edward Elric", "Monkey D. Luffy", 
+                "Ichigo Kurosaki", "Loid Forger", "Thors", "Lelouch Lamperouge",
+                "Reigen Arataka", "Shinra Kusakabe", "Shoyo Hinata", "Subaru Natsuki", "Sung Jinwoo"
             ],
             openings: [
-                "JJK - Kaikai Kitan", "SnK - Shinzou wo Sasageyo", 
-                "HxH - Departure!", "CSM - Kick Back", 
-                "Demon Slayer - Gurenge", "Naruto - Blue Bird", 
-                "Death Note - The World", "FMA:B - Again"
+                "JJK OP 1 - Kaikai Kitan (Eve)", "JJK OP 2 - Specialz (King Gnu)",
+                "SnK OP 2 - Shinzou wo Sasageyo (Linked Horizon)", "SnK OP 4 - My War (Shinsei Kamattechan)",
+                "HxH OP 1 - Departure! (Masatoshi Ono)", "CSM OP 1 - Kick Back (Kenshi Yonezu)",
+                "Demon Slayer OP 1 - Gurenge (LiSA)", "Demon Slayer OP 3 - Zankyo Sanka (Aimer)",
+                "Naruto OP 2 - Silhouette (KANA-BOON)", "Naruto OP 3 - Blue Bird (Ikimono Gakari)",
+                "Death Note OP 1 - The World (Nightmare)", "FMA:B OP 1 - Again (YUI)",
+                "One Piece OP 1 - We Are! (Hiroshi Kitadani)", "Bleach OP 1 - Asterisk (Orange Range)",
+                "Spy x Family OP 1 - Mixed Nuts (Official HIGE DANdism)", "JoJo OP 2 - Bloody Stream (Coda)"
             ],
             endings: [
-                "JJK - Lost in Paradise", "SnK - Akuma no Ko", 
-                "HxH - Hyori Ittai", "CSM - Hawatari Nioku Centi", 
-                "Demon Slayer - Asa ga Kuru", "Naruto - Wind", 
-                "Bleach - Life is Like a Boat", "JoJo - Roundabout"
+                "Jujutsu Kaisen ED 1 - Lost in Paradise (ALI)",
+                "Shingeki no Kyojin ED 7 - Akuma no Ko (Higuchi Ai)",
+                "Hunter x Hunter ED 5 - Hyori Ittai (Yuzu)",
+                "Hunter x Hunter ED 2 - Hunting for Your Dream (Galneryus)",
+                "Chainsaw Man ED 3 - Hawatari Nioku Centi (Maximum the Hormone)",
+                "Demon Slayer ED 1 - from the edge (LiSA)",
+                "Demon Slayer ED 2 - Asa ga Kuru (Aimer)",
+                "Naruto ED 1 - Wind (Akeboshi)",
+                "Naruto Shippuden ED 1 - Shooting Star (HOME MADE Kazoku)",
+                "Naruto Shippuden ED 15 - U can do it! (DOMINO)",
+                "Death Note ED 1 - Alumina (Nightmare)",
+                "Death Note ED 2 - Zetsubou Billy (Maximum the Hormone)",
+                "Fullmetal Alchemist: Brotherhood ED 1 - Uso (SID)",
+                "Fullmetal Alchemist: Brotherhood ED 4 - Shunkan Sentimental",
+                "One Piece ED 1 - Memories (Maki Otsuki)",
+                "Bleach ED 1 - Life is Like a Boat (Rie fu)",
+                "Bleach ED 3 - Houkiboshi (Younha)",
+                "My Hero Academia ED 3 - Datte Atashi no Hero (LiSA)",
+                "My Hero Academia ED 6 - Shout Baby",
+                "Spy x Family ED 1 - Comedy (Gen Hoshino)",
+                "Kaguya-sama: Love is War ED 2 - Chika Dance",
+                "JoJo's Bizarre Adventure ED 1 - Roundabout (Yes)",
+                "Dragon Ball Z ED 1 - Detekoi Tobikiri ZENKAI Power!",
+                "Dragon Ball Super ED 10 - 70cm Square no Mado",
+                "Black Clover ED 1 - Aoi Honoo",
+                "Tokyo Ghoul ED 1 - Kisetsu wa TsugiTsugi Shindeiku",
+                "Mob Psycho 100 ED 1 - Refrain Boy",
+                "Classroom of the Elite S1 ED - Beautiful Soldier (Minami)",
+                "Classroom of the Elite S2 ED - Hito Suki (Mai Fuchigami)",
+                "Classroom of the Elite S3 ED - Chosai Koreso (Yui Ninomiya)",
+                "Vinland Saga ED 1 - Torches (Aimer)",
+                "Fire Force ED 1 - veil (Keina Suda)",
+                "Code Geass ED 1 - Mokuteki (FLOW)",
+                "Assassination Classroom ED 1 - Hello, shooting-star",
+                "Haikyu!! ED 1 - Leo (Tacica)",
+                "Haikyu!! ED 2 - Ah Yeah!! (Sukima Switch)",
+                "Re:Zero ED 1 - STYX HELIX (MYTH & ROID)",
+                "Solo Leveling ED 1 - request (krage)",
+                "Naruto ED 2 - Harmonia (RYTHEM)",
+                "Naruto Shippuden ED 28 - Rainbow (ALTIMA)",
+                "One Piece ED 15 - Eternal Pose",
+                "Bleach ED 29 - Reepoipaa",
+                "Demon Slayer S3 ED - Koi Kogare (milet x MAN WITH A MISSION)",
+                "Shingeki no Kyojin ED 1 - Utsukushiki Zankoku na Sekai",
+                "Chainsaw Man ED 8 - First Death (TK)",
+                "Jujutsu Kaisen S2 ED 1 - Akari (Soushi Sakiyama)",
+                "Spy x Family ED 2 - SOUVENIR / Shikaku Unmei",
+                "Kuroko no Basket ED 1 - Start it right away",
+                "Blue Lock ED 1 - Natsu Yoru no Hanabi",
+                "Dragon Ball Super ED 3 - Usubeni"
+            ],
+            osts: [
+                "JJK - Hollow Purple Theme", "SnK - YouSeeBIGGIRL",
+                "HxH - Kingdom of Predators", "CSM - Power's Theme",
+                "Demon Slayer - Nezuko's Theme", "Naruto - Girei (Pain's Theme)",
+                "Death Note - L's Theme", "FMA:B - Triss Merigold / Bratja",
+                "One Piece - Overthedd / Drum of Liberation", "Bleach - Number One",
+                "Code Geass - Lelouch's Britannia Theme", "Vinland Saga - Iron Fist"
             ]
         };
 
-        // Palette de couleurs pour la roue
+        // Palette de couleurs cyberpunk
         const colors = [
             "#ff4757", "#2e90ff", "#2ed573", "#ffa801", 
-            "#9b59b6", "#1abc9c", "#e84393", "#e67e22"
+            "#9b59b6", "#1abc9c", "#e84393", "#e67e22",
+            "#3498db", "#e74c3c", "#2ecc71", "#f1c40f"
         ];
 
         let currentCategory = 'animes';
@@ -278,46 +392,62 @@
         function drawWheel() {
             const numOptions = items.length;
             const arcSize = (2 * Math.PI) / numOptions;
-            const outsideRadius = 200;
-            const textRadius = 140;
-            const insideRadius = 40;
+            const outsideRadius = 205;
+            const textRadius = 145;
+            const insideRadius = 45;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1.5;
 
             for (let i = 0; i < numOptions; i++) {
                 const angle = startAngle + i * arcSize;
                 ctx.fillStyle = colors[i % colors.length];
 
                 ctx.beginPath();
-                ctx.arc(225, 225, outsideRadius, angle, angle + arcSize, false);
-                ctx.arc(225, 225, insideRadius, angle + arcSize, angle, true);
+                ctx.arc(230, 230, outsideRadius, angle, angle + arcSize, false);
+                ctx.arc(230, 230, insideRadius, angle + arcSize, angle, true);
                 ctx.stroke();
                 ctx.fill();
 
                 ctx.save();
-                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowColor = "rgba(0,0,0,0.6)";
                 ctx.shadowBlur = 4;
                 ctx.fillStyle = "white";
-                ctx.font = "bold 13px Poppins, sans-serif";
+                
+                // Ajuster dynamiquement la taille de police si beaucoup d'éléments (ex: 50 endings)
+                let fontSize = numOptions > 30 ? 10 : (numOptions > 15 ? 11 : 13);
+                ctx.font = `bold ${fontSize}px Poppins, sans-serif`;
 
-                // Positionnement du texte
                 const textAngle = angle + arcSize / 2;
                 ctx.translate(
-                    225 + Math.cos(textAngle) * textRadius,
-                    225 + Math.sin(textAngle) * textRadius
+                    230 + Math.cos(textAngle) * textRadius,
+                    230 + Math.sin(textAngle) * textRadius
                 );
                 ctx.rotate(textAngle + Math.PI / 2);
                 
                 const text = items[i];
-                // Troncature du texte si trop long
-                const formattedText = text.length > 18 ? text.substring(0, 16) + "..." : text;
-                ctx.fillText(formattedText, -ctx.measureText(formattedText).width / 2, 0);
+                const maxLength = numOptions > 30 ? 14 : 18;
+                const formattedText = text.length > maxLength ? text.substring(0, maxLength - 2) + "..." : text;
                 
+                ctx.fillText(formattedText, -ctx.measureText(formattedText).width / 2, 0);
                 ctx.restore();
             }
+
+            // Cercle central design
+            ctx.beginPath();
+            ctx.arc(230, 230, 45, 0, 2 * Math.PI);
+            ctx.fillStyle = "#141621";
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+            ctx.stroke();
+
+            // Icône ou texte central
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 14px Poppins, sans-serif";
+            ctx.fillText("OTA", -14, -3, 230, 230); // centré
         }
 
         // Changement de catégorie
@@ -325,7 +455,6 @@
             currentCategory = cat;
             items = datasets[cat];
             
-            // Mise à jour visuelle des boutons
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
@@ -335,9 +464,9 @@
 
         // Lancer la roulette
         function spin() {
-            spinAngleStart = Math.random() * 10 + 10;
+            spinAngleStart = Math.random() * 12 + 10;
             spinTime = 0;
-            spinTimeTotal = Math.random() * 3000 + 4000; // Durée entre 4 et 7 sec
+            spinTimeTotal = Math.random() * 3000 + 4500;
             spinBtn.disabled = true;
             rotateWheel();
         }
@@ -355,13 +484,12 @@
             spinTimeout = setTimeout(rotateWheel, 30);
         }
 
-        // Arrêt de la roue et affichage du résultat
+        // Arrêt et calcul du résultat exact
         function stopRotateWheel() {
             clearTimeout(spinTimeout);
             const numOptions = items.length;
             const arcSize = (2 * Math.PI) / numOptions;
             
-            // Calcul de l'index pointé par le curseur du haut (270° ou 3*PI/2)
             let degrees = startAngle * 180 / Math.PI + 90;
             let arcd = arcSize * 180 / Math.PI;
             let index = Math.floor((360 - (degrees % 360)) / arcd);
@@ -371,14 +499,12 @@
             spinBtn.disabled = false;
         }
 
-        // Fonction de décélération fluide (Easing)
         function easeOut(t, b, c, d) {
             const ts = (t /= d) * t;
             const tc = ts * t;
             return b + c * (tc + -3 * ts + 3 * t);
         }
 
-        // Affichage de la modal
         function showResult(text) {
             document.getElementById("resultText").innerText = text;
             document.getElementById("resultModal").style.display = "flex";
@@ -388,7 +514,7 @@
             document.getElementById("resultModal").style.display = "none";
         }
 
-        // Premier dessin au chargement
+        // Premier rendu
         drawWheel();
     </script>
 </body>
