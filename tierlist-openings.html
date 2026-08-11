@@ -26,7 +26,7 @@
             z-index: 1;
         }
 
-        /* Bouton Retour ultra-stylisé */
+        /* Bouton Retour */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -47,6 +47,30 @@
             border-color: #ff4757;
             transform: translateX(-5px);
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Bouton Télécharger */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
         }
 
         /* Titres */
@@ -175,7 +199,7 @@
             box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
         }
 
-        /* Effet d'animation quand la musique joue sur cet opening */
+        /* Effet d'animation quand la musique joue */
         .character.playing {
             border-color: #2ed573;
             box-shadow: 0 0 15px rgba(46, 213, 115, 0.8);
@@ -210,7 +234,7 @@
 
         <button onclick="downloadTierList()" class="download-btn">📸 Télécharger ma Tier List</button>
 
-        <div class="tier-table">
+        <div class="tier-table" id="tierTable">
             <div class="tier-row">
                 <div class="tier-label tier-s">S</div>
                 <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
@@ -305,7 +329,6 @@
         // Génération automatique des jaquettes
         for (let i = 1; i <= totalOpenings; i++) {
             const img = document.createElement('img');
-            // Images dans : images/openings/
             img.src = `images/openings/${i}.${imageExtension}`; 
             img.id = `opening-${i}`;
             img.className = 'character';
@@ -329,7 +352,6 @@
 
         // --- GESTION DE L'AUDIO ---
         function gererAudio(id, imgElement) {
-            // Option 2 : Cherche le MP3 directement dans audio/ (ex: audio/1.mp3)
             const audioSrc = `audio/${id}.mp3`;
 
             // 1. Pause / Reprise si c'est la même musique
@@ -405,6 +427,24 @@
             if (targetZone.classList.contains('tier-zone') || targetZone.classList.contains('bank-zone')) {
                 targetZone.appendChild(draggedElement);
             }
+        }
+
+        // --- EXPORT EN IMAGE (html2canvas) ---
+        function downloadTierList() {
+            const tierTable = document.getElementById('tierTable');
+            
+            html2canvas(tierTable, {
+                backgroundColor: '#0f111a',
+                scale: 2,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Ma_TierList_Openings.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("Erreur lors de la capture d'écran :", err);
+            });
         }
     </script>
 
