@@ -1,3 +1,52 @@
+/* ==============================================
+   1. SYSTÈME DE THÈMES DYNAMIQUES (VARIABLES)
+============================================== */
+
+/* Thème 1 : Cyber Otaku (Par défaut) */
+:root, [data-theme="cyber"] {
+    --bg-color: #06070c;
+    --panel-bg: rgba(18, 20, 32, 0.85);
+    --blue-neon: #2e90ff;
+    --pink-neon: #ff4757;
+    --text-main: #ffffff;
+    --text-sub: #a4b0be;
+    --card-border: rgba(46, 144, 255, 0.2);
+}
+
+/* Thème 2 : Dark Fantasy (Berserk / Blood) */
+[data-theme="dark-fantasy"] {
+    --bg-color: #0a0404;
+    --panel-bg: rgba(28, 10, 10, 0.88);
+    --blue-neon: #ff3333;
+    --pink-neon: #800000;
+    --text-main: #f5f5f5;
+    --text-sub: #b38f8f;
+    --card-border: rgba(255, 51, 51, 0.25);
+}
+
+/* Thème 3 : Synthwave Neon (Cyberpunk / Edgerunners) */
+[data-theme="synthwave"] {
+    --bg-color: #0f051d;
+    --panel-bg: rgba(30, 15, 50, 0.88);
+    --blue-neon: #00f0ff;
+    --pink-neon: #ff007f;
+    --text-main: #ffffff;
+    --text-sub: #c3aed6;
+    --card-border: rgba(255, 0, 127, 0.25);
+}
+
+/* Thème 4 : Gold Shonen (Dragon Ball / Saint Seiya) */
+[data-theme="gold-shonen"] {
+    --bg-color: #0d0a03;
+    --panel-bg: rgba(30, 24, 10, 0.88);
+    --blue-neon: #ffb703;
+    --pink-neon: #fb8500;
+    --text-main: #ffffff;
+    --text-sub: #d4c5a9;
+    --card-border: rgba(255, 183, 3, 0.25);
+}
+
+
 /* --- CONFIGURATION GLOBALE --- */
 * {
     margin: 0;
@@ -8,19 +57,19 @@
 
 /* --- STYLE DU FOND ANIMÉ --- */
 body {
-    background-color: #0d0e12;
-    /* Opacité diminuée pour bien voir le Mont Fuji */
+    background-color: var(--bg-color);
     background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.45), rgba(13, 14, 18, 0.65)), url('images/fuji.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    color: #f5f6fa;
+    color: var(--text-main);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Conteneur des éléments qui bougent */
@@ -74,22 +123,21 @@ body {
     left: 0;
     width: 100%;
     height: 35vh;
-    background: linear-gradient(to top, rgba(255, 71, 87, 0.05), rgba(0,0,0,0));
+    background: linear-gradient(to top, var(--pink-neon), transparent);
+    opacity: 0.15;
     animation: pulseMist 8s ease-in-out infinite alternate;
 }
 
 /* --- LES ANIMATIONS (KEYFRAMES) --- */
 
-/* Animation de déplacement horizontal des nuages */
 @keyframes drift {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100vw); }
 }
 
-/* Animation de respiration de la brume */
 @keyframes pulseMist {
-    0% { opacity: 0.3; transform: scaleY(0.9); }
-    100% { opacity: 0.7; transform: scaleY(1.1); }
+    0% { opacity: 0.1; transform: scaleY(0.9); }
+    100% { opacity: 0.25; transform: scaleY(1.1); }
 }
 
 /* Ambiance lumineuse en arrière-plan */
@@ -100,9 +148,11 @@ body {
     transform: translateX(-50%);
     width: 600px;
     height: 300px;
-    background: radial-gradient(circle, rgba(255, 71, 87, 0.15) 0%, rgba(0,0,0,0) 70%);
+    background: radial-gradient(circle, var(--blue-neon) 0%, rgba(0,0,0,0) 70%);
+    opacity: 0.2;
     pointer-events: none;
     z-index: 0;
+    transition: background 0.4s ease;
 }
 
 /* --- HEADER / HERO SECTION --- */
@@ -120,9 +170,10 @@ body {
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 2px;
-    color: #ff4757;
-    border: 1px solid rgba(255, 71, 87, 0.3);
+    color: var(--blue-neon);
+    border: 1px solid var(--blue-neon);
     margin-bottom: 15px;
+    transition: all 0.4s ease;
 }
 
 .hero-section h1 {
@@ -130,210 +181,33 @@ body {
     font-weight: 800;
     margin-bottom: 10px;
     letter-spacing: -1px;
-    /* Ombre ajoutée pour détacher le titre du fond */
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 .hero-section h1 span {
-    background: linear-gradient(45deg, #ff4757, #ff6b81);
+    background: linear-gradient(45deg, var(--blue-neon), var(--pink-neon));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transition: all 0.4s ease;
 }
 
 .hero-section p {
-    color: #f5f6fa; /* Éclairci pour compenser le fond */
+    color: var(--text-sub);
     font-size: 1.1rem;
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
-    /* Ombre ajoutée pour une lisibilité parfaite */
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    transition: color 0.4s ease;
 }
 
-/* --- CONTENEUR DES CARTES --- */
-.hub-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
-    z-index: 1;
-}
-
-/* --- LE STYLE DES CARTES --- */
-.card {
-    background-color: #161822;
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.4s ease, 
-                border-color 0.4s ease;
-}
-
-.card-image {
-    height: 160px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-end;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-}
-
-/* Couleurs personnalisées pour chaque catégorie */
-.card-character .card-image {
-    background: linear-gradient(135deg, #ff4757, #9b1c26);
-}
-.card-opening .card-image {
-    background: linear-gradient(135deg, #2e90ff, #1c529b);
-}
-.card-genre .card-image {
-    background: linear-gradient(135deg, #2ed573, #1b7a42);
-}
-
-.category-tag {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.card-content {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    background: linear-gradient(to bottom, #161822, #12131a);
-}
-
-.card-content h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #ffffff;
-    transition: color 0.3s ease;
-}
-
-.card-content p {
-    color: #747d8c;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-}
-
-.card-action {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    transition: gap 0.3s ease;
-}
-
-/* --- ANIMATIONS AU SURVOL (HOVER) --- */
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.card-character:hover { border-color: rgba(255, 71, 87, 0.4); }
-.card-opening:hover { border-color: rgba(46, 144, 255, 0.4); }
-.card-genre:hover { border-color: rgba(46, 213, 115, 0.4); }
-
-.card:hover .card-content h3 { color: #ffffff; }
-.card-character:hover .card-content h3 { color: #ff4757; }
-.card-opening:hover .card-content h3 { color: #2e90ff; }
-.card-genre:hover .card-content h3 { color: #2ed573; }
-
-.card:hover .card-action {
-    text-decoration: underline;
-}
-
-/* --- FOOTER --- */
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: #57606f;
-    font-size: 0.85rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
-    margin-top: 40px;
-    z-index: 1;
-}
-
-/* --- RESPONSIVE MOBILE --- */
-@media (max-width: 600px) {
-    .hero-section h1 { font-size: 2rem; }
-    .hero-section p { font-size: 0.95rem; }
-    .hub-container { grid-template-columns: 1fr; gap: 20px; }
-}
-
-/* ==============================================
-   SYSTÈME DE THÈMES DYNAMIQUES
-============================================== */
-
-/* Thème 1 : Cyber Otaku (Par défaut) */
-:root, [data-theme="cyber"] {
-    --bg-color: #06070c;
-    --panel-bg: rgba(18, 20, 32, 0.85);
-    --blue-neon: #2e90ff;
-    --pink-neon: #ff4757;
-    --text-main: #ffffff;
-    --text-sub: #a4b0be;
-    --card-border: rgba(46, 144, 255, 0.2);
-}
-
-/* Thème 2 : Dark Fantasy (Berserk / Blood) */
-[data-theme="dark-fantasy"] {
-    --bg-color: #0a0404;
-    --panel-bg: rgba(28, 10, 10, 0.88);
-    --blue-neon: #ff3333;
-    --pink-neon: #800000;
-    --text-main: #f5f5f5;
-    --text-sub: #b38f8f;
-    --card-border: rgba(255, 51, 51, 0.25);
-}
-
-/* Thème 3 : Synthwave Neon (Cyberpunk / Edgerunners) */
-[data-theme="synthwave"] {
-    --bg-color: #0f051d;
-    --panel-bg: rgba(30, 15, 50, 0.88);
-    --blue-neon: #00f0ff;
-    --pink-neon: #ff007f;
-    --text-main: #ffffff;
-    --text-sub: #c3aed6;
-    --card-border: rgba(255, 0, 127, 0.25);
-}
-
-/* Thème 4 : Gold Shonen (Dragon Ball / Saint Seiya) */
-[data-theme="gold-shonen"] {
-    --bg-color: #0d0a03;
-    --panel-bg: rgba(30, 24, 10, 0.88);
-    --blue-neon: #ffb703;
-    --pink-neon: #fb8500;
-    --text-main: #ffffff;
-    --text-sub: #d4c5a9;
-    --card-border: rgba(255, 183, 3, 0.25);
-}
-
-/* Style de la barre de boutons de thèmes */
+/* --- BARRE DE BOUTONS DE THÈME --- */
 .theme-switcher {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 25px;
     flex-wrap: wrap;
 }
 
@@ -341,7 +215,7 @@ footer {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text-main);
-    padding: 8px 16px;
+    padding: 8px 18px;
     border-radius: 30px;
     font-family: 'Poppins', sans-serif;
     font-size: 0.85rem;
@@ -362,4 +236,138 @@ footer {
     border-color: var(--blue-neon);
     box-shadow: 0 0 15px var(--blue-neon);
     font-weight: 800;
+}
+
+/* --- CONTENEUR DES CARTES --- */
+.hub-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* --- LE STYLE DES CARTES --- */
+.card {
+    background-color: var(--panel-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease,
+                background-color 0.4s ease;
+}
+
+.card-image {
+    height: 160px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Couleurs dynamiques pour chaque carte */
+.card-character .card-image {
+    background: linear-gradient(135deg, var(--pink-neon), rgba(0,0,0,0.6));
+}
+.card-opening .card-image {
+    background: linear-gradient(135deg, var(--blue-neon), rgba(0,0,0,0.6));
+}
+.card-ending .card-image {
+    background: linear-gradient(135deg, var(--pink-neon), rgba(0,0,0,0.6));
+}
+.card-ost .card-image {
+    background: linear-gradient(135deg, var(--blue-neon), rgba(0,0,0,0.6));
+}
+.card-roulette .card-image,
+.card-vs .card-image,
+.card-game .card-image {
+    background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));
+}
+
+.category-tag {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.card-content h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    transition: color 0.3s ease;
+}
+
+.card-content p {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    transition: color 0.4s ease;
+}
+
+.card-action {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--blue-neon);
+    display: flex;
+    align-items: center;
+    transition: gap 0.3s ease, color 0.4s ease;
+}
+
+/* --- ANIMATIONS AU SURVOL (HOVER) --- */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    border-color: var(--blue-neon);
+}
+
+.card:hover .card-action {
+    text-decoration: underline;
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--card-border);
+    margin-top: 40px;
+    z-index: 1;
+    transition: color 0.4s ease, border-color 0.4s ease;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 600px) {
+    .hero-section h1 { font-size: 2rem; }
+    .hero-section p { font-size: 0.95rem; }
+    .hub-container { grid-template-columns: 1fr; gap: 20px; }
 }
