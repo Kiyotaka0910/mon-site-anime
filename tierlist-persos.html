@@ -48,6 +48,30 @@
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
         }
 
+        /* Bouton Télécharger */
+        .download-btn {
+            background: linear-gradient(135deg, #2ed573, #1e90ff);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 213, 115, 0.5);
+        }
+
         /* Titres */
         .tierlist-container h2 {
             font-size: 2.2rem;
@@ -59,7 +83,7 @@
 
         .tierlist-container p {
             color: #a4b0be;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 1rem;
             text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
@@ -92,7 +116,7 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Étiquettes de rangs avec lettres blanches et dégradés profonds */
+        /* Étiquettes de rangs */
         .tier-label {
             width: 95px;
             min-width: 95px;
@@ -123,7 +147,7 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
-        /* Zone de réserve des personnages (Style Translucide) */
+        /* Zone de réserve des personnages */
         .character-bank {
             margin-top: 40px;
             background: rgba(22, 24, 34, 0.75);
@@ -198,7 +222,7 @@
 
         <button onclick="downloadTierList()" class="download-btn">📸 Télécharger ma Tier List</button>
 
-        <div class="tier-table">
+        <div class="tier-table" id="tierTable">
             <div class="tier-row">
                 <div class="tier-label tier-s">S</div>
                 <div class="tier-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
@@ -374,7 +398,7 @@
         };
 
         const bankZone = document.getElementById('bankZone');
-        const totalCharacters = 500; // Remis à 500 pile suite à la correction !
+        const totalCharacters = 500;
         const imageExtension = 'jpg'; 
 
         // Génération automatique des 500 emplacements
@@ -428,6 +452,21 @@
             if (targetZone.classList.contains('tier-zone') || targetZone.classList.contains('bank-zone')) {
                 targetZone.appendChild(draggedElement);
             }
+        }
+
+        // --- FONCTION DE TÉLÉCHARGEMENT EN IMAGE ---
+        function downloadTierList() {
+            const tierTable = document.getElementById('tierTable');
+            
+            html2canvas(tierTable, {
+                backgroundColor: '#141621',
+                scale: 2
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'ma-tierlist-personnages.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
     </script>
 
