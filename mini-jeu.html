@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-Jeu Otaku - Mode Infini</title>
+    <title>Mini-Jeu Otaku - Mode Hardcore Infini</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,6 +11,7 @@
             --panel-bg: rgba(18, 20, 32, 0.85);
             --blue-neon: #2e90ff;
             --pink-neon: #ff4757;
+            --purple-neon: #a55eea;
             --green-neon: #2ed573;
             --text-main: #ffffff;
             --text-sub: #a4b0be;
@@ -26,8 +27,8 @@
             min-height: 100vh;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 20% 20%, rgba(46, 144, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(255, 71, 87, 0.15) 0%, transparent 40%);
+                radial-gradient(circle at 20% 20%, rgba(165, 94, 234, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 71, 87, 0.18) 0%, transparent 40%);
         }
 
         .container {
@@ -54,17 +55,17 @@
         }
 
         .back-button:hover {
-            background: var(--blue-neon);
-            border-color: var(--blue-neon);
+            background: var(--purple-neon);
+            border-color: var(--purple-neon);
             transform: translateX(-5px);
-            box-shadow: 0 5px 20px rgba(46, 144, 255, 0.4);
+            box-shadow: 0 5px 20px rgba(165, 94, 234, 0.4);
         }
 
         h1 {
             font-size: 3rem;
             font-weight: 900;
             margin: 0 0 8px 0;
-            background: linear-gradient(135deg, var(--blue-neon), #ffffff, var(--pink-neon));
+            background: linear-gradient(135deg, var(--purple-neon), #ffffff, var(--pink-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -91,7 +92,7 @@
 
         .stat-val {
             font-weight: 900;
-            color: var(--blue-neon);
+            color: var(--purple-neon);
         }
 
         /* Carte de Jeu */
@@ -113,13 +114,13 @@
             letter-spacing: 1.5px;
             padding: 6px 16px;
             border-radius: 20px;
-            background: rgba(46, 144, 255, 0.2);
-            color: var(--blue-neon);
+            background: rgba(165, 94, 234, 0.2);
+            color: var(--purple-neon);
             margin-bottom: 20px;
         }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 30px;
             line-height: 1.4;
@@ -147,7 +148,7 @@
             padding: 16px;
             border-radius: 16px;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -155,8 +156,8 @@
         }
 
         .opt-btn:hover {
-            background: rgba(46, 144, 255, 0.2);
-            border-color: var(--blue-neon);
+            background: rgba(165, 94, 234, 0.2);
+            border-color: var(--purple-neon);
             transform: translateY(-3px);
         }
 
@@ -178,17 +179,17 @@
     <div class="container">
         <a href="index.html" class="back-button">← Retour à l'accueil</a>
 
-        <h1>Devine l'Animé ! 🎮</h1>
-        <p class="subtitle">Mode Infini ♾️ — Teste tes limites Otaku sans interruption !</p>
+        <h1>Devine l'Animé ! 🧠</h1>
+        <p class="subtitle">Mode Hardcore Infini 💀 — Réservé aux vrais experts du genre !</p>
 
         <div class="stats-bar">
             <div>Score : <span id="scoreVal" class="stat-val">0</span></div>
-            <div>Questions jouées : <span id="qCount" class="stat-val">0</span></div>
+            <div>Questions : <span id="qCount" class="stat-val">0</span></div>
             <div>Série : <span id="streakVal" class="stat-val">0 🔥</span></div>
         </div>
 
         <div class="quiz-card" id="quizCard">
-            <span id="qCategory" class="question-category">Émojis</span>
+            <span id="qCategory" class="question-category">Chargement...</span>
             <div id="qText" class="question-text">Chargement de la question...</div>
 
             <div class="options-grid" id="optionsGrid">
@@ -198,97 +199,97 @@
 
     <script>
         /* ==============================================
-           BANQUE DE QUESTIONS OTAKU
+           BANQUE DE QUESTIONS OTAKU - NIVEAU EXPERT / HARDCORE
         ============================================== */
         const questionsDatabase = [
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 📓 🖊️ 👁️ 🍎",
-                options: ["Death Note", "Jujutsu Kaisen", "Bleach", "Code Geass"],
+                type: "Lore Profond 📚",
+                question: "Dans Hunter x Hunter, quel est le numéro du badge de Hisoka lors du 287ème examen de Hunter ?",
+                options: ["N° 44", "N° 191", "N° 403", "N° 99"],
                 answer: 0
             },
             {
-                type: "Citation 💬",
-                question: "« S'il n'y a plus de place en enfer, les démons marcheront sur terre. »",
-                options: ["Chainsaw Man", "Berserk", "Tokyo Ghoul", "Demon Slayer"],
+                type: "Détail Technique ⚡",
+                question: "Dans Jujutsu Kaisen, à quelle vitesse la technique de projection de Naobito Zen'in découpe-t-elle une seconde ?",
+                options: ["12 images/sec", "24 images/sec", "60 images/sec", "120 images/sec"],
                 answer: 1
             },
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 🏴‍☠️ 👒 🍖 🌊",
-                options: ["Naruto", "One Piece", "Hunter x Hunter", "Fairy Tail"],
+                type: "Lore Obscur 💀",
+                question: "Dans Attack on Titan, qui était le détenteur du Titan Assaillant juste avant Grisha Jaeger ?",
+                options: ["Ymir Fritz", "Eren Kruger", "Uri Reiss", "Xaver"],
                 answer: 1
             },
             {
-                type: "Indice 🔍",
-                question: "L'histoire tourne autour d'un alchimiste qui cherche la Pierre Philosophale.",
-                options: ["Steins;Gate", "Soul Eater", "Fullmetal Alchemist", "Black Clover"],
+                type: "Steins;Gate ⏳",
+                question: "Quelle est la valeur exacte du Divergence Meter nécessaire pour atteindre la ligne d'univers Steins Gate ?",
+                options: ["1.048596%", "0.571024%", "1.130426%", "0.000000%"],
+                answer: 0
+            },
+            {
+                type: "Bleach 🗡️",
+                question: "Quel numéro prend l'Espada Yammy Llargo lorsque sa forme 'Ira' est complètement libérée ?",
+                options: ["N° 10", "N° 1", "N° 0", "N° 9"],
                 answer: 2
             },
             {
-                type: "Citation 💬",
-                question: "« Je serai le dieu de ce nouveau monde ! »",
-                options: ["Lelouch (Code Geass)", "Light Yagami (Death Note)", "Aizen (Bleach)", "Sukuna (JJK)"],
+                type: "One Piece 🏴‍☠️",
+                question: "Comment s'appelle le sabre de classe Meito (Meiyo) confié à Zoro par Hiyori au pays de Wano ?",
+                options: ["Shusui", "Enma", "Wado Ichimonji", "Sandai Kitetsu"],
                 answer: 1
             },
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 🧱 ⚔️ 🛡️ 🩸 👑",
-                options: ["Vinland Saga", "Attack on Titan", "Kingdom", "Overlord"],
-                answer: 1
+                type: "Death Note 📓",
+                question: "Quel est le nom du Shinigami qui s'est sacrifié par amour pour sauver Misa Aane ?",
+                options: ["Gelus (Jealous)", "Rem", "Sidoh", "Midora"],
+                answer: 0
             },
             {
-                type: "Indice 🔍",
-                question: "Un lycéen se fait renverser par un camion et se réincarne dans un monde fantasy.",
-                options: ["Re:Zero", "Konosuba", "Solo Leveling", "Isekai classique"],
+                type: "Fullmetal Alchemist ⚗️",
+                question: "Quel nom portait 'Le Père' lorsqu'il était retenu dans sa fiole à Cserkess ?",
+                options: ["Homunculus", "Enfant de la fiole", "Nouveau Dieu", "Dwarf in the Flask (Homunculus)"],
                 answer: 3
             },
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 👁️ 🟣 🖐️ 🏫",
-                options: ["Jujutsu Kaisen", "Mob Psycho 100", "My Hero Academia", "Parasyte"],
-                answer: 0
+                type: "Chainsaw Man 🪚",
+                question: "Quel est le nom du démon qui contracte avec Aki Hayakawa en échange d'une partie de son espérance de vie ?",
+                options: ["Démon Renard", "Démon Malédiction", "Démon Futur", "Démon Flingue"],
+                answer: 2
             },
             {
-                type: "Citation 💬",
-                question: "« Dans ce monde, ceux qui enfreignent les règles sont des déchets, mais ceux qui abandonnent leurs amis sont pires que ça. »",
-                options: ["Naruto", "Dragon Ball", "Hunter x Hunter", "Bleach"],
-                answer: 0
-            },
-            {
-                type: "Indice 🔍",
-                question: "Quel animé possède l'opening ultra-célèbre 'Unravel' ?",
-                options: ["Parasyte", "Tokyo Ghoul", "Psycho-Pass", "Another"],
+                type: "Chiffre Exact 🔢",
+                question: "Dans la Saison 1 de Re:Zero, combien de fois Subaru meurt-il au total ?",
+                options: ["7 fois", "11 fois", "15 fois", "18 fois"],
                 answer: 1
             },
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 🗡️ 🐗 ⚡ 🎋 👺",
-                options: ["Demon Slayer", "Inuyasha", "Dororo", "Gintama"],
+                type: "Demon Slayer 👺",
+                question: "Quel est le nom du créateur du premier Souffle (Souffle du Soleil / Hinokami Kagura) ?",
+                options: ["Yoriichi Tsugikuni", "Michikatsu Tsugikuni", "Sumiyoshi", "Tanjuro Kamado"],
                 answer: 0
             },
             {
-                type: "Citation 💬",
-                question: "« Bankai ! »",
-                options: ["One Piece", "Bleach", "Naruto", "Dragon Ball Z"],
+                type: "Naruto Shippuden 🌀",
+                question: "Quel est le vrai nom du Démon à Quatre Queues (Yonbi) scellé dans Rôshi ?",
+                options: ["Isobu", "Son Gokū", "Kokuō", "Saiken"],
                 answer: 1
             },
             {
-                type: "Émojis 🧩",
-                question: "Devine l'animé : 👨‍👩‍👧 🕵️‍♂️ 👩‍🍳 🥜",
-                options: ["Spy x Family", "Kaguya-sama", "Clannad", "Toradora"],
-                answer: 0
-            },
-            {
-                type: "Indice 🔍",
-                question: "Un livre magique qui permet d'invoquer un grimoire à 5 trèfles.",
-                options: ["Fairy Tail", "Black Clover", "Magi", "Radiant"],
+                type: "Code Geass 👁️",
+                question: "Quel est le nom du mécha personnalisé piloted par Suzaku Kururugi ?",
+                options: ["Gawain", "Lancelot", "Guren Mk-II", "Shen Hu"],
                 answer: 1
             },
             {
-                type: "Citation 💬",
-                question: "« Plus Ultra ! »",
-                options: ["One Punch Man", "My Hero Academia", "Dragon Ball Super", "Solo Leveling"],
+                type: "Berserk 🗡️",
+                question: "Quel est le nom de la troupe de mercenaires dirigée par Griffith avant l'Éclipse ?",
+                options: ["La Brigade des Ombres", "La Troupe du Falcon (Bande du Griffon)", "Les Chevaliers Noirs", "La Lame de Dieu"],
+                answer: 1
+            },
+            {
+                type: "JoJo's Bizarre Adventure ⭐️",
+                question: "Dans la partie 5 (Golden Wind), quel est le nom du Stand de Bruno Bucciarati ?",
+                options: ["Gold Experience", "Sticky Fingers", "Moody Blues", "Purple Haze"],
                 answer: 1
             }
         ];
@@ -327,7 +328,7 @@
             } catch(e){}
         }
 
-        // Récupère une question en évitant les répétitions
+        // Tirage aléatoire sans répétition immédiate
         function getNextQuestion() {
             if (pool.length === 0) {
                 pool = [...questionsDatabase].sort(() => Math.random() - 0.5);
@@ -363,7 +364,7 @@
 
             if (selectedIdx === currentQuestion.answer) {
                 btnElement.classList.add("correct");
-                score += 100 + (streak * 20);
+                score += 150 + (streak * 30); // Plus de points en mode Hardcore !
                 streak++;
                 playSound(true);
             } else {
@@ -377,7 +378,7 @@
 
             setTimeout(() => {
                 loadQuestion();
-            }, 1000);
+            }, 1200);
         }
 
         function updateStats() {
@@ -386,7 +387,7 @@
             document.getElementById("streakVal").innerText = `${streak} 🔥`;
         }
 
-        // Lancement initial du mode infini
+        // Lancement initial
         loadQuestion();
     </script>
 </body>
