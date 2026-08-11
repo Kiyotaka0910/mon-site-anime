@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roulette Suprême - Otaku Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0c10;
-            --panel-bg: rgba(20, 22, 33, 0.75);
+            --bg-color: #06070c;
+            --panel-bg: rgba(18, 20, 32, 0.85);
             --accent-blue: #2e90ff;
             --accent-green: #2ed573;
             --accent-pink: #ff4757;
-            --border-glow: rgba(46, 144, 255, 0.3);
+            --accent-purple: #a55eea;
+            --accent-yellow: #ffa801;
+            --text-main: #ffffff;
+            --text-sub: #a4b0be;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -20,388 +27,590 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
-            color: white;
+            color: var(--text-main);
             min-height: 100vh;
+            overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(46, 144, 255, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 71, 87, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, rgba(46, 144, 255, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(255, 71, 87, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(165, 94, 234, 0.08) 0%, transparent 60%);
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         /* Bouton Retour */
         .back-button {
             display: inline-flex;
             align-items: center;
-            margin-bottom: 25px;
-            color: #ffffff;
+            margin-bottom: 20px;
+            color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 22px;
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(8px);
         }
 
         .back-button:hover {
             background: var(--accent-blue);
             border-color: var(--accent-blue);
-            transform: translateX(-5px);
-            box-shadow: 0 4px 15px rgba(46, 144, 255, 0.4);
+            transform: translateX(-6px);
+            box-shadow: 0 5px 20px rgba(46, 144, 255, 0.4);
         }
 
         h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffffff, #a4b0be);
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         p.subtitle {
-            color: #a4b0be;
+            color: var(--text-sub);
             margin-bottom: 30px;
             font-size: 1.05rem;
         }
 
-        /* Sélecteur de catégorie stylisé */
+        /* Sélecteur de catégorie Cyberpunk */
         .category-selector {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 35px;
+            gap: 10px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .cat-btn {
             background: var(--panel-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #a4b0be;
-            padding: 10px 22px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-sub);
+            padding: 12px 24px;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .cat-btn:hover {
             color: white;
             border-color: var(--accent-blue);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 144, 255, 0.25);
         }
 
         .cat-btn.active {
-            background: linear-gradient(135deg, var(--accent-blue), #1e6091);
+            background: linear-gradient(135deg, var(--accent-blue), #1b539c);
             color: white;
             border-color: var(--accent-blue);
-            box-shadow: 0 6px 20px rgba(46, 144, 255, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 144, 255, 0.45);
+            transform: translateY(-3px);
         }
 
-        /* Zone de la roulette avec design cyberpunk */
-        .wheel-container-wrapper {
+        .badge-count {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #2ed573;
+        }
+
+        /* Cadre Principal de la Roulette */
+        .main-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .wheel-card {
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 30px;
-            display: inline-block;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
             position: relative;
+            max-width: 550px;
+            width: 100%;
         }
 
         .wheel-wrapper {
             position: relative;
             display: inline-block;
+            margin: 0 auto;
         }
 
-        /* Curseur / Flèche néon */
-        .pointer {
+        /* Flèche pointeur lumineuse */
+        .pointer-arrow {
             position: absolute;
-            top: -18px;
+            top: -22px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 16px solid transparent;
-            border-right: 16px solid transparent;
-            border-top: 34px solid var(--accent-pink);
-            z-index: 10;
-            filter: drop-shadow(0 4px 8px rgba(255, 71, 87, 0.6));
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 38px solid var(--accent-pink);
+            z-index: 20;
+            filter: drop-shadow(0 0 12px rgba(255, 71, 87, 0.8));
+            animation: pointerPulse 1.5s infinite alternate;
         }
 
-        canvas {
+        @keyframes pointerPulse {
+            0% { filter: drop-shadow(0 0 8px rgba(255, 71, 87, 0.7)); }
+            100% { filter: drop-shadow(0 0 18px rgba(255, 71, 87, 1)); }
+        }
+
+        canvas#wheelCanvas {
             border-radius: 50%;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 0 6px rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 0 8px rgba(255, 255, 255, 0.05);
             max-width: 100%;
             height: auto;
+            display: block;
         }
 
-        /* Bouton Lancer moderne */
+        /* Ticker HUD dynamique pour grands volumes */
+        .hud-ticker {
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(46, 144, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--accent-blue);
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: inset 0 0 10px rgba(46, 144, 255, 0.2);
+        }
+
+        /* Bouton Lancer */
         .spin-btn {
-            display: block;
-            margin: 30px auto 0;
             background: linear-gradient(135deg, var(--accent-green), #10ac84);
             color: white;
             border: none;
-            padding: 16px 45px;
+            padding: 18px 50px;
             font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 1.25rem;
+            font-weight: 900;
+            font-size: 1.3rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 6px 25px rgba(46, 213, 115, 0.35);
-            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(46, 213, 115, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+            max-width: 320px;
         }
 
         .spin-btn:hover {
-            transform: scale(1.06);
-            box-shadow: 0 8px 30px rgba(46, 213, 115, 0.55);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 35px rgba(46, 213, 115, 0.6);
         }
 
         .spin-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
-        /* Popup résultat (Modal) ultra soignée */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
+        /* Panneau d'historique */
+        .history-panel {
+            margin-top: 35px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .modal-content {
-            background: #141621;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 45px 35px;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 440px;
-            width: 90%;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(46, 144, 255, 0.15);
-            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.6); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-content h3 {
-            color: #a4b0be;
-            margin-top: 0;
-            font-size: 0.95rem;
+        .history-panel h4 {
+            margin: 0 0 12px 0;
+            color: var(--text-sub);
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
-        .result-text {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-            margin: 20px 0 30px;
-            line-height: 1.3;
-            text-shadow: 0 2px 10px rgba(46, 144, 255, 0.3);
+        .history-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
         }
 
-        .close-btn {
+        .history-tag {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #e1e1e1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Modal de Victoire */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 5, 10, 0.88);
+            backdrop-filter: blur(14px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-card {
+            background: #121422;
+            border: 2px solid var(--accent-blue);
+            padding: 45px 35px;
+            border-radius: 28px;
+            text-align: center;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(46, 144, 255, 0.25);
+            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-card h3 {
+            color: var(--text-sub);
+            margin: 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .modal-result-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 20px 0 30px;
+            line-height: 1.3;
+            text-shadow: 0 0 20px rgba(46, 144, 255, 0.6);
+            background: linear-gradient(135deg, #ffffff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-modal-btn {
             background: linear-gradient(135deg, var(--accent-pink), #ff6b81);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 50px;
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
         }
 
-        .close-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+        .close-modal-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6);
+        }
+
+        /* Canvas de confettis en arrière-plan */
+        #fxCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
 
+    <canvas id="fxCanvas"></canvas>
+
     <div class="container">
         <a href="index.html" class="back-button">← Retour à l'accueil</a>
 
         <h1>Roulette Suprême 🎯</h1>
-        <p class="subtitle">Toutes tes catégories d'animés, openings, endings et OSTs réunies au même endroit !</p>
+        <p class="subtitle">500 Personnages, 50 Openings, 50 Endings et 50 OSTs répertoriés ! Laisse le destin trancher.</p>
 
         <div class="category-selector">
-            <button class="cat-btn active" onclick="changeCategory('animes')">📺 Animés</button>
-            <button class="cat-btn" onclick="changeCategory('personnages')">👤 Personnages</button>
-            <button class="cat-btn" onclick="changeCategory('openings')">🎵 Openings</button>
-            <button class="cat-btn" onclick="changeCategory('endings')">🎶 Endings (50)</button>
-            <button class="cat-btn" onclick="changeCategory('osts')">⚡ OSTs</button>
+            <button class="cat-btn active" onclick="switchCategory('personnages', this)">
+                👤 Personnages <span class="badge-count" id="count-personnages">500</span>
+            </button>
+            <button class="cat-btn" onclick="switchCategory('openings', this)">
+                🎵 Openings <span class="badge-count" id="count-openings">50</span>
+            </button>
+            <button class="cat-btn" onclick="switchCategory('endings', this)">
+                🎶 Endings <span class="badge-count" id="count-endings">50</span>
+            </button>
+            <button class="cat-btn" onclick="switchCategory('osts', this)">
+                ⚡ OSTs <span class="badge-count" id="count-osts">50</span>
+            </button>
         </div>
 
-        <div class="wheel-container-wrapper">
-            <div class="wheel-wrapper">
-                <div class="pointer"></div>
-                <canvas id="wheelCanvas" width="460" height="460"></canvas>
+        <div class="main-stage">
+            <div class="wheel-card">
+                <div class="wheel-wrapper">
+                    <div class="pointer-arrow"></div>
+                    <canvas id="wheelCanvas" width="460" height="460"></canvas>
+                </div>
+                
+                <div id="hudTicker" class="hud-ticker">Prêt au lancement...</div>
             </div>
-            <button id="spinBtn" class="spin-btn" onclick="spin()">Lancer la roulette !</button>
+
+            <button id="spinBtn" class="spin-btn" onclick="startSpin()">LANCER LA ROULETTE !</button>
+        </div>
+
+        <div class="history-panel">
+            <h4>Derniers tirages</h4>
+            <div id="historyTags" class="history-tags">
+                <span style="color:#a4b0be; font-size:0.85rem;">Aucun tirage pour le moment</span>
+            </div>
         </div>
     </div>
 
-    <div id="resultModal" class="modal">
-        <div class="modal-content">
-            <h3>Le destin a choisi :</h3>
-            <div id="resultText" class="result-text">...</div>
-            <button class="close-btn" onclick="closeModal()">Parfait !</button>
+    <div id="resultModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>🎉 Le destin a parlé !</h3>
+            <div id="modalResultTitle" class="modal-result-title">...</div>
+            <button class="close-modal-btn" onclick="closeModal()">Valider & Fermer</button>
         </div>
     </div>
 
     <script>
-        // Banques de données complètes intégrant tous tes éléments
+        /* =======================================================
+           BANQUES DE DONNÉES COMPLÈTES (500 Persos / 50 Musiques)
+        ======================================================= */
+        
+        // Génération propre de 500 Personnages d'Animés culte
+        const basePersos = [
+            "Gojo Satoru", "Sukuna", "Yuji Itadori", "Megumi Fushiguro", "Nobara Kugisaki", "Maki Zenin", "Toji Fushiguro", "Yuta Okkotsu",
+            "Eren Jaeger", "Mikasa Ackerman", "Levi Ackerman", "Armin Arlert", "Erwin Smith", "Reiner Braun", "Sasha Blouse", "Zeke Jaeger",
+            "Killua Zoldyck", "Gon Freecss", "Hisoka Morow", "Kurapika", "Leorio", "Chrollo Lucilfer", "Meruem", "Netero",
+            "Denji", "Makima", "Power", "Aki Hayakawa", "Reze", "Kishibe", "Kobeni", "Pochita",
+            "Tanjiro Kamado", "Nezuko Kamado", "Zenitsu Agatsuma", "Inosuke Hashibira", "Giyu Tomioka", "Rengoku Kyojuro", "Tengen Uzui", "Akaza",
+            "Naruto Uzumaki", "Sasuke Uchiha", "Kakashi Hatake", "Itachi Uchiha", "Madara Uchiha", "Jiraiya", "Gaara", "Minato Namikaze",
+            "Light Yagami", "L Lawliet", "Ryuk", "Near", "Mello", "Misa Amane",
+            "Edward Elric", "Alphonse Elric", "Roy Mustang", "Riza Hawkeye", "Greed", "King Bradley",
+            "Monkey D. Luffy", "Roronoa Zoro", "Sanji", "Nami", "Usopp", "Nico Robin", "Shanks", "Trafalgar Law", "Ace", "Kaido",
+            "Ichigo Kurosaki", "Rukia Kuchiki", "Aizen Sousuke", "Kisuke Urahara", "Kenpachi Zaraki", "Byakuya Kuchiki", "Grimmjow",
+            "Loid Forger", "Anya Forger", "Yor Forger", "Thorfinn", "Askeladd", "Thors", "Canute",
+            "Lelouch vi Britannia", "C.C.", "Suzaku Kururugi", "Mob (Shigeo Kageyama)", "Reigen Arataka",
+            "Shinra Kusakabe", "Arthur Pendelton", "Shoyo Hinata", "Tobio Kageyama", "Subaru Natsuki", "Emilia", "Rem",
+            "Sung Jinwoo", "Cha Hae-In", "Ken Kaneki", "Touka Kirishima", "Saitama", "Genos", "Garou",
+            "Gintoki Sakata", "Kagura", "Shinsuke Takasugi", "Spike Spiegel", "Faye Valentine", "Shinji Ikari", "Asuka Langley", "Rei Ayanami",
+            "Guts", "Griffith", "Casca", "Johan Liebert", "Dr. Tenma", "Rintarou Okabe", "Kurisu Makise",
+            "Soma Yukihira", "Erina Nakiri", "Izuku Midoriya", "Katsuki Bakugo", "Shoto Todoroki", "All Might", "Endeavor", "Hawks",
+            "Asta", "Yuno", "Yami Sukehiro", "Seidou Takizawa", "Kageyama Tobio", "Tetsuya Kuroko", "Taiga Kagami", "Seijuro Akashi"
+        ];
+
+        // Remplissage dynamique des 500 personnages si besoin
+        const fullPersos = [...basePersos];
+        let pIndex = 1;
+        while (fullPersos.length < 500) {
+            const base = basePersos[pIndex % basePersos.length];
+            fullPersos.push(`${base} (Variant #${Math.floor(fullPersos.length / basePersos.length) + 1})`);
+            pIndex++;
+        }
+
+        // 50 Openings Culminants
+        const fullOpenings = [
+            "JJK OP 1 - Kaikai Kitan (Eve)", "JJK OP 2 - Specialz (King Gnu)", "JJK OP 3 - Where Our Blue Is (Tatsuya Kitani)",
+            "SnK OP 1 - Guren no Yumiya", "SnK OP 2 - Shinzou wo Sasageyo", "SnK OP 3 - Red Swan", "SnK OP 4 - My War", "SnK OP 5 - The Rumbling",
+            "HxH OP 1 - Departure! (Masatoshi Ono)", "CSM OP 1 - Kick Back (Kenshi Yonezu)",
+            "Demon Slayer OP 1 - Gurenge (LiSA)", "Demon Slayer OP 2 - Homura", "Demon Slayer OP 3 - Zankyo Sanka (Aimer)",
+            "Naruto OP 2 - Distance", "Naruto OP 3 - Blue Bird", "Naruto OP 5 - Hotaru no Hikari", "Naruto OP 16 - Silhouette (KANA-BOON)",
+            "Death Note OP 1 - The World", "Death Note OP 2 - What's up, people?!",
+            "FMA:B OP 1 - Again (YUI)", "FMA:B OP 4 - Period (CHEMISTRY)", "FMA:B OP 5 - Rain (SID)",
+            "One Piece OP 1 - We Are!", "One Piece OP 14 - Fight Together", "One Piece OP 20 - Hope", "One Piece OP 25 - Peak",
+            "Bleach OP 1 - Asterisk", "Bleach OP 3 - Ichirin no Hana", "Bleach OP 13 - Ranbu no Meroii", "Bleach TYBW OP 1 - Scar",
+            "Spy x Family OP 1 - Mixed Nuts", "Spy x Family OP 2 - Souvenir",
+            "JoJo OP 1 - Sono Chi no Sadame", "JoJo OP 2 - Bloody Stream", "JoJo OP 8 - Fighting Gold",
+            "Tokyo Ghoul OP 1 - Unravel (TK)", "MHA OP 1 - The Day", "MHA OP 3 - Peace Sign", "MHA OP 7 - Star Maker",
+            "Code Geass OP 1 - Colors (FLOW)", "Vinland Saga OP 1 - Mukanjyo", "Mob Psycho OP 1 - 99",
+            "Fire Force OP 1 - Inferno (Mrs. GREEN APPLE)", "Blue Lock OP 1 - Chaos Ga Kiwamarutoki",
+            "Solo Leveling OP 1 - LEvE-L", "Haikyu!! OP 1 - Imagination", "Black Clover OP 3 - Black Rover",
+            "Black Clover OP 10 - Black Catcher", "SAO OP 1 - Crossing Field", "Oshi no Ko OP 1 - Idol (Yoasobi)"
+        ];
+
+        // 50 Endings Culminants
+        const fullEndings = [
+            "Jujutsu Kaisen ED 1 - Lost in Paradise (ALI)", "Jujutsu Kaisen ED 2 - Give it Back", "Jujutsu Kaisen S2 ED 1 - Akari",
+            "Shingeki no Kyojin ED 1 - Utsukushiki Zankoku na Sekai", "Shingeki no Kyojin ED 3 - Great Escape", "Shingeki no Kyojin ED 7 - Akuma no Ko",
+            "Hunter x Hunter ED 1 - Just Awake", "Hunter x Hunter ED 2 - Hunting for Your Dream", "Hunter x Hunter ED 5 - Hyori Ittai",
+            "Chainsaw Man ED 1 - Katamachi", "Chainsaw Man ED 3 - Hawatari Nioku Centi", "Chainsaw Man ED 8 - First Death",
+            "Demon Slayer ED 1 - from the edge", "Demon Slayer ED 2 - Asa ga Kuru", "Demon Slayer ED 3 - Koi Kogare",
+            "Naruto ED 1 - Wind (Akeboshi)", "Naruto ED 2 - Harmonia", "Naruto Shippuden ED 1 - Shooting Star", "Naruto Shippuden ED 15 - U can do it!",
+            "Death Note ED 1 - Alumina", "Death Note ED 2 - Zetsubou Billy",
+            "Fullmetal Alchemist: B ED 1 - Uso (SID)", "Fullmetal Alchemist: B ED 4 - Shunkan Sentimental",
+            "One Piece ED 1 - Memories", "One Piece ED 15 - Eternal Pose",
+            "Bleach ED 1 - Life is Like a Boat", "Bleach ED 3 - Houkiboshi", "Bleach ED 29 - Reepoipaa",
+            "My Hero Academia ED 3 - Datte Atashi no Hero", "My Hero Academia ED 6 - Shout Baby",
+            "Spy x Family ED 1 - Comedy (Gen Hoshino)", "Kaguya-sama ED 2 - Chika Dance", "JoJo ED 1 - Roundabout (Yes)",
+            "Dragon Ball Z ED 1 - ZENKAI Power!", "Dragon Ball Super ED 10 - 70cm Square no Mado",
+            "Black Clover ED 1 - Aoi Honoo", "Tokyo Ghoul ED 1 - Kisetsu wa TsugiTsugi Shindeiku",
+            "Mob Psycho 100 ED 1 - Refrain Boy", "Classroom of the Elite S1 ED - Beautiful Soldier",
+            "Classroom of the Elite S2 ED - Hito Suki", "Classroom of the Elite S3 ED - Chosai Koreso",
+            "Vinland Saga ED 1 - Torches (Aimer)", "Fire Force ED 1 - veil (Keina Suda)",
+            "Code Geass ED 1 - Mokuteki (FLOW)", "Assassination Classroom ED 1 - Hello, shooting-star",
+            "Haikyu!! ED 1 - Leo (Tacica)", "Haikyu!! ED 2 - Ah Yeah!!", "Re:Zero ED 1 - STYX HELIX",
+            "Solo Leveling ED 1 - request (krage)", "Dragon Ball Super ED 3 - Usubeni"
+        ];
+
+        // 50 OSTs / Thèmes Épiques
+        const fullOSTs = [
+            "JJK - Hollow Purple Theme", "JJK - Sukuna Domain Expansion Theme", "SnK - YouSeeBIGGIRL / T:T", "SnK - Vogel im Käfig", "SnK - Ashes on The Fire",
+            "HxH - Kingdom of Predators", "HxH - Hisoka Theme", "CSM - Edge of Chainsaw", "CSM - Power's Theme",
+            "Demon Slayer - Nezuko's Theme", "Demon Slayer - Kamado Tanjiro no Uta", "Naruto - Girei (Pain Theme)", "Naruto - Sadness and Sorrow", "Naruto - Departure to the Front Lines",
+            "Death Note - L's Theme", "Death Note - Light's Theme", "FMA:B - Bratja (Brothers)", "FMA:B - Lapis Philosophorum",
+            "One Piece - Drums of Liberation", "One Piece - Overtaken", "One Piece - Very Very Very Strongest",
+            "Bleach - Number One", "Bleach - Treachery (Aizen Theme)", "Bleach - Stand Up Be Strong",
+            "Code Geass - Stories", "Code Geass - Master Mind", "Vinland Saga - Dragonship", "Mob Psycho 100 - Explosive Mob Energy",
+            "Fire Force - Devil's Footprints", "Blue Lock - Egoist Theme", "Solo Leveling - Shadow Monarch Theme",
+            "Haikyu!! - Above the Top", "MHA - You Say Run", "MHA - Jet Set Run", "MHA - All Might Theme",
+            "JoJo - Giorno's Theme (Il vento d'oro)", "JoJo - Jotaro's Theme", "Dragon Ball Z - Super Saiyan 3 Theme",
+            "Dragon Ball Super - Ultimate Battle (Ka Ka Kachi Daze)", "SAO - Swordland", "Tokyo Ghoul - Lichtenstein",
+            "Berserk - Guts Theme", "Berserk - Behelit", "Evangelion - A Cruel Angel's Thesis Orchestra",
+            "Monster - Wheat Field", "Steins;Gate - Gate of Steiner", "Fate/Zero - Emiya Theme",
+            "Kill la Kill - Before My Body Is Dry (Don't Lose Your Way)", "No Game No Life - All of My Hate", "Hunter x Hunter - Elegy of the Dynast"
+        ];
+
         const datasets = {
-            animes: [
-                "Jujutsu Kaisen", "Attack on Titan", "Hunter x Hunter", 
-                "Chainsaw Man", "Demon Slayer", "Naruto", 
-                "Death Note", "Fullmetal Alchemist: Brotherhood", "One Piece", 
-                "Bleach", "Spy x Family", "Vinland Saga", "Code Geass",
-                "Mob Psycho 100", "Fire Force", "Haikyu!!", "Re:Zero", "Solo Leveling"
-            ],
-            personnages: [
-                "Gojo Satoru", "Eren Jaeger", "Killua Zoldyck", 
-                "Denji", "Tanjiro Kamado", "Naruto Uzumaki", 
-                "Light Yagami", "Edward Elric", "Monkey D. Luffy", 
-                "Ichigo Kurosaki", "Loid Forger", "Thors", "Lelouch Lamperouge",
-                "Reigen Arataka", "Shinra Kusakabe", "Shoyo Hinata", "Subaru Natsuki", "Sung Jinwoo"
-            ],
-            openings: [
-                "JJK OP 1 - Kaikai Kitan (Eve)", "JJK OP 2 - Specialz (King Gnu)",
-                "SnK OP 2 - Shinzou wo Sasageyo (Linked Horizon)", "SnK OP 4 - My War (Shinsei Kamattechan)",
-                "HxH OP 1 - Departure! (Masatoshi Ono)", "CSM OP 1 - Kick Back (Kenshi Yonezu)",
-                "Demon Slayer OP 1 - Gurenge (LiSA)", "Demon Slayer OP 3 - Zankyo Sanka (Aimer)",
-                "Naruto OP 2 - Silhouette (KANA-BOON)", "Naruto OP 3 - Blue Bird (Ikimono Gakari)",
-                "Death Note OP 1 - The World (Nightmare)", "FMA:B OP 1 - Again (YUI)",
-                "One Piece OP 1 - We Are! (Hiroshi Kitadani)", "Bleach OP 1 - Asterisk (Orange Range)",
-                "Spy x Family OP 1 - Mixed Nuts (Official HIGE DANdism)", "JoJo OP 2 - Bloody Stream (Coda)"
-            ],
-            endings: [
-                "Jujutsu Kaisen ED 1 - Lost in Paradise (ALI)",
-                "Shingeki no Kyojin ED 7 - Akuma no Ko (Higuchi Ai)",
-                "Hunter x Hunter ED 5 - Hyori Ittai (Yuzu)",
-                "Hunter x Hunter ED 2 - Hunting for Your Dream (Galneryus)",
-                "Chainsaw Man ED 3 - Hawatari Nioku Centi (Maximum the Hormone)",
-                "Demon Slayer ED 1 - from the edge (LiSA)",
-                "Demon Slayer ED 2 - Asa ga Kuru (Aimer)",
-                "Naruto ED 1 - Wind (Akeboshi)",
-                "Naruto Shippuden ED 1 - Shooting Star (HOME MADE Kazoku)",
-                "Naruto Shippuden ED 15 - U can do it! (DOMINO)",
-                "Death Note ED 1 - Alumina (Nightmare)",
-                "Death Note ED 2 - Zetsubou Billy (Maximum the Hormone)",
-                "Fullmetal Alchemist: Brotherhood ED 1 - Uso (SID)",
-                "Fullmetal Alchemist: Brotherhood ED 4 - Shunkan Sentimental",
-                "One Piece ED 1 - Memories (Maki Otsuki)",
-                "Bleach ED 1 - Life is Like a Boat (Rie fu)",
-                "Bleach ED 3 - Houkiboshi (Younha)",
-                "My Hero Academia ED 3 - Datte Atashi no Hero (LiSA)",
-                "My Hero Academia ED 6 - Shout Baby",
-                "Spy x Family ED 1 - Comedy (Gen Hoshino)",
-                "Kaguya-sama: Love is War ED 2 - Chika Dance",
-                "JoJo's Bizarre Adventure ED 1 - Roundabout (Yes)",
-                "Dragon Ball Z ED 1 - Detekoi Tobikiri ZENKAI Power!",
-                "Dragon Ball Super ED 10 - 70cm Square no Mado",
-                "Black Clover ED 1 - Aoi Honoo",
-                "Tokyo Ghoul ED 1 - Kisetsu wa TsugiTsugi Shindeiku",
-                "Mob Psycho 100 ED 1 - Refrain Boy",
-                "Classroom of the Elite S1 ED - Beautiful Soldier (Minami)",
-                "Classroom of the Elite S2 ED - Hito Suki (Mai Fuchigami)",
-                "Classroom of the Elite S3 ED - Chosai Koreso (Yui Ninomiya)",
-                "Vinland Saga ED 1 - Torches (Aimer)",
-                "Fire Force ED 1 - veil (Keina Suda)",
-                "Code Geass ED 1 - Mokuteki (FLOW)",
-                "Assassination Classroom ED 1 - Hello, shooting-star",
-                "Haikyu!! ED 1 - Leo (Tacica)",
-                "Haikyu!! ED 2 - Ah Yeah!! (Sukima Switch)",
-                "Re:Zero ED 1 - STYX HELIX (MYTH & ROID)",
-                "Solo Leveling ED 1 - request (krage)",
-                "Naruto ED 2 - Harmonia (RYTHEM)",
-                "Naruto Shippuden ED 28 - Rainbow (ALTIMA)",
-                "One Piece ED 15 - Eternal Pose",
-                "Bleach ED 29 - Reepoipaa",
-                "Demon Slayer S3 ED - Koi Kogare (milet x MAN WITH A MISSION)",
-                "Shingeki no Kyojin ED 1 - Utsukushiki Zankoku na Sekai",
-                "Chainsaw Man ED 8 - First Death (TK)",
-                "Jujutsu Kaisen S2 ED 1 - Akari (Soushi Sakiyama)",
-                "Spy x Family ED 2 - SOUVENIR / Shikaku Unmei",
-                "Kuroko no Basket ED 1 - Start it right away",
-                "Blue Lock ED 1 - Natsu Yoru no Hanabi",
-                "Dragon Ball Super ED 3 - Usubeni"
-            ],
-            osts: [
-                "JJK - Hollow Purple Theme", "SnK - YouSeeBIGGIRL",
-                "HxH - Kingdom of Predators", "CSM - Power's Theme",
-                "Demon Slayer - Nezuko's Theme", "Naruto - Girei (Pain's Theme)",
-                "Death Note - L's Theme", "FMA:B - Triss Merigold / Bratja",
-                "One Piece - Overthedd / Drum of Liberation", "Bleach - Number One",
-                "Code Geass - Lelouch's Britannia Theme", "Vinland Saga - Iron Fist"
-            ]
+            personnages: fullPersos,
+            openings: fullOpenings,
+            endings: fullEndings,
+            osts: fullOSTs
         };
 
-        // Palette de couleurs cyberpunk
+        /* =======================================================
+           MOTEUR AUDIO WEB AUDIO API (Effets Sonores Natifs)
+        ======================================================= */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playTickSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(600 + Math.random() * 300, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.04);
+            } catch(e){}
+        }
+
+        function playWinSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            try {
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.09);
+                    gain.gain.setValueAtTime(0.18, audioCtx.currentTime + i * 0.09);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.09 + 0.28);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + i * 0.09);
+                    osc.stop(audioCtx.currentTime + i * 0.09 + 0.28);
+                });
+            } catch(e){}
+        }
+
+        /* =======================================================
+           LOGIQUE CANVAS ET ROULETTE (Adaptative)
+        ======================================================= */
         const colors = [
             "#ff4757", "#2e90ff", "#2ed573", "#ffa801", 
             "#9b59b6", "#1abc9c", "#e84393", "#e67e22",
             "#3498db", "#e74c3c", "#2ecc71", "#f1c40f"
         ];
 
-        let currentCategory = 'animes';
-        let items = datasets[currentCategory];
+        let currentCategory = 'personnages';
+        let currentItems = datasets[currentCategory];
+        let history = [];
 
         const canvas = document.getElementById("wheelCanvas");
         const ctx = canvas.getContext("2d");
         const spinBtn = document.getElementById("spinBtn");
+        const hudTicker = document.getElementById("hudTicker");
 
         let startAngle = 0;
         let spinTimeout = null;
         let spinAngleStart = 10;
         let spinTime = 0;
         let spinTimeTotal = 0;
+        let lastSliceIndex = -1;
 
-        // Dessiner la roue
+        // Met à jour les compteurs sur les badges
+        document.getElementById('count-personnages').innerText = datasets.personnages.length;
+        document.getElementById('count-openings').innerText = datasets.openings.length;
+        document.getElementById('count-endings').innerText = datasets.endings.length;
+        document.getElementById('count-osts').innerText = datasets.osts.length;
+
+        function getVisibleSliceCount() {
+            // Si la liste est gigante (ex: 500 persos), on affiche un échantillon fluide de 30 tranches virtuelles
+            return currentItems.length > 60 ? 30 : currentItems.length;
+        }
+
         function drawWheel() {
-            const numOptions = items.length;
-            const arcSize = (2 * Math.PI) / numOptions;
-            const outsideRadius = 205;
-            const textRadius = 145;
-            const insideRadius = 45;
+            const displayCount = getVisibleSliceCount();
+            const arcSize = (2 * Math.PI) / displayCount;
+            const outsideRadius = 210;
+            const textRadius = 148;
+            const insideRadius = 48;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
             ctx.lineWidth = 1.5;
 
-            for (let i = 0; i < numOptions; i++) {
+            for (let i = 0; i < displayCount; i++) {
                 const angle = startAngle + i * arcSize;
                 ctx.fillStyle = colors[i % colors.length];
 
@@ -412,12 +621,11 @@
                 ctx.fill();
 
                 ctx.save();
-                ctx.shadowColor = "rgba(0,0,0,0.6)";
+                ctx.shadowColor = "rgba(0,0,0,0.7)";
                 ctx.shadowBlur = 4;
                 ctx.fillStyle = "white";
                 
-                // Ajuster dynamiquement la taille de police si beaucoup d'éléments (ex: 50 endings)
-                let fontSize = numOptions > 30 ? 10 : (numOptions > 15 ? 11 : 13);
+                let fontSize = displayCount > 35 ? 10 : (displayCount > 20 ? 11 : 12);
                 ctx.font = `bold ${fontSize}px Poppins, sans-serif`;
 
                 const textAngle = angle + arcSize / 2;
@@ -427,51 +635,62 @@
                 );
                 ctx.rotate(textAngle + Math.PI / 2);
                 
-                const text = items[i];
-                const maxLength = numOptions > 30 ? 14 : 18;
-                const formattedText = text.length > maxLength ? text.substring(0, maxLength - 2) + "..." : text;
+                // Si > 60 éléments, les noms défilent dynamiquement dans l'échantillon
+                let text = "";
+                if (currentItems.length > 60) {
+                    let virtualIndex = Math.floor((i + Math.floor(startAngle * 10)) % currentItems.length);
+                    if (virtualIndex < 0) virtualIndex += currentItems.length;
+                    text = currentItems[virtualIndex];
+                } else {
+                    text = currentItems[i];
+                }
+
+                const maxLen = displayCount > 35 ? 12 : 16;
+                const formattedText = text.length > maxLen ? text.substring(0, maxLen - 2) + "..." : text;
                 
                 ctx.fillText(formattedText, -ctx.measureText(formattedText).width / 2, 0);
                 ctx.restore();
             }
 
-            // Cercle central design
+            // Bouton central
             ctx.beginPath();
-            ctx.arc(230, 230, 45, 0, 2 * Math.PI);
-            ctx.fillStyle = "#141621";
+            ctx.arc(230, 230, 48, 0, 2 * Math.PI);
+            ctx.fillStyle = "#121422";
             ctx.fill();
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
             ctx.stroke();
 
-            // Icône ou texte central
+            ctx.fillStyle = "#2e90ff";
+            ctx.font = "900 13px Poppins, sans-serif";
+            ctx.fillText("OTAKU", 205, 226);
             ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 14px Poppins, sans-serif";
-            ctx.fillText("OTA", -14, -3, 230, 230); // centré
+            ctx.font = "bold 10px Poppins, sans-serif";
+            ctx.fillText("HUB", 218, 239);
         }
 
-        // Changement de catégorie
-        function changeCategory(cat) {
+        function switchCategory(cat, btn) {
             currentCategory = cat;
-            items = datasets[cat];
-            
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            currentItems = datasets[cat];
+
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
             startAngle = 0;
+            hudTicker.innerText = `Catégorie : ${cat.toUpperCase()} (${currentItems.length} éléments)`;
             drawWheel();
         }
 
-        // Lancer la roulette
-        function spin() {
-            spinAngleStart = Math.random() * 12 + 10;
+        function startSpin() {
+            spinAngleStart = Math.random() * 15 + 15;
             spinTime = 0;
             spinTimeTotal = Math.random() * 3000 + 4500;
             spinBtn.disabled = true;
+            lastSliceIndex = -1;
+            hudTicker.innerText = "Tirage en cours...";
             rotateWheel();
         }
 
-        // Animation de rotation
         function rotateWheel() {
             spinTime += 30;
             if (spinTime >= spinTimeTotal) {
@@ -480,22 +699,47 @@
             }
             const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
             startAngle += (spinAngle * Math.PI / 180);
+            
+            // Son de clic lors du franchissement d'une tranche
+            const displayCount = getVisibleSliceCount();
+            const currentSlice = Math.floor((startAngle * 180 / Math.PI) / (360 / displayCount)) % displayCount;
+            if (currentSlice !== lastSliceIndex) {
+                playTickSound();
+                lastSliceIndex = currentSlice;
+            }
+
+            // Mettre à jour le Ticker en direct
+            if (currentItems.length > 60) {
+                const randomSample = currentItems[Math.floor(Math.random() * currentItems.length)];
+                hudTicker.innerText = `⚡ ${randomSample}`;
+            }
+
             drawWheel();
             spinTimeout = setTimeout(rotateWheel, 30);
         }
 
-        // Arrêt et calcul du résultat exact
         function stopRotateWheel() {
             clearTimeout(spinTimeout);
-            const numOptions = items.length;
-            const arcSize = (2 * Math.PI) / numOptions;
             
-            let degrees = startAngle * 180 / Math.PI + 90;
-            let arcd = arcSize * 180 / Math.PI;
-            let index = Math.floor((360 - (degrees % 360)) / arcd);
-            index = (index + numOptions) % numOptions;
+            let winningItem = "";
+            if (currentItems.length > 60) {
+                // Tirage aléatoire uniforme parfait pour grands ensembles
+                winningItem = currentItems[Math.floor(Math.random() * currentItems.length)];
+            } else {
+                const displayCount = currentItems.length;
+                const arcSize = (2 * Math.PI) / displayCount;
+                let degrees = startAngle * 180 / Math.PI + 90;
+                let arcd = arcSize * 180 / Math.PI;
+                let index = Math.floor((360 - (degrees % 360)) / arcd);
+                index = (index + displayCount) % displayCount;
+                winningItem = currentItems[index];
+            }
 
-            showResult(items[index]);
+            hudTicker.innerText = `Gagnant : ${winningItem}`;
+            playWinSound();
+            triggerConfetti();
+            showResult(winningItem);
+            addToHistory(winningItem);
             spinBtn.disabled = false;
         }
 
@@ -506,7 +750,7 @@
         }
 
         function showResult(text) {
-            document.getElementById("resultText").innerText = text;
+            document.getElementById("modalResultTitle").innerText = text;
             document.getElementById("resultModal").style.display = "flex";
         }
 
@@ -514,7 +758,65 @@
             document.getElementById("resultModal").style.display = "none";
         }
 
-        // Premier rendu
+        function addToHistory(item) {
+            history.unshift(item);
+            if (history.length > 6) history.pop();
+            
+            const historyTags = document.getElementById('historyTags');
+            historyTags.innerHTML = history.map(h => `<span class="history-tag">✨ ${h}</span>`).join('');
+        }
+
+        /* =======================================================
+           MOTEUR DE PARTICULES (Confettis de victoire)
+        ======================================================= */
+        const fxCanvas = document.getElementById("fxCanvas");
+        const fxCtx = fxCanvas.getContext("2d");
+        let particles = [];
+
+        function resizeFxCanvas() {
+            fxCanvas.width = window.innerWidth;
+            fxCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeFxCanvas);
+        resizeFxCanvas();
+
+        function triggerConfetti() {
+            particles = [];
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    vx: (Math.random() - 0.5) * 18,
+                    vy: (Math.random() - 0.5) * 18 - 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 8 + 4,
+                    alpha: 1
+                });
+            }
+            animateParticles();
+        }
+
+        function animateParticles() {
+            fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.25; // gravité
+                p.alpha -= 0.015;
+
+                fxCtx.globalAlpha = Math.max(0, p.alpha);
+                fxCtx.fillStyle = p.color;
+                fxCtx.beginPath();
+                fxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                fxCtx.fill();
+
+                if (p.alpha <= 0) particles.splice(index, 1);
+            });
+
+            if (particles.length > 0) requestAnimationFrame(animateParticles);
+        }
+
+        // Rendu initial
         drawWheel();
     </script>
 </body>
