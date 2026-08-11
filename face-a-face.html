@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face-à-Face - Otaku Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #06070c;
+            --panel-bg: rgba(18, 20, 32, 0.85);
+            --blue-neon: #2e90ff;
+            --pink-neon: #ff4757;
+            --text-main: #ffffff;
+            --text-sub: #a4b0be;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(46, 144, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 71, 87, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* Bouton Retour */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .back-button:hover {
+            background: var(--blue-neon);
+            border-color: var(--blue-neon);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(46, 144, 255, 0.4);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, var(--blue-neon), #ffffff, var(--pink-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+
+        /* Sélecteur de catégorie */
+        .category-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-sub);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cat-btn:hover {
+            color: white;
+            border-color: var(--blue-neon);
+            transform: translateY(-2px);
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));
+            color: white;
+            border: none;
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Indicateur de Série / Score */
+        .streak-board {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(10px);
+        }
+
+        .streak-count {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #2ed573;
+        }
+
+        /* Arène du Duel */
+        .arena {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        /* Cartes de Duel */
+        .vs-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 40px 25px;
+            width: 320px;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Carte de gauche (Bleu) */
+        .card-left {
+            border: 2px solid rgba(46, 144, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-left:hover {
+            border-color: var(--blue-neon);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(46, 144, 255, 0.4);
+        }
+
+        /* Carte de droite (Rose) */
+        .card-right {
+            border: 2px solid rgba(255, 71, 87, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-right:hover {
+            border-color: var(--pink-neon);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(255, 71, 87, 0.4);
+        }
+
+        .badge-role {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .card-left .badge-role {
+            background: rgba(46, 144, 255, 0.2);
+            color: var(--blue-neon);
+        }
+
+        .card-right .badge-role {
+            background: rgba(255, 71, 87, 0.2);
+            color: var(--pink-neon);
+        }
+
+        .item-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin: 15px 0;
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        .vote-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-left .vote-btn {
+            background: linear-gradient(135deg, var(--blue-neon), #1b539c);
+            color: white;
+            box-shadow: 0 5px 15px rgba(46, 144, 255, 0.3);
+        }
+
+        .card-right .vote-btn {
+            background: linear-gradient(135deg, var(--pink-neon), #c0392b);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        /* Badge central VS */
+        .vs-badge {
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--panel-bg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            animation: pulseVS 2s infinite alternate;
+            z-index: 10;
+        }
+
+        @keyframes pulseVS {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(46, 144, 255, 0.3); }
+            100% { transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 71, 87, 0.5); }
+        }
+
+        /* Modal du Champion Ultime */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 5, 10, 0.88);
+            backdrop-filter: blur(14px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-card {
+            background: #121422;
+            border: 2px solid var(--blue-neon);
+            padding: 40px;
+            border-radius: 28px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-card h3 {
+            color: var(--text-sub);
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .winner-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #ffffff, var(--blue-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(46, 144, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour à l'accueil</a>
+
+        <h1>Face-à-Face 🥊</h1>
+        <p class="subtitle">Fais tes choix au fil des duels. Le gagnant reste sur le trône !</p>
+
+        <div class="category-selector">
+            <button class="cat-btn active" onclick="setCategory('personnages', this)">👤 Personnages</button>
+            <button class="cat-btn" onclick="setCategory('openings', this)">🎵 Openings</button>
+            <button class="cat-btn" onclick="setCategory('endings', this)">🎶 Endings</button>
+            <button class="cat-btn" onclick="setCategory('osts', this)">⚡ OSTs</button>
+            <button class="cat-btn" onclick="setCategory('animes', this)">📺 Animés</button>
+        </div>
+
+        <div class="streak-board">
+            <span>Série du Champion actuel :</span>
+            <span id="streakCount" class="streak-count">0 victoire(s)</span>
+        </div>
+
+        <div class="arena">
+            <div class="vs-card card-left" onclick="vote(0)">
+                <span class="badge-role">👑 Champion en titre</span>
+                <div id="leftName" class="item-name">...</div>
+                <button class="vote-btn">Choisir ce favori</button>
+            </div>
+
+            <div class="vs-badge">VS</div>
+
+            <div class="vs-card card-right" onclick="vote(1)">
+                <span class="badge-role">⚔️ Challenger</span>
+                <div id="rightName" class="item-name">...</div>
+                <button class="vote-btn">Choisir ce favori</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="winModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>👑 Champion Invaincu !</h3>
+            <div id="winnerTitle" class="winner-title">...</div>
+            <p>Ce choix a régné en maître sur plusieurs duels d'affilée !</p>
+            <button class="restart-btn" onclick="closeModal()">Continuer les duels</button>
+        </div>
+    </div>
+
+    <script>
+        /* ==============================================
+           BANQUES DE DONNÉES DE DUEL
+        ============================================== */
+        const datasets = {
+            personnages: [
+                "Gojo Satoru", "Eren Jaeger", "Killua Zoldyck", "Denji", "Tanjiro Kamado",
+                "Naruto Uzumaki", "Light Yagami", "Edward Elric", "Monkey D. Luffy", "Ichigo Kurosaki",
+                "Loid Forger", "Thorfinn", "Lelouch vi Britannia", "Mob (Shigeo)", "Shinra Kusakabe",
+                "Sung Jinwoo", "Ken Kaneki", "Saitama", "Guts", "Levi Ackerman", "Sukuna", "Itachi Uchiha"
+            ],
+            openings: [
+                "JJK OP 1 - Kaikai Kitan", "JJK OP 2 - Specialz", "SnK OP 1 - Guren no Yumiya",
+                "SnK OP 5 - The Rumbling", "HxH OP 1 - Departure!", "CSM OP 1 - Kick Back",
+                "Demon Slayer OP 1 - Gurenge", "Naruto OP 16 - Silhouette", "FMA:B OP 1 - Again",
+                "One Piece OP 1 - We Are!", "Bleach OP 1 - Asterisk", "Tokyo Ghoul OP 1 - Unravel",
+                "MHA OP 3 - Peace Sign", "Code Geass OP 1 - Colors", "Oshi no Ko OP 1 - Idol"
+            ],
+            endings: [
+                "JJK ED 1 - Lost in Paradise", "SnK ED 7 - Akuma no Ko", "HxH ED 5 - Hyori Ittai",
+                "CSM ED 3 - Hawatari Nioku Centi", "Demon Slayer ED 1 - from the edge",
+                "Naruto ED 1 - Wind", "Death Note ED 1 - Alumina", "FMA:B ED 1 - Uso",
+                "One Piece ED 1 - Memories", "Bleach ED 1 - Life is Like a Boat", "Spy x Family ED 1 - Comedy"
+            ],
+            osts: [
+                "JJK - Hollow Purple Theme", "SnK - YouSeeBIGGIRL", "HxH - Kingdom of Predators",
+                "Naruto - Girei (Pain Theme)", "Death Note - L's Theme", "Bleach - Number One",
+                "MHA - You Say Run", "JoJo - Giorno's Theme", "Dragon Ball Super - Ultimate Battle"
+            ],
+            animes: [
+                "Jujutsu Kaisen", "Attack on Titan", "Hunter x Hunter", "Chainsaw Man",
+                "Demon Slayer", "Naruto", "Death Note", "Fullmetal Alchemist: Brotherhood",
+                "One Piece", "Bleach", "Spy x Family", "Vinland Saga", "Code Geass", "Solo Leveling"
+            ]
+        };
+
+        let currentCategory = 'personnages';
+        let items = [...datasets[currentCategory]];
+        
+        let champion = "";
+        let challenger = "";
+        let streak = 0;
+
+        const leftNameElem = document.getElementById("leftName");
+        const rightNameElem = document.getElementById("rightName");
+        const streakElem = document.getElementById("streakCount");
+
+        // Web Audio API pour effets sonores
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSelectSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e){}
+        }
+
+        // Tirer un élément aléatoire qui n'est pas déjà affiché
+        function getRandomItem(exclude = []) {
+            const available = items.filter(item => !exclude.includes(item));
+            if (available.length === 0) return items[Math.floor(Math.random() * items.length)];
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function initArena() {
+            champion = getRandomItem();
+            challenger = getRandomItem([champion]);
+            streak = 0;
+            updateUI();
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            items = [...datasets[cat]];
+
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            initArena();
+        }
+
+        function vote(index) {
+            playSelectSound();
+
+            if (index === 0) {
+                // Le champion conserve son trône
+                streak++;
+                challenger = getRandomItem([champion, challenger]);
+            } else {
+                // Le challenger détrône le champion !
+                champion = challenger;
+                streak = 1;
+                challenger = getRandomItem([champion]);
+            }
+
+            // Déclencher une petite animation de transition
+            document.querySelector('.arena').style.opacity = '0.4';
+            setTimeout(() => {
+                updateUI();
+                document.querySelector('.arena').style.opacity = '1';
+            }, 150);
+        }
+
+        function updateUI() {
+            leftNameElem.innerText = champion;
+            rightNameElem.innerText = challenger;
+            streakElem.innerText = `${streak} victoire(s)`;
+        }
+
+        function closeModal() {
+            document.getElementById("winModal").style.display = "none";
+        }
+
+        // Initialisation initiale
+        initArena();
+    </script>
+</body>
+</html>
