@@ -22,6 +22,13 @@
         <div class="logo-badge">OTAKU HUB</div>
         <h1>Anime Tier List <span>Creator 🏆</span></h1>
         <p>Deviens le juge suprême. Crée, personnalise et impose tes classements d'animés favoris !</p>
+
+        <div class="theme-switcher">
+            <button class="theme-btn active" onclick="setTheme('cyber', this)">💙 Cyber Neon</button>
+            <button class="theme-btn" onclick="setTheme('dark-fantasy', this)">🩸 Dark Fantasy</button>
+            <button class="theme-btn" onclick="setTheme('synthwave', this)">🪩 Synthwave</button>
+            <button class="theme-btn" onclick="setTheme('gold-shonen', this)">👑 Gold Shonen</button>
+        </div>
     </header>
 
     <main class="hub-container">
@@ -108,6 +115,31 @@
     <footer>
         <p>Fait avec 🔥 par et pour les passionnés d'animés • 2026</p>
     </footer>
+
+    <script>
+        function setTheme(themeName, btnElement) {
+            // Applique le thème sur l'élément racine
+            document.documentElement.setAttribute('data-theme', themeName);
+            
+            // Sauvegarde dans le navigateur
+            localStorage.setItem('otaku_theme', themeName);
+
+            // Met à jour la classe active sur les boutons
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                const activeBtn = document.querySelector(`.theme-btn[onclick*="${themeName}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+        }
+
+        // Chargement automatique du thème sauvegardé au démarrage
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
+            setTheme(savedTheme);
+        })();
+    </script>
 
 </body>
 </html>
