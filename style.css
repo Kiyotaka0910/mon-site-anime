@@ -278,3 +278,88 @@ footer {
     .hero-section p { font-size: 0.95rem; }
     .hub-container { grid-template-columns: 1fr; gap: 20px; }
 }
+
+/* ==============================================
+   SYSTÈME DE THÈMES DYNAMIQUES
+============================================== */
+
+/* Thème 1 : Cyber Otaku (Par défaut) */
+:root, [data-theme="cyber"] {
+    --bg-color: #06070c;
+    --panel-bg: rgba(18, 20, 32, 0.85);
+    --blue-neon: #2e90ff;
+    --pink-neon: #ff4757;
+    --text-main: #ffffff;
+    --text-sub: #a4b0be;
+    --card-border: rgba(46, 144, 255, 0.2);
+}
+
+/* Thème 2 : Dark Fantasy (Berserk / Blood) */
+[data-theme="dark-fantasy"] {
+    --bg-color: #0a0404;
+    --panel-bg: rgba(28, 10, 10, 0.88);
+    --blue-neon: #ff3333;
+    --pink-neon: #800000;
+    --text-main: #f5f5f5;
+    --text-sub: #b38f8f;
+    --card-border: rgba(255, 51, 51, 0.25);
+}
+
+/* Thème 3 : Synthwave Neon (Cyberpunk / Edgerunners) */
+[data-theme="synthwave"] {
+    --bg-color: #0f051d;
+    --panel-bg: rgba(30, 15, 50, 0.88);
+    --blue-neon: #00f0ff;
+    --pink-neon: #ff007f;
+    --text-main: #ffffff;
+    --text-sub: #c3aed6;
+    --card-border: rgba(255, 0, 127, 0.25);
+}
+
+/* Thème 4 : Gold Shonen (Dragon Ball / Saint Seiya) */
+[data-theme="gold-shonen"] {
+    --bg-color: #0d0a03;
+    --panel-bg: rgba(30, 24, 10, 0.88);
+    --blue-neon: #ffb703;
+    --pink-neon: #fb8500;
+    --text-main: #ffffff;
+    --text-sub: #d4c5a9;
+    --card-border: rgba(255, 183, 3, 0.25);
+}
+
+/* Style de la barre de boutons de thèmes */
+.theme-switcher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.theme-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-main);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--blue-neon);
+}
+
+.theme-btn.active {
+    background: var(--blue-neon);
+    color: #ffffff;
+    border-color: var(--blue-neon);
+    box-shadow: 0 0 15px var(--blue-neon);
+    font-weight: 800;
+}
