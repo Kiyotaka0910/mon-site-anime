@@ -83,8 +83,8 @@
             max-height: 250px;
             max-width: 100%;
             object-fit: contain;
-            /* Transformation en silhouette noire */
-            filter: brightness(0) drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+            /* Filtre silhouette adapté aux images JPG (sombre + contours visibles) */
+            filter: grayscale(100%) brightness(0.12) contrast(250%) drop-shadow(0 5px 15px rgba(0,0,0,0.8));
             transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
             user-select: none;
             -webkit-user-drag: none;
@@ -92,18 +92,8 @@
 
         /* Classe appliquée lors du dévoilement de la réponse */
         .character-img.revealed {
-            filter: brightness(1) drop-shadow(0 0 20px var(--blue-neon, #00d2ff));
+            filter: grayscale(0%) brightness(1) contrast(100%) drop-shadow(0 0 20px var(--blue-neon, #00d2ff));
             transform: scale(1.05);
-        }
-
-        .anime-hint {
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--text-sub, #aaaaaa);
-            font-weight: 600;
         }
 
         /* Grille des boutons de choix */
@@ -203,7 +193,6 @@
 
         <div class="silhouette-box">
             <img id="charImage" class="character-img" src="" alt="Silhouette Mystère">
-            <div class="anime-hint" id="animeHint">Origine : ???</div>
         </div>
 
         <div class="options-grid" id="optionsGrid">
@@ -339,7 +328,6 @@
             497: "Lelouch", 498: "Yuuichi Katagiri", 499: "Cid Kagenou (Shadow)", 500: "Guts"
         };
 
-        /* FONCTION POUR DÉTERMINER L'ANIME EN FONCTION DE L'ID */
         function getAnimeName(id) {
             if (id >= 1 && id <= 30) return "One Piece";
             if (id >= 31 && id <= 75) return "Naruto";
@@ -362,7 +350,6 @@
             return "Autres Séries";
         }
 
-        /* BASE DE DONNÉES DE 500 PERSOS */
         const charactersDatabase = Object.keys(rawCharacters).map(id => {
             const numId = parseInt(id);
             return {
@@ -372,8 +359,6 @@
                 img: `images/${numId}.jpg`
             };
         });
-
-        const allNames = charactersDatabase.map(c => c.name);
 
         let currentCharacter = null;
         let score = 0;
@@ -387,24 +372,36 @@
             const charImg = document.getElementById('charImage');
             charImg.classList.remove('revealed');
 
-            // Tirage aléatoire
+            // Sélection aléatoire du personnage
             currentCharacter = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
-            
             charImg.src = currentCharacter.img;
-            document.getElementById('animeHint').innerText = `Origine : ${currentCharacter.anime}`;
 
-            // Génération des 4 choix
+            // NIVEAU HARDCORE : Génération de pièges issus du MÊME animé !
+            const sameAnimeChars = charactersDatabase.filter(
+                c => c.anime === currentCharacter.anime && c.name !== currentCharacter.name
+            );
+
             let options = [currentCharacter.name];
+            sameAnimeChars.sort(() => Math.random() - 0.5);
+
+            // On complète avec les personnages du même univers en priorité
+            for (let c of sameAnimeChars) {
+                if (options.length < 4) {
+                    options.push(c.name);
+                }
+            }
+
+            // Si l'animé a moins de 4 personnages enregistrés, on complète avec du hasard total
             while (options.length < 4) {
-                let randomName = allNames[Math.floor(Math.random() * allNames.length)];
-                if (!options.includes(randomName)) {
-                    options.push(randomName);
+                let randomChar = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
+                if (!options.includes(randomChar.name)) {
+                    options.push(randomChar.name);
                 }
             }
 
             options.sort(() => Math.random() - 0.5);
 
-            // Affichage des boutons
+            // Affichage des options
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
 
@@ -449,7 +446,7 @@
             document.getElementById('nextBtn').style.display = 'block';
         }
 
-        // Chargement du thème
+        // Thème actif
         (function initTheme() {
             const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
             document.documentElement.setAttribute('data-theme', savedTheme);
