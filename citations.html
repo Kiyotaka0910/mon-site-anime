@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citations Cultes Anime - Otaku Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        .quote-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .back-button:hover {
+            background: var(--blue-neon);
+            border-color: var(--blue-neon);
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+
+        .quote-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 50px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            position: relative;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--blue-neon);
+            margin-bottom: 15px;
+            line-height: 1;
+            opacity: 0.8;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--blue-neon);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .quote-anime {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(8px);
+        }
+
+        .action-btn.primary {
+            background: var(--blue-neon);
+            border-color: var(--blue-neon);
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(46, 144, 255, 0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-btn.primary:hover {
+            filter: brightness(1.15);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--blue-neon);
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animated-background">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="mist"></div>
+    </div>
+
+    <div class="quote-container">
+        <a href="index.html" class="back-button">← Retour au Hub</a>
+
+        <header class="hero-section" style="padding: 0 0 30px 0;">
+            <div class="logo-badge">INSPIRATION OTAKU</div>
+            <h1>Citations <span>Cultes 📜</span></h1>
+            <p>Découvre les répliques les plus marquantes, épiques et philosophiques de l'histoire de l'animation.</p>
+        </header>
+
+        <div class="quote-card">
+            <div class="quote-icon">“</div>
+            <div class="quote-text" id="quoteText">Chargement de la citation...</div>
+            <div class="quote-author" id="quoteAuthor">- Auteur</div>
+            <div class="quote-anime" id="quoteAnime">Anime</div>
+        </div>
+
+        <div class="actions-bar">
+            <button class="action-btn primary" onclick="generateNewQuote()">
+                <span>🎲</span> Citation Suivante
+            </button>
+            <button class="action-btn" onclick="copyQuote()">
+                <span>📋</span> Copier
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Citation copiée dans le presse-papier ! ✨</div>
+
+    <script>
+        /* BANQUE DE CITATIONS DIVERSIFIÉE ET ÉTENDUE */
+        const quotesDatabase = [
+            { text: "Si tu ne tentes rien, tu n'obtiendras jamais rien.", author: "Monkey D. Luffy", anime: "One Piece" },
+            { text: "Ce n'est pas parce que je suis faible que je vais abandonner. C'est parce que je suis faible que je dois me battre !", author: "Naruto Uzumaki", anime: "Naruto" },
+            { text: "Les gens meurent quand ils sont tués... mais ce n'est pas une raison pour renoncer à vivre !", author: "Shirou Emiya", anime: "Fate/stay night" },
+            { text: "Si tu gagnes, tu vis. Si tu meurs, tu perds. Si tu ne te bats pas, tu ne peux pas gagner !", author: "Eren Jaeger", anime: "Attack on Titan" },
+            { text: "La seule chose qu'on a le droit de faire, c'est de croire qu'on ne regrettera pas le choix qu'on a fait.", author: "Levi Ackerman", anime: "Attack on Titan" },
+            { text: "Dans ce monde, là où il y a de la lumière, il y a aussi de l'ombre.", author: "Madara Uchiha", anime: "Naruto Shippuden" },
+            { text: "Ne cherche pas à être parfait, cherche à être unique.", author: "Satoru Gojo", anime: "Jujutsu Kaisen" },
+            { text: "Une leçon sans douleur n'a pas de valeur.", author: "Edward Elric", anime: "Fullmetal Alchemist" },
+            { text: "Je vais prendre une chips... et la MANGER !", author: "Light Yagami", anime: "Death Note" },
+            { text: "Le pouvoir ne s'obtient pas en le souhaitant, mais en travaillant dur pour l'atteindre.", author: "All Might", anime: "My Hero Academia" },
+            { text: "Rappelle-toi : la peur n'est pas le mal. Elle te montre simplement où sont tes limites.", author: "Gildarts Clive", anime: "Fairy Tail" },
+            { text: "Même si je dois tout perdre, je ne reculerai jamais !", author: "Tanjiro Kamado", anime: "Demon Slayer" },
+            { text: "Seuls ceux qui sont prêts à se faire tirer dessus devraient avoir le droit de tirer.", author: "Lelouch vi Britannia", anime: "Code Geass" },
+            { text: "Il n'y a pas de honte à tomber, la vraie honte est de ne pas se relever.", author: "Midorima Shintaro", anime: "Kuroko no Basket" },
+            { text: "L'intelligence n'est pas de ne pas commettre d'erreurs, mais de savoir comment les corriger.", author: "L Lawliet", anime: "Death Note" },
+            { text: "Repousse tes limites. Ici et maintenant !", author: "Yami Sukehiro", anime: "Black Clover" },
+            { text: "Un homme ne meurt que lorsqu'on l'oublie.", author: "Dr. Hiluluk", anime: "One Piece" },
+            { text: "Si tu as le temps de penser à une fin belle, vis magnifiquement jusqu'à la fin !", author: "Sakata Gintoki", anime: "Gintama" },
+            { text: "Ce n'est pas le monde qui est cruel, ce sont les gens qui s'y trouvent.", author: "Ken Kaneki", anime: "Tokyo Ghoul" },
+            { text: "Travailler dur est inutile pour ceux qui ne croient pas en eux-mêmes.", author: "Naruto Uzumaki", anime: "Naruto" }
+        ];
+
+        let history = [];
+        let currentQuote = null;
+
+        function generateNewQuote() {
+            // Empêche la répétition immédiate
+            let availableQuotes = quotesDatabase.filter(q => q !== currentQuote);
+            
+            // Tirage aléatoire
+            const randomIndex = Math.floor(Math.random() * availableQuotes.length);
+            currentQuote = availableQuotes[randomIndex];
+
+            // Mise à jour de l'affichage
+            document.getElementById('quoteText').innerText = `"${currentQuote.text}"`;
+            document.getElementById('quoteAuthor').innerText = `- ${currentQuote.author}`;
+            document.getElementById('quoteAnime').innerText = currentQuote.anime;
+        }
+
+        function copyQuote() {
+            if (!currentQuote) return;
+            const fullText = `"${currentQuote.text}" - ${currentQuote.author} (${currentQuote.anime})`;
+            navigator.clipboard.writeText(fullText).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Chargement du thème sauvegardé
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        // Première citation au chargement
+        generateNewQuote();
+    </script>
+</body>
+</html>
