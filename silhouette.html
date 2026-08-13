@@ -80,20 +80,21 @@
         }
 
         .character-img {
-            max-height: 250px;
+            max-height: 260px;
             max-width: 100%;
             object-fit: contain;
-            /* Filtre silhouette adapté aux images JPG (sombre + contours visibles) */
-            filter: grayscale(100%) brightness(0.12) contrast(250%) drop-shadow(0 5px 15px rgba(0,0,0,0.8));
-            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+            border-radius: 12px;
+            /* Effet ombre mystère adapté aux JPGs */
+            filter: blur(16px) brightness(0.35) contrast(150%);
+            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
             user-select: none;
             -webkit-user-drag: none;
         }
 
-        /* Classe appliquée lors du dévoilement de la réponse */
+        /* Classe appliquée lors du dévoilement */
         .character-img.revealed {
-            filter: grayscale(0%) brightness(1) contrast(100%) drop-shadow(0 0 20px var(--blue-neon, #00d2ff));
-            transform: scale(1.05);
+            filter: blur(0px) brightness(1) contrast(100%) drop-shadow(0 0 20px var(--blue-neon, #00d2ff));
+            transform: scale(1.03);
         }
 
         /* Grille des boutons de choix */
@@ -365,6 +366,10 @@
         let streak = 0;
         let isAnswered = false;
 
+        // Historique des personnages récents pour éviter les répétitions
+        let playedIds = [];
+        const MAX_HISTORY = 30;
+
         function loadNextCharacter() {
             isAnswered = false;
             document.getElementById('nextBtn').style.display = 'none';
@@ -372,11 +377,23 @@
             const charImg = document.getElementById('charImage');
             charImg.classList.remove('revealed');
 
-            // Sélection aléatoire du personnage
-            currentCharacter = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
+            // Filtrer pour exclure les personnages joués récemment
+            let availableChars = charactersDatabase.filter(c => !playedIds.includes(c.id));
+            if (availableChars.length === 0) {
+                playedIds = [];
+                availableChars = charactersDatabase;
+            }
+
+            // Sélection aléatoire sans répétition
+            currentCharacter = availableChars[Math.floor(Math.random() * availableChars.length)];
+            playedIds.push(currentCharacter.id);
+            if (playedIds.length > MAX_HISTORY) {
+                playedIds.shift();
+            }
+
             charImg.src = currentCharacter.img;
 
-            // NIVEAU HARDCORE : Génération de pièges issus du MÊME animé !
+            // Génération des pièges issus du MÊME animé
             const sameAnimeChars = charactersDatabase.filter(
                 c => c.anime === currentCharacter.anime && c.name !== currentCharacter.name
             );
@@ -384,14 +401,12 @@
             let options = [currentCharacter.name];
             sameAnimeChars.sort(() => Math.random() - 0.5);
 
-            // On complète avec les personnages du même univers en priorité
             for (let c of sameAnimeChars) {
                 if (options.length < 4) {
                     options.push(c.name);
                 }
             }
 
-            // Si l'animé a moins de 4 personnages enregistrés, on complète avec du hasard total
             while (options.length < 4) {
                 let randomChar = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
                 if (!options.includes(randomChar.name)) {
