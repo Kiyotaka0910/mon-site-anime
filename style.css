@@ -46,6 +46,72 @@
     --card-border: rgba(255, 183, 3, 0.25);
 }
 
+/* Thème 5 : Sakura 🌸 */
+[data-theme="sakura"] {
+    --bg-color: #0f060a;
+    --panel-bg: rgba(35, 15, 25, 0.85);
+    --blue-neon: #ff75a0;
+    --pink-neon: #ffb3c6;
+    --text-main: #ffffff;
+    --text-sub: #e0a6b8;
+    --card-border: rgba(255, 117, 160, 0.3);
+}
+
+/* Thème 6 : Saiyan 💥 */
+[data-theme="saiyan"] {
+    --bg-color: #0c0803;
+    --panel-bg: rgba(25, 18, 10, 0.85);
+    --blue-neon: #ffaa00;
+    --pink-neon: #ff5500;
+    --text-main: #ffffff;
+    --text-sub: #d4b28c;
+    --card-border: rgba(255, 170, 0, 0.3);
+}
+
+/* Thème 7 : Shadow 💜 */
+[data-theme="shadow"] {
+    --bg-color: #06040d;
+    --panel-bg: rgba(12, 10, 24, 0.9);
+    --blue-neon: #9d4edd;
+    --pink-neon: #3a0ca3;
+    --text-main: #ffffff;
+    --text-sub: #a29bfe;
+    --card-border: rgba(157, 78, 221, 0.35);
+}
+
+/* Thème 8 : EVA-01 🤖 */
+[data-theme="eva"] {
+    --bg-color: #0a050f;
+    --panel-bg: rgba(18, 10, 25, 0.88);
+    --blue-neon: #39ff14;
+    --pink-neon: #8a2be2;
+    --text-main: #ffffff;
+    --text-sub: #b3a2c7;
+    --card-border: rgba(57, 255, 20, 0.3);
+}
+
+/* Thème 9 : Crimson 🩸 */
+[data-theme="crimson"] {
+    --bg-color: #0c0405;
+    --panel-bg: rgba(25, 10, 12, 0.88);
+    --blue-neon: #ff2a2a;
+    --pink-neon: #800000;
+    --text-main: #ffffff;
+    --text-sub: #d19a9a;
+    --card-border: rgba(255, 42, 42, 0.3);
+}
+
+/* Thème 10 : Shinobi 🥷 */
+[data-theme="shinobi"] {
+    --bg-color: #030c08;
+    --panel-bg: rgba(8, 20, 15, 0.88);
+    --blue-neon: #00e676;
+    --pink-neon: #1de9b6;
+    --text-main: #ffffff;
+    --text-sub: #82c4a7;
+    --card-border: rgba(0, 230, 118, 0.3);
+}
+
 
 /* --- CONFIGURATION GLOBALE --- */
 * {
