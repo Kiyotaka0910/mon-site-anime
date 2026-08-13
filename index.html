@@ -312,7 +312,7 @@
             }, 4500);
         }
 
-        // --- EE : SUKUNA MALEVOLENT SHRINE ---
+        // --- EE 4 : SUKUNA MALEVOLENT SHRINE (AVEC TAILLES DE PARTOUT) ---
         function activateSukuna() {
             document.body.classList.add('ee-shaking');
 
@@ -322,20 +322,39 @@
                 <div class="sukuna-bg"></div>
                 <div class="sukuna-container">
                     <h2 class="sukuna-kanji">領域展開 : 伏魔御廚子</h2>
-                    <p class="sukuna-subtext">FUKUMA MIZUSHI</p>
+                    <p class="sukuna-subtext">MALEVOLENT SHRINE</p>
                 </div>
             `;
             document.body.appendChild(overlay);
+
+            // Génération dynamique des entailles sur tout l'écran
+            const slashContainer = document.createElement('div');
+            slashContainer.className = 'sukuna-slash-container';
+            document.body.appendChild(slashContainer);
+
+            for (let i = 0; i < 25; i++) {
+                const slash = document.createElement('div');
+                slash.className = 'sukuna-slash';
+                slash.style.top = Math.random() * 100 + 'vh';
+                slash.style.left = Math.random() * 100 + 'vw';
+                slash.style.transform = `rotate(${Math.random() * 360}deg)`;
+                slash.style.animationDelay = (Math.random() * 0.8) + 's';
+                slashContainer.appendChild(slash);
+            }
 
             setTimeout(() => document.body.classList.remove('ee-shaking'), 600);
 
             setTimeout(() => {
                 overlay.style.opacity = '0';
-                setTimeout(() => overlay.remove(), 800);
+                slashContainer.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.remove();
+                    slashContainer.remove();
+                }, 800);
             }, 3800);
         }
 
-        // --- EE 4 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
+        // --- EE 5 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
         let logoClicks = 0;
         const logo = document.querySelector('.logo-badge');
         if (logo) {
@@ -385,7 +404,7 @@
             });
         }
 
-        // --- EE 5 : FESTIN DE RAMEN (Clic 5x sur le Footer) ---
+        // --- EE 6 : FESTIN DE RAMEN (Clic 5x sur le Footer) ---
         let fireClicks = 0;
         const footerText = document.querySelector('footer p');
         if (footerText) {
