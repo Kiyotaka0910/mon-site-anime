@@ -145,14 +145,13 @@
     </footer>
 
     <script>
+        /* ==============================================
+           1. GESTION DES THÈMES DYNAMIQUES
+        ============================================== */
         function setTheme(themeName, btnElement) {
-            // Applique le thème sur l'élément racine
             document.documentElement.setAttribute('data-theme', themeName);
-            
-            // Sauvegarde dans le navigateur
             localStorage.setItem('otaku_theme', themeName);
 
-            // Met à jour la classe active sur les boutons
             document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
             if (btnElement) {
                 btnElement.classList.add('active');
@@ -162,11 +161,129 @@
             }
         }
 
-        // Chargement automatique du thème sauvegardé au démarrage
         (function initTheme() {
             const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
             setTheme(savedTheme);
         })();
+
+        /* ==============================================
+           2. SYSTÈME DES 5 EASTER EGGS
+        ============================================== */
+
+        // --- EE 1 & 2 & 3 : Clavier (Konami Code, Gojo, Kira) ---
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        let typedKeys = '';
+
+        document.addEventListener('keydown', (e) => {
+            // Check Code Konami (Super Saiyan)
+            if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    activateSuperSaiyan();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+
+            // Check Mots-clés (Gojo & Kira)
+            typedKeys += e.key.toLowerCase();
+            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
+
+            if (typedKeys.endsWith('gojo')) {
+                activateInfiniteVoid();
+                typedKeys = '';
+            }
+            if (typedKeys.endsWith('kira')) {
+                activateDeathNote();
+                typedKeys = '';
+            }
+        });
+
+        function activateSuperSaiyan() {
+            document.body.style.transition = "all 0.5s ease";
+            document.body.style.boxShadow = "inset 0 0 100px #ffcc00, 0 0 50px #ff9900";
+            alert("💥 MODE SUPER SAIYAN ACTIVÉ ! TON KI EST AU MAXIMUM !");
+            setTimeout(() => { document.body.style.boxShadow = "none"; }, 5000);
+        }
+
+        function activateInfiniteVoid() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: radial-gradient(circle, #4a00e0, #000000);
+                z-index: 9999; display: flex; justify-content: center; align-items: center;
+                color: #fff; font-size: 2rem; font-weight: 800; text-shadow: 0 0 20px #8a2be2;
+                transition: opacity 1s ease; opacity: 1; pointer-events: none; text-align: center; padding: 20px;
+            `;
+            overlay.innerHTML = "🌌 Ryōiki Tenkai : Muryōkūsho<br><span style='font-size: 1.2rem; font-weight: 400;'>(Infinite Void)</span>";
+            document.body.appendChild(overlay);
+
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 1000);
+            }, 3000);
+        }
+
+        function activateDeathNote() {
+            document.body.style.filter = "invert(1) hue-rotate(180deg)";
+            setTimeout(() => {
+                document.body.style.filter = "none";
+                alert("📓 Ton nom a été écrit dans le cahier...");
+            }, 800);
+        }
+
+        // --- EE 4 : Multi-Clonage (Clic 7x sur le Badge "OTAKU HUB") ---
+        let logoClicks = 0;
+        const logo = document.querySelector('.logo-badge');
+        if (logo) {
+            logo.addEventListener('click', () => {
+                logoClicks++;
+                if (logoClicks === 7) {
+                    alert("🍥 KAGE BUNSHIN NO JUTSU ! Multi-clonage réussi !");
+                    for (let i = 0; i < 15; i++) {
+                        const clone = logo.cloneNode(true);
+                        clone.style.position = 'fixed';
+                        clone.style.top = Math.random() * 80 + 'vh';
+                        clone.style.left = Math.random() * 80 + 'vw';
+                        clone.style.zIndex = '999';
+                        clone.style.pointerEvents = 'none';
+                        document.body.appendChild(clone);
+                        setTimeout(() => clone.remove(), 2500);
+                    }
+                    logoClicks = 0;
+                }
+            });
+        }
+
+        // --- EE 5 : Pluie de Ramen (Clic 5x sur le Footer) ---
+        let fireClicks = 0;
+        const footerText = document.querySelector('footer p');
+        if (footerText) {
+            footerText.addEventListener('click', () => {
+                fireClicks++;
+                if (fireClicks === 5) {
+                    for (let i = 0; i < 30; i++) {
+                        const ramen = document.createElement('div');
+                        ramen.innerText = '🍜';
+                        ramen.style.cssText = `
+                            position: fixed; top: -50px; left: ${Math.random() * 100}vw;
+                            font-size: ${Math.random() * 20 + 20}px; z-index: 9999;
+                            transition: transform 3s linear, opacity 3s ease;
+                            pointer-events: none;
+                        `;
+                        document.body.appendChild(ramen);
+                        setTimeout(() => {
+                            ramen.style.transform = `translateY(105vh) rotate(${Math.random() * 360}deg)`;
+                            ramen.style.opacity = '0';
+                        }, 50);
+                        setTimeout(() => ramen.remove(), 3100);
+                    }
+                    fireClicks = 0;
+                }
+            });
+        }
     </script>
 
 </body>
