@@ -167,7 +167,7 @@
         })();
 
         /* ==============================================
-           2. DÉTECTION ET LOGIQUE DES 5 EASTER EGGS
+           2. DÉTECTION ET LOGIQUE DES EASTER EGGS
         ============================================== */
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
@@ -185,7 +185,7 @@
                 konamiIndex = 0;
             }
 
-            // Mots-clés GOJO & KIRA
+            // Mots-clés GOJO, KIRA & SUKUNA
             typedKeys += e.key.toLowerCase();
             if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
 
@@ -195,6 +195,10 @@
             }
             if (typedKeys.endsWith('kira')) {
                 activateDeathNote();
+                typedKeys = '';
+            }
+            if (typedKeys.endsWith('sukuna')) {
+                activateSukunaDomain();
                 typedKeys = '';
             }
         });
@@ -257,7 +261,54 @@
             }, 3800);
         }
 
-        // --- EE 3 : DEATH NOTE ---
+        // --- EE 3 : SUKUNA MALEVOLENT SHRINE ---
+        function activateSukunaDomain() {
+            document.body.classList.add('ee-shaking');
+
+            const overlay = document.createElement('div');
+            overlay.className = 'sukuna-overlay';
+            overlay.innerHTML = `
+                <div class="sukuna-aura"></div>
+                <div class="sukuna-slash-container" id="slashContainer"></div>
+                <div class="sukuna-container">
+                    <h2 class="sukuna-kanji">伏魔御廚</h2>
+                    <p class="sukuna-subtext">EXTENSION DU TERRITOIRE : AUTEL DÉMONIAQUE</p>
+                </div>
+            `;
+
+            document.body.appendChild(overlay);
+
+            const slashContainer = document.getElementById('slashContainer');
+            const slashInterval = setInterval(() => {
+                createSlash(slashContainer);
+            }, 60);
+
+            setTimeout(() => {
+                clearInterval(slashInterval);
+                document.body.classList.remove('ee-shaking');
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 500);
+            }, 4000);
+        }
+
+        function createSlash(container) {
+            const slash = document.createElement('div');
+            slash.className = 'sukuna-slash';
+
+            const top = Math.random() * 100;
+            const left = Math.random() * 100;
+            const angle = Math.random() * 360;
+
+            slash.style.top = `${top}%`;
+            slash.style.left = `${left}%`;
+            slash.style.transform = `rotate(${angle}deg)`;
+
+            container.appendChild(slash);
+
+            setTimeout(() => slash.remove(), 300);
+        }
+
+        // --- EE 4 : DEATH NOTE ---
         function activateDeathNote() {
             const bookContainer = document.createElement('div');
             bookContainer.className = 'dn-book-container';
@@ -308,7 +359,7 @@
             }, 4500);
         }
 
-        // --- EE 4 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
+        // --- EE 5 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
         let logoClicks = 0;
         const logo = document.querySelector('.logo-badge');
         if (logo) {
@@ -358,7 +409,7 @@
             });
         }
 
-        // --- EE 5 : FESTIN DE RAMEN (Clic 5x sur le Footer) ---
+        // --- EE 6 : FESTIN DE RAMEN (Clic 5x sur le Footer) ---
         let fireClicks = 0;
         const footerText = document.querySelector('footer p');
         if (footerText) {
