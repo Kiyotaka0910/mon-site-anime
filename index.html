@@ -167,7 +167,7 @@
         })();
 
         /* ==============================================
-           2. DÉTECTION ET LOGIQUE DES 5 EASTER EGGS
+           2. DÉTECTION ET LOGIQUE DES EASTER EGGS
         ============================================== */
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
@@ -185,7 +185,7 @@
                 konamiIndex = 0;
             }
 
-            // Mots-clés GOJO & KIRA
+            // Mots-clés GOJO, KIRA & SUKUNA
             typedKeys += e.key.toLowerCase();
             if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
 
@@ -195,6 +195,10 @@
             }
             if (typedKeys.endsWith('kira')) {
                 activateDeathNote();
+                typedKeys = '';
+            }
+            if (typedKeys.endsWith('sukuna')) {
+                activateSukuna();
                 typedKeys = '';
             }
         });
@@ -268,7 +272,7 @@
                         <div class="dn-cover-title">DEATH NOTE</div>
                     </div>
                     <div class="dn-page">
-                        <div style="font-size: 1rem; color: #888; margin-bottom: 15px;">How to use it...</div>
+                        <div style="font-size: 1.0rem; color: #888; margin-bottom: 15px;">How to use it...</div>
                         <div id="dnWrittenText" style="font-weight: bold; color: #900;"></div>
                     </div>
                     <div class="dn-pen">✒️</div>
@@ -306,6 +310,29 @@
                     bookContainer.remove();
                 }, 800);
             }, 4500);
+        }
+
+        // --- EE : SUKUNA MALEVOLENT SHRINE ---
+        function activateSukuna() {
+            document.body.classList.add('ee-shaking');
+
+            const overlay = document.createElement('div');
+            overlay.className = 'sukuna-overlay';
+            overlay.innerHTML = `
+                <div class="sukuna-bg"></div>
+                <div class="sukuna-container">
+                    <h2 class="sukuna-kanji">領域展開 : 伏魔御廚子</h2>
+                    <p class="sukuna-subtext">MALEVOLENT SHRINE</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            setTimeout(() => document.body.classList.remove('ee-shaking'), 600);
+
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 800);
+            }, 3800);
         }
 
         // --- EE 4 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
