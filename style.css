@@ -1,649 +1,108 @@
 /* ==============================================
-   1. SYSTÈME DE THÈMES DYNAMIQUES (VARIABLES)
+   EASTER EGG : SUKUNA - MALEVOLENT SHRINE (FUKUMA MIZUSHI)
 ============================================== */
 
-/* Thème 1 : Cyber Otaku (Par défaut) */
-:root, [data-theme="cyber"] {
-    --bg-color: #06070c;
-    --panel-bg: rgba(18, 20, 32, 0.85);
-    --blue-neon: #2e90ff;
-    --pink-neon: #ff4757;
-    --text-main: #ffffff;
-    --text-sub: #a4b0be;
-    --card-border: rgba(46, 144, 255, 0.2);
-}
-
-/* Thème 2 : Dark Fantasy (Berserk / Blood) */
-[data-theme="dark-fantasy"] {
-    --bg-color: #0a0404;
-    --panel-bg: rgba(28, 10, 10, 0.88);
-    --blue-neon: #ff3333;
-    --pink-neon: #800000;
-    --text-main: #f5f5f5;
-    --text-sub: #b38f8f;
-    --card-border: rgba(255, 51, 51, 0.25);
-}
-
-/* Thème 3 : Synthwave Neon (Cyberpunk / Edgerunners) */
-[data-theme="synthwave"] {
-    --bg-color: #0f051d;
-    --panel-bg: rgba(30, 15, 50, 0.88);
-    --blue-neon: #00f0ff;
-    --pink-neon: #ff007f;
-    --text-main: #ffffff;
-    --text-sub: #c3aed6;
-    --card-border: rgba(255, 0, 127, 0.25);
-}
-
-/* Thème 4 : Gold Shonen (Dragon Ball / Saint Seiya) */
-[data-theme="gold-shonen"] {
-    --bg-color: #0d0a03;
-    --panel-bg: rgba(30, 24, 10, 0.88);
-    --blue-neon: #ffb703;
-    --pink-neon: #fb8500;
-    --text-main: #ffffff;
-    --text-sub: #d4c5a9;
-    --card-border: rgba(255, 183, 3, 0.25);
-}
-
-/* Thème 5 : Sakura 🌸 */
-[data-theme="sakura"] {
-    --bg-color: #0f060a;
-    --panel-bg: rgba(35, 15, 25, 0.85);
-    --blue-neon: #ff75a0;
-    --pink-neon: #ffb3c6;
-    --text-main: #ffffff;
-    --text-sub: #e0a6b8;
-    --card-border: rgba(255, 117, 160, 0.3);
-}
-
-/* Thème 6 : Saiyan 💥 */
-[data-theme="saiyan"] {
-    --bg-color: #0c0803;
-    --panel-bg: rgba(25, 18, 10, 0.85);
-    --blue-neon: #ffaa00;
-    --pink-neon: #ff5500;
-    --text-main: #ffffff;
-    --text-sub: #d4b28c;
-    --card-border: rgba(255, 170, 0, 0.3);
-}
-
-/* Thème 7 : Shadow 💜 */
-[data-theme="shadow"] {
-    --bg-color: #06040d;
-    --panel-bg: rgba(12, 10, 24, 0.9);
-    --blue-neon: #9d4edd;
-    --pink-neon: #3a0ca3;
-    --text-main: #ffffff;
-    --text-sub: #a29bfe;
-    --card-border: rgba(157, 78, 221, 0.35);
-}
-
-/* Thème 8 : EVA-01 🤖 */
-[data-theme="eva"] {
-    --bg-color: #0a050f;
-    --panel-bg: rgba(18, 10, 25, 0.88);
-    --blue-neon: #39ff14;
-    --pink-neon: #8a2be2;
-    --text-main: #ffffff;
-    --text-sub: #b3a2c7;
-    --card-border: rgba(57, 255, 20, 0.3);
-}
-
-/* Thème 9 : Crimson 🩸 */
-[data-theme="crimson"] {
-    --bg-color: #0c0405;
-    --panel-bg: rgba(25, 10, 12, 0.88);
-    --blue-neon: #ff2a2a;
-    --pink-neon: #800000;
-    --text-main: #ffffff;
-    --text-sub: #d19a9a;
-    --card-border: rgba(255, 42, 42, 0.3);
-}
-
-/* Thème 10 : Shinobi 🥷 */
-[data-theme="shinobi"] {
-    --bg-color: #030c08;
-    --panel-bg: rgba(8, 20, 15, 0.88);
-    --blue-neon: #00e676;
-    --pink-neon: #1de9b6;
-    --text-main: #ffffff;
-    --text-sub: #82c4a7;
-    --card-border: rgba(0, 230, 118, 0.3);
-}
-
-
-/* --- CONFIGURATION GLOBALE --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* --- STYLE DU FOND ANIMÉ --- */
-body {
-    background-color: var(--bg-color);
-    background-image: linear-gradient(to bottom, rgba(13, 14, 18, 0.45), rgba(13, 14, 18, 0.65)), url('images/fuji.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: var(--text-main);
-    min-height: 100vh;
+/* Overlay principal du Territoire */
+.sukuna-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #2b0000 0%, #050000 100%);
+    z-index: 10000;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    overflow-x: hidden;
-    position: relative;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    overflow: hidden;
+    transition: opacity 0.5s ease;
 }
 
-/* Conteneur des éléments qui bougent */
-.animated-background {
-    position: fixed;
+/* Aura d'énergie maudite rouge */
+.sukuna-aura {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    animation: sukunaPulse 0.15s infinite alternate;
+}
+
+@keyframes sukunaPulse {
+    0% { opacity: 0.3; transform: scale(0.98); }
+    100% { opacity: 0.8; transform: scale(1.02); }
+}
+
+/* Conteneur pour les entailles de découpe */
+.sukuna-slash-container {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
     pointer-events: none;
-    overflow: hidden;
+    z-index: 10001;
 }
 
-/* Style de base des nuages */
-.cloud {
+/* Animation d'une découpe (Cleave / Dismantle) */
+.sukuna-slash {
     position: absolute;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    filter: blur(20px);
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff3333, #ffffff, #ff3333, transparent);
+    box-shadow: 0 0 15px #ff0000, 0 0 25px #ffffff;
+    opacity: 0;
+    transform-origin: center;
+    animation: slashCut 0.25s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
 
-/* Nuage 1 : Gros et lent */
-.cloud-1 {
-    top: 15%;
-    width: 600px;
-    height: 200px;
-    animation: drift 60s linear infinite;
+@keyframes slashCut {
+    0% {
+        width: 0%;
+        opacity: 0;
+    }
+    50% {
+        width: 130%;
+        opacity: 1;
+    }
+    100% {
+        width: 150%;
+        opacity: 0;
+    }
 }
 
-/* Nuage 2 : Plus bas et vitesse différente */
-.cloud-2 {
-    top: 35%;
-    width: 400px;
-    height: 150px;
-    animation: drift 45s linear infinite reverse;
-}
-
-/* Nuage 3 : Petit et plus haut */
-.cloud-3 {
-    top: 5%;
-    width: 300px;
-    height: 100px;
-    animation: drift 80s linear infinite;
-}
-
-/* Brume Japonaise au sol qui pulse doucement */
-.mist {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 35vh;
-    background: linear-gradient(to top, var(--pink-neon), transparent);
-    opacity: 0.15;
-    animation: pulseMist 8s ease-in-out infinite alternate;
-}
-
-/* --- LES ANIMATIONS (KEYFRAMES) --- */
-
-@keyframes drift {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100vw); }
-}
-
-@keyframes pulseMist {
-    0% { opacity: 0.1; transform: scaleY(0.9); }
-    100% { opacity: 0.25; transform: scaleY(1.1); }
-}
-
-/* Ambiance lumineuse en arrière-plan */
-.overlay-glow {
-    position: absolute;
-    top: -150px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(circle, var(--blue-neon) 0%, rgba(0,0,0,0) 70%);
-    opacity: 0.2;
-    pointer-events: none;
-    z-index: 0;
-    transition: background 0.4s ease;
-}
-
-/* --- HEADER / HERO SECTION --- */
-.hero-section {
-    text-align: center;
-    padding: 60px 20px 40px;
-    z-index: 1;
-}
-
-.logo-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: var(--blue-neon);
-    border: 1px solid var(--blue-neon);
-    margin-bottom: 15px;
-    transition: all 0.4s ease;
-}
-
-.hero-section h1 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-}
-
-.hero-section h1 span {
-    background: linear-gradient(45deg, var(--blue-neon), var(--pink-neon));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: all 0.4s ease;
-}
-
-.hero-section p {
-    color: var(--text-sub);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-    transition: color 0.4s ease;
-}
-
-/* --- BARRE DE BOUTONS DE THÈMES --- */
-.theme-switcher {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 25px;
-    flex-wrap: wrap;
-}
-
-.theme-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-main);
-    padding: 8px 18px;
-    border-radius: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-}
-
-.theme-btn:hover {
-    transform: translateY(-2px);
-    border-color: var(--blue-neon);
-}
-
-.theme-btn.active {
-    background: var(--blue-neon);
-    color: #ffffff;
-    border-color: var(--blue-neon);
-    box-shadow: 0 0 15px var(--blue-neon);
-    font-weight: 800;
-}
-
-/* --- CONTENEUR DES CARTES --- */
-.hub-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
-    z-index: 1;
-}
-
-/* --- LE STYLE DES CARTES --- */
-.card {
-    background-color: var(--panel-bg);
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(12px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.4s ease, 
-                border-color 0.4s ease,
-                background-color 0.4s ease;
-}
-
-.card-image {
-    height: 160px;
-    padding: 20px;
-    display: flex;
-    align-items: flex-end;
+/* Textes et Kanji de Sukuna */
+.sukuna-container {
     position: relative;
-    background-size: cover;
-    background-position: center;
-}
-
-/* Couleurs dynamiques pour chaque carte */
-.card-character .card-image {
-    background: linear-gradient(135deg, var(--pink-neon), rgba(0,0,0,0.6));
-}
-.card-opening .card-image {
-    background: linear-gradient(135deg, var(--blue-neon), rgba(0,0,0,0.6));
-}
-.card-ending .card-image {
-    background: linear-gradient(135deg, var(--pink-neon), rgba(0,0,0,0.6));
-}
-.card-ost .card-image {
-    background: linear-gradient(135deg, var(--blue-neon), rgba(0,0,0,0.6));
-}
-.card-roulette .card-image,
-.card-vs .card-image,
-.card-game .card-image {
-    background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));
-}
-
-.category-tag {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-}
-
-.card-content {
-    padding: 25px;
+    z-index: 10002;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    background: transparent;
-}
-
-.card-content h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--text-main);
-    transition: color 0.3s ease;
-}
-
-.card-content p {
-    color: var(--text-sub);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    transition: color 0.4s ease;
-}
-
-.card-action {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--blue-neon);
-    display: flex;
     align-items: center;
-    transition: gap 0.3s ease, color 0.4s ease;
 }
 
-/* --- ANIMATIONS AU SURVOL (HOVER) --- */
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-    border-color: var(--blue-neon);
+.sukuna-kanji {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ff2222;
+    text-shadow: 0 0 20px #ff0000, 0 0 40px #800000, 0 0 60px #000;
+    margin: 15px 0 5px 0;
+    letter-spacing: 4px;
+    animation: sukunaGlow 0.1s infinite alternate;
 }
 
-.card:hover .card-action {
-    text-decoration: underline;
+.sukuna-subtext {
+    font-size: 1.3rem;
+    letter-spacing: 6px;
+    color: #ff6666;
+    text-shadow: 0 0 12px #ff0000;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
-/* --- FOOTER --- */
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: var(--text-sub);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--card-border);
-    margin-top: 40px;
-    z-index: 1;
-    transition: color 0.4s ease, border-color 0.4s ease;
-    cursor: pointer;
-}
-
-/* --- RESPONSIVE MOBILE --- */
-@media (max-width: 600px) {
-    .hero-section h1 { font-size: 2rem; }
-    .hero-section p { font-size: 0.95rem; }
-    .hub-container { grid-template-columns: 1fr; gap: 20px; }
-}
-
-
-/* ==============================================
-   2. EASTER EGGS & EFFETS SPÉCIAUX
-============================================== */
-
-/* --- EFFET GLOBAL : SECOUSSE DE L'ÉCRAN --- */
-@keyframes screenShake {
-    0%, 100% { transform: translate(0, 0); }
-    20% { transform: translate(-10px, 8px) rotate(-1deg); }
-    40% { transform: translate(10px, -8px) rotate(1deg); }
-    60% { transform: translate(-8px, -4px); }
-    80% { transform: translate(8px, 4px); }
-}
-.ee-shaking { 
-    animation: screenShake 0.12s infinite; 
-}
-
-/* --- EASTER EGG : AURA SUPER SAIYAN --- */
-@keyframes saiyanPulse {
-    0% { box-shadow: inset 0 0 60px #ffea00, inset 0 0 120px #ff6a00; }
-    50% { box-shadow: inset 0 0 120px #ffee00, inset 0 0 200px #ff3300; }
-    100% { box-shadow: inset 0 0 60px #ffea00, inset 0 0 120px #ff6a00; }
-}
-.saiyan-aura-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none; z-index: 9997;
-    animation: saiyanPulse 0.3s infinite alternate;
-    background: radial-gradient(circle, rgba(255,230,0,0.15) 0%, rgba(255,100,0,0.3) 80%);
-}
-@keyframes saiyanLightning {
-    0%, 100% { opacity: 0; }
-    10% { opacity: 1; transform: scale(1.2) rotate(10deg); }
-    20% { opacity: 0; }
-    60% { opacity: 0.9; transform: scale(0.9) rotate(-15deg); }
-}
-.saiyan-spark {
-    position: fixed; width: 150px; height: 150px;
-    background: radial-gradient(circle, #00f0ff 10%, transparent 70%);
-    filter: drop-shadow(0 0 15px #00e5ff); pointer-events: none; z-index: 9998;
-    animation: saiyanLightning 0.4s infinite;
-}
-
-/* --- EASTER EGG : GOJO INFINITE VOID --- */
-.gojo-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: radial-gradient(circle at center, #0e0024 0%, #030008 100%);
-    z-index: 10000; display: flex; flex-direction: column;
-    justify-content: center; align-items: center; color: #fff;
-    font-family: 'Poppins', sans-serif; text-align: center;
-    transition: opacity 0.8s ease; overflow: hidden;
-}
-.gojo-cosmos-bg {
-    position: absolute; width: 200%; height: 200%;
-    background: radial-gradient(2px 2px at 20px 30px, #00f0ff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #a000ff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 80px 120px, #ffffff, rgba(0,0,0,0));
-    background-repeat: repeat; background-size: 200px 200px;
-    opacity: 0.6; animation: spaceZoom 8s linear infinite; pointer-events: none;
-}
-@keyframes spaceZoom {
-    0% { transform: scale(1) rotate(0deg); }
-    100% { transform: scale(2) rotate(15deg); }
-}
-.gojo-container {
-    position: relative; z-index: 2; display: flex;
-    flex-direction: column; align-items: center;
-}
-.gojo-svg-art {
-    width: 280px; height: 180px;
-    filter: drop-shadow(0 0 20px #00f0ff) drop-shadow(0 0 40px #8a2be2);
-    animation: gojoFloat 2s ease-in-out infinite alternate;
-}
-@keyframes gojoFloat {
-    from { transform: translateY(0px) scale(0.98); }
-    to { transform: translateY(-10px) scale(1.02); }
-}
-.gojo-kanji {
-    font-size: 3rem; font-weight: 800; color: #e0b0ff;
-    text-shadow: 0 0 20px #00f0ff, 0 0 40px #a000ff; margin: 15px 0 5px 0;
-    letter-spacing: 2px; animation: kanjiGlow 1.5s infinite alternate;
-}
-.gojo-subtext {
-    font-size: 1.2rem; letter-spacing: 6px; color: #00f0ff;
-    text-shadow: 0 0 12px #00f0ff; margin: 0;
-}
-@keyframes kanjiGlow {
-    from { opacity: 0.8; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1.02); }
-}
-
-/* --- EASTER EGG : DEATH NOTE 3D --- */
-@keyframes dnAppear {
-    0% { transform: scale(0) rotateX(45deg); opacity: 0; }
-    70% { transform: scale(1.1) rotateX(0deg); opacity: 1; }
-    100% { transform: scale(1) rotateX(0deg); opacity: 1; }
-}
-@keyframes penWrite {
-    0% { transform: translate(0, 0) rotate(-20deg); }
-    25% { transform: translate(40px, 10px) rotate(-10deg); }
-    50% { transform: translate(80px, -5px) rotate(-25deg); }
-    75% { transform: translate(120px, 15px) rotate(-15deg); }
-    100% { transform: translate(160px, 0px) rotate(-20deg); }
-}
-.dn-book-container {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 320px; height: 420px; z-index: 10000; perspective: 1000px;
-    animation: dnAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-.dn-book {
-    width: 100%; height: 100%; background: #111; border: 3px solid #333;
-    border-radius: 8px; box-shadow: 0 0 50px rgba(255,0,0,0.6), inset 0 0 15px #000;
-    position: relative; transform-style: preserve-3d;
-}
-.dn-cover {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: #0a0a0a; border-radius: 8px; border: 2px solid #222;
-    display: flex; justify-content: center; align-items: center;
-    transform-origin: left; transition: transform 1s ease-in-out;
-    backface-visibility: hidden; z-index: 2;
-}
-.dn-cover-title {
-    color: #e6e6e6; font-family: 'Times New Roman', serif; font-size: 2.2rem;
-    letter-spacing: 5px; text-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-.dn-page {
-    position: absolute; top: 10px; right: 10px; width: 290px; height: 395px;
-    background: #f4ebd9; border-radius: 4px; padding: 25px; box-sizing: border-box;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.2); color: #111;
-    font-family: 'Reenie Beanie', cursive, sans-serif; font-size: 2rem;
-}
-.dn-pen {
-    position: absolute; top: 100px; left: 30px; font-size: 2.5rem;
-    pointer-events: none; z-index: 3; opacity: 0; transition: opacity 0.3s;
-}
-.dn-writing-active .dn-pen {
-    opacity: 1; animation: penWrite 2s linear infinite;
-}
-
-/* --- EASTER EGG : OTAKU HUB (KAGE BUNSHIN) --- */
-.chakra-charging {
-    box-shadow: 0 0 25px #00f0ff, 0 0 50px #0088ff !important;
-    animation: chakraPulse 0.3s infinite alternate;
-}
-@keyframes chakraPulse {
-    from { transform: scale(1.05); }
-    to { transform: scale(1.15); }
-}
-.ninja-smoke-puff {
-    position: fixed; width: 150px; height: 150px;
-    background: radial-gradient(circle, rgba(240,240,255,0.95) 0%, rgba(180,180,200,0.6) 50%, transparent 80%);
-    border-radius: 50%; pointer-events: none; z-index: 10001;
-    animation: smokeExplode 0.7s ease-out forwards;
-}
-@keyframes smokeExplode {
-    0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; filter: blur(2px); }
-    60% { opacity: 0.9; filter: blur(6px); }
-    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; filter: blur(15px); }
-}
-.ninja-banner {
-    position: fixed; top: 15%; left: 50%; transform: translateX(-50%);
-    background: rgba(10, 10, 20, 0.95); border: 2px solid #00f0ff;
-    padding: 12px 30px; border-radius: 50px; color: #fff; font-weight: 800;
-    font-size: 1.5rem; z-index: 10002; box-shadow: 0 0 30px #00f0ff;
-    letter-spacing: 2px; animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-@keyframes bannerPop {
-    0% { transform: translate(-50%, -20px) scale(0.5); opacity: 0; }
-    100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-}
-
-/* --- EASTER EGG : FESTIN DE RAMEN (ICHIRAKU) --- */
-.ramen-bowl-giant {
-    position: fixed; bottom: -20px; left: 50%; transform: translateX(-50%);
-    font-size: 7rem; z-index: 10000; pointer-events: none;
-    filter: drop-shadow(0 0 30px #ff9900);
-    animation: bowlBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-@keyframes bowlBounce {
-    0% { transform: translate(-50%, 100px) scale(0.5); }
-    100% { transform: translate(-50%, 0) scale(1); }
-}
-.ramen-steam {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-    font-size: 2.5rem; opacity: 0.8; z-index: 10001; pointer-events: none;
-    animation: steamRise 1.8s infinite ease-out;
-}
-@keyframes steamRise {
-    0% { transform: translate(-50%, 0) scale(0.8); opacity: 0.8; }
-    100% { transform: translate(-50%, -60px) scale(1.4); opacity: 0; }
-}
-.ramen-drop-item {
-    position: fixed; top: -60px; z-index: 9999; pointer-events: none;
-    user-select: none; animation: ramenFall linear forwards;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-}
-@keyframes ramenFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    85% { opacity: 1; }
-    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-}
-.ramen-notice {
-    position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
-    background: linear-gradient(135deg, #ff4500, #ff8c00);
-    color: #fff; padding: 12px 28px; border-radius: 30px;
-    font-weight: 800; font-size: 1.4rem; z-index: 10002;
-    box-shadow: 0 0 25px rgba(255, 69, 0, 0.8); text-align: center;
-    animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+@keyframes sukunaGlow {
+    from { text-shadow: 0 0 15px #ff0000, 0 0 30px #800000; transform: scale(0.99); }
+    to { text-shadow: 0 0 25px #ff3333, 0 0 50px #ff0000, 0 0 10px #ffffff; transform: scale(1.01); }
 }
