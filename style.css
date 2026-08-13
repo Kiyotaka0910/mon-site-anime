@@ -707,47 +707,35 @@ footer {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 99999;
-    transition: opacity 0.8s ease;
+    z-index: 999999; /* S'assure de passer au-dessus de tout */
+    overflow: hidden;
 }
 
 .sukuna-slash {
     position: absolute;
-    width: 320px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #ff0000, #ffffff, #ff0000, transparent);
-    box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
-    border-radius: 50%;
+    width: 80vw; /* Longueur de la lame */
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, #ff1a1a 20%, #ffffff 50%, #ff1a1a 80%, transparent 100%);
+    box-shadow: 0 0 15px #ff0000, 0 0 35px #ff0000, 0 0 50px #ffffff;
+    border-radius: 4px;
     opacity: 0;
-    animation: slashAnime 0.4s ease-out forwards;
+    transform-origin: center center;
+    /* Utilise la variable --angle définie par le JS */
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(0);
+    animation: slashAnime 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
 
 @keyframes slashAnime {
     0% {
         opacity: 0;
-        transform: scaleX(0);
+        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(0);
     }
-    50% {
+    30% {
         opacity: 1;
-        transform: scaleX(1.3);
+        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1.3);
     }
     100% {
         opacity: 0;
-        transform: scaleX(1);
+        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1);
     }
-}
-
-@keyframes fadeInSukuna {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes pulseSukunaBg {
-    from { transform: scale(1); opacity: 0.9; }
-    to { transform: scale(1.05); opacity: 1; }
-}
-
-@keyframes scaleUpSukuna {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
 }
