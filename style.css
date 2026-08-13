@@ -267,7 +267,7 @@ body {
     transition: color 0.4s ease;
 }
 
-/* --- BARRE DE BOUTONS DE THÈME --- */
+/* --- BARRE DE BOUTONS DE THÈMES --- */
 .theme-switcher {
     display: flex;
     justify-content: center;
@@ -429,6 +429,7 @@ footer {
     margin-top: 40px;
     z-index: 1;
     transition: color 0.4s ease, border-color 0.4s ease;
+    cursor: pointer;
 }
 
 /* --- RESPONSIVE MOBILE --- */
@@ -436,4 +437,213 @@ footer {
     .hero-section h1 { font-size: 2rem; }
     .hero-section p { font-size: 0.95rem; }
     .hub-container { grid-template-columns: 1fr; gap: 20px; }
+}
+
+
+/* ==============================================
+   2. EASTER EGGS & EFFETS SPÉCIAUX
+============================================== */
+
+/* --- EFFET GLOBAL : SECOUSSE DE L'ÉCRAN --- */
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-10px, 8px) rotate(-1deg); }
+    40% { transform: translate(10px, -8px) rotate(1deg); }
+    60% { transform: translate(-8px, -4px); }
+    80% { transform: translate(8px, 4px); }
+}
+.ee-shaking { 
+    animation: screenShake 0.12s infinite; 
+}
+
+/* --- EASTER EGG : AURA SUPER SAIYAN --- */
+@keyframes saiyanPulse {
+    0% { box-shadow: inset 0 0 60px #ffea00, inset 0 0 120px #ff6a00; }
+    50% { box-shadow: inset 0 0 120px #ffee00, inset 0 0 200px #ff3300; }
+    100% { box-shadow: inset 0 0 60px #ffea00, inset 0 0 120px #ff6a00; }
+}
+.saiyan-aura-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 9997;
+    animation: saiyanPulse 0.3s infinite alternate;
+    background: radial-gradient(circle, rgba(255,230,0,0.15) 0%, rgba(255,100,0,0.3) 80%);
+}
+@keyframes saiyanLightning {
+    0%, 100% { opacity: 0; }
+    10% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+    20% { opacity: 0; }
+    60% { opacity: 0.9; transform: scale(0.9) rotate(-15deg); }
+}
+.saiyan-spark {
+    position: fixed; width: 150px; height: 150px;
+    background: radial-gradient(circle, #00f0ff 10%, transparent 70%);
+    filter: drop-shadow(0 0 15px #00e5ff); pointer-events: none; z-index: 9998;
+    animation: saiyanLightning 0.4s infinite;
+}
+
+/* --- EASTER EGG : GOJO INFINITE VOID --- */
+.gojo-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: radial-gradient(circle at center, #0e0024 0%, #030008 100%);
+    z-index: 10000; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; color: #fff;
+    font-family: 'Poppins', sans-serif; text-align: center;
+    transition: opacity 0.8s ease; overflow: hidden;
+}
+.gojo-cosmos-bg {
+    position: absolute; width: 200%; height: 200%;
+    background: radial-gradient(2px 2px at 20px 30px, #00f0ff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #a000ff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 80px 120px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat; background-size: 200px 200px;
+    opacity: 0.6; animation: spaceZoom 8s linear infinite; pointer-events: none;
+}
+@keyframes spaceZoom {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(2) rotate(15deg); }
+}
+.gojo-container {
+    position: relative; z-index: 2; display: flex;
+    flex-direction: column; align-items: center;
+}
+.gojo-svg-art {
+    width: 280px; height: 180px;
+    filter: drop-shadow(0 0 20px #00f0ff) drop-shadow(0 0 40px #8a2be2);
+    animation: gojoFloat 2s ease-in-out infinite alternate;
+}
+@keyframes gojoFloat {
+    from { transform: translateY(0px) scale(0.98); }
+    to { transform: translateY(-10px) scale(1.02); }
+}
+.gojo-kanji {
+    font-size: 3rem; font-weight: 800; color: #e0b0ff;
+    text-shadow: 0 0 20px #00f0ff, 0 0 40px #a000ff; margin: 15px 0 5px 0;
+    letter-spacing: 2px; animation: kanjiGlow 1.5s infinite alternate;
+}
+.gojo-subtext {
+    font-size: 1.2rem; letter-spacing: 6px; color: #00f0ff;
+    text-shadow: 0 0 12px #00f0ff; margin: 0;
+}
+@keyframes kanjiGlow {
+    from { opacity: 0.8; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1.02); }
+}
+
+/* --- EASTER EGG : DEATH NOTE 3D --- */
+@keyframes dnAppear {
+    0% { transform: scale(0) rotateX(45deg); opacity: 0; }
+    70% { transform: scale(1.1) rotateX(0deg); opacity: 1; }
+    100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+}
+@keyframes penWrite {
+    0% { transform: translate(0, 0) rotate(-20deg); }
+    25% { transform: translate(40px, 10px) rotate(-10deg); }
+    50% { transform: translate(80px, -5px) rotate(-25deg); }
+    75% { transform: translate(120px, 15px) rotate(-15deg); }
+    100% { transform: translate(160px, 0px) rotate(-20deg); }
+}
+.dn-book-container {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 320px; height: 420px; z-index: 10000; perspective: 1000px;
+    animation: dnAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.dn-book {
+    width: 100%; height: 100%; background: #111; border: 3px solid #333;
+    border-radius: 8px; box-shadow: 0 0 50px rgba(255,0,0,0.6), inset 0 0 15px #000;
+    position: relative; transform-style: preserve-3d;
+}
+.dn-cover {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #0a0a0a; border-radius: 8px; border: 2px solid #222;
+    display: flex; justify-content: center; align-items: center;
+    transform-origin: left; transition: transform 1s ease-in-out;
+    backface-visibility: hidden; z-index: 2;
+}
+.dn-cover-title {
+    color: #e6e6e6; font-family: 'Times New Roman', serif; font-size: 2.2rem;
+    letter-spacing: 5px; text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+.dn-page {
+    position: absolute; top: 10px; right: 10px; width: 290px; height: 395px;
+    background: #f4ebd9; border-radius: 4px; padding: 25px; box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2); color: #111;
+    font-family: 'Reenie Beanie', cursive, sans-serif; font-size: 2rem;
+}
+.dn-pen {
+    position: absolute; top: 100px; left: 30px; font-size: 2.5rem;
+    pointer-events: none; z-index: 3; opacity: 0; transition: opacity 0.3s;
+}
+.dn-writing-active .dn-pen {
+    opacity: 1; animation: penWrite 2s linear infinite;
+}
+
+/* --- EASTER EGG : OTAKU HUB (KAGE BUNSHIN) --- */
+.chakra-charging {
+    box-shadow: 0 0 25px #00f0ff, 0 0 50px #0088ff !important;
+    animation: chakraPulse 0.3s infinite alternate;
+}
+@keyframes chakraPulse {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.15); }
+}
+.ninja-smoke-puff {
+    position: fixed; width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(240,240,255,0.95) 0%, rgba(180,180,200,0.6) 50%, transparent 80%);
+    border-radius: 50%; pointer-events: none; z-index: 10001;
+    animation: smokeExplode 0.7s ease-out forwards;
+}
+@keyframes smokeExplode {
+    0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; filter: blur(2px); }
+    60% { opacity: 0.9; filter: blur(6px); }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; filter: blur(15px); }
+}
+.ninja-banner {
+    position: fixed; top: 15%; left: 50%; transform: translateX(-50%);
+    background: rgba(10, 10, 20, 0.95); border: 2px solid #00f0ff;
+    padding: 12px 30px; border-radius: 50px; color: #fff; font-weight: 800;
+    font-size: 1.5rem; z-index: 10002; box-shadow: 0 0 30px #00f0ff;
+    letter-spacing: 2px; animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes bannerPop {
+    0% { transform: translate(-50%, -20px) scale(0.5); opacity: 0; }
+    100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+}
+
+/* --- EASTER EGG : FESTIN DE RAMEN (ICHIRAKU) --- */
+.ramen-bowl-giant {
+    position: fixed; bottom: -20px; left: 50%; transform: translateX(-50%);
+    font-size: 7rem; z-index: 10000; pointer-events: none;
+    filter: drop-shadow(0 0 30px #ff9900);
+    animation: bowlBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes bowlBounce {
+    0% { transform: translate(-50%, 100px) scale(0.5); }
+    100% { transform: translate(-50%, 0) scale(1); }
+}
+.ramen-steam {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+    font-size: 2.5rem; opacity: 0.8; z-index: 10001; pointer-events: none;
+    animation: steamRise 1.8s infinite ease-out;
+}
+@keyframes steamRise {
+    0% { transform: translate(-50%, 0) scale(0.8); opacity: 0.8; }
+    100% { transform: translate(-50%, -60px) scale(1.4); opacity: 0; }
+}
+.ramen-drop-item {
+    position: fixed; top: -60px; z-index: 9999; pointer-events: none;
+    user-select: none; animation: ramenFall linear forwards;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+@keyframes ramenFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+.ramen-notice {
+    position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    color: #fff; padding: 12px 28px; border-radius: 30px;
+    font-weight: 800; font-size: 1.4rem; z-index: 10002;
+    box-shadow: 0 0 25px rgba(255, 69, 0, 0.8); text-align: center;
+    animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
