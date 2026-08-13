@@ -1,246 +1,461 @@
-<script>
-    /* MAPPING COMPLET DES 500 PERSONNAGES */
-    const rawCharacters = {
-        1: "Monkey D. Luffy", 2: "Roronoa Zoro", 3: "Nami", 4: "Usopp", 5: "Sanji Vinsmoke",
-        6: "Tony Tony Chopper", 7: "Nico Robin", 8: "Franky", 9: "Brook", 10: "Jinbe",
-        11: "Portgas D. Ace", 12: "Sabo", 13: "Shanks le Roux", 14: "Trafalgar D. Water Law", 15: "Eustass \"Captain\" Kid",
-        16: "Yamato", 17: "Kozuki Oden", 18: "Donquixote Doflamingo", 19: "Crocodile", 20: "Rob Lucci",
-        21: "Kaido", 22: "Charlotte Linlin (Big Mom)", 23: "Marshall D. Teach (Barbe Noire)", 24: "Edward Newgate (Barbe Blanche)", 25: "Gol D. Roger",
-        26: "Dracule Mihawk", 27: "Boa Hancock", 28: "Buggy le Clown", 29: "Marco le Phénix", 30: "Katakuri Charlotte",
-
-        31: "Naruto Uzumaki", 32: "Sasuke Uchiha", 33: "Sakura Haruno", 34: "Kakashi Hatake", 35: "Itachi Uchiha",
-        36: "Gaara", 37: "Jiraiya", 38: "Tsunade", 39: "Orochimaru", 40: "Shikamaru Nara",
-        41: "Hinata Hyuga", 42: "Neji Hyuga", 43: "Rock Lee", 44: "Might Guy", 45: "Minato Namikaze",
-        46: "Kyuubi", 47: "Obito Uchiha (Tobi)", 48: "Madara Uchiha", 49: "Pain (Nagato)", 50: "Konan",
-        51: "Deidara", 52: "Sasori", 53: "Hidan", 54: "Kakuzu", 55: "Kisame Hoshigaki",
-        56: "Zetsu", 57: "Hashirama Senju", 58: "Tobirama Senju", 59: "Hiruzen Sarutobi", 60: "Sai",
-        61: "Yamato (Tenzō)", 62: "Kiba Inuzuka", 63: "Shino Aburame", 64: "Choji Akimichi", 65: "Ino Yamanaka",
-        66: "Temari", 67: "Kankuro", 68: "Killer Bee", 69: "Zabuza Momochi", 70: "Kabuto",
-        71: "Asuma", 72: "Boruto Uzumaki", 73: "Sarada Uchiha", 74: "Mitsuki", 75: "Kawaki",
-
-        76: "Son Goku", 77: "Vegeta", 78: "Son Gohan", 79: "Trunks (Futur)", 80: "Piccolo",
-        81: "Krillin", 82: "Bulma", 83: "Yamcha", 84: "Tenshinhan", 85: "Chaozu",
-        86: "Kamé Sennin (Tortue Géniale)", 87: "Chichi", 88: "Videl", 89: "Son Goten", 90: "Trunks (Enfant)",
-        91: "Frieza (Freezer)", 92: "Cell", 93: "Majin Buu (Boubou)", 94: "Beerus", 95: "Whis",
-        96: "Broly", 97: "Bardock", 98: "Jiren", 99: "Hit", 100: "Goku Black",
-        101: "Zamasu", 102: "Caulifla", 103: "Kale", 104: "Cabba", 105: "C-17 (Android 17)",
-
-        106: "Eren Jaeger", 107: "Mikasa Ackerman", 108: "Levi Ackerman", 109: "Armin Arlert", 110: "Erwin Smith",
-        111: "Hange Zoë", 112: "Reiner Braun", 113: "Bertholdt Hoover", 114: "Annie Leonhart", 115: "Sasha Blouse",
-        116: "Jean Kirschtein", 117: "Connie Springer", 118: "Historia Reiss (Christa)", 119: "Ymir", 120: "Ymir (Le Titan Originel)",
-        121: "Zeke Jaeger", 122: "Oluo Bozado", 123: "Floch Forster", 124: "Gabi Braun", 125: "Falco Grice",
-        126: "Pieck Finger", 127: "Porco Galliard", 128: "Kenny Ackerman", 129: "Grisha Jaeger", 130: "Carla Jaeger",
-        131: "Rod Reiss", 132: "Dot Pixis", 133: "Keith Shadis", 134: "Marco Bott", 135: "Petra Ral",
-
-        136: "Yuji Itadori", 137: "Megumi Fushiguro", 138: "Nobara Kugisaki", 139: "Satoru Gojo", 140: "Ryomen Sukuna",
-        141: "Kento Nanami", 142: "Suguru Geto", 143: "Mahito", 144: "Jogo", 145: "Hanami",
-        146: "Toji Fushiguro", 147: "Maki Zenin", 148: "Kasumi Miwa", 149: "Toge Inumaki", 150: "Panda",
-        151: "Yuta Okkotsu", 152: "Aoi Todo", 153: "Mai Zenin", 154: "Kokichi Muta (Mechamaru)", 155: "Noritoshi Kamo",
-        156: "Momo Nishimiya", 157: "Utahime Iori", 158: "Mei Mei", 159: "Naobito Zenin", 160: "Choso",
-        161: "Eso", 162: "Rika Orimoto", 163: "Hiromi Higuruma", 164: "Hajime Kashimo",
-
-        165: "Tanjiro Kamado", 166: "Nezuko Kamado", 167: "Zenitsu Agatsuma", 168: "Inosuke Hashibira", 169: "Giyu Tomioka",
-        170: "Shinobu Kocho", 171: "Kyojuro Rengoku", 172: "Tengen Uzui", 173: "Muichiro Tokito", 174: "Mitsuri Kanroji",
-        175: "Gyomei Himejima", 176: "Obanai Iguro", 177: "Sanemi Shinazugawa", 178: "Genya Shinazugawa", 179: "Muzan Kibutsuji",
-        180: "Kokushibo", 181: "Doma", 182: "Akaza", 183: "Hantengu", 184: "Gyokko",
-        185: "Daki", 186: "Gyutaro", 187: "Kaigaku", 188: "Enmu", 189: "Rui",
-        190: "Kagaya Ubuyashiki", 191: "Sakonji Urokodaki", 192: "Sabito", 193: "Makomo", 194: "Hotaru Haganezuka",
-        195: "Yoriichi Tsugikuni",
-
-        196: "Izuku Midoriya (Deku)", 197: "Katsuki Bakugo", 198: "Shoto Todoroki", 199: "Ochaco Uraraka", 200: "Tenya Iida",
-        201: "Tsuyu Asui", 202: "Eijiro Kirishima", 203: "Mina Ashido", 204: "Denki Kaminari", 205: "Kyoka Jiro",
-        206: "Fumikage Tokoyami", 207: "Momo Yaoyorozu", 208: "Mezou Shoji", 209: "Hanta Sero", 210: "All Might (Toshinori Yagi)",
-        211: "Shota Aizawa (Eraser Head)", 212: "Endeavor", 213: "Hawks", 214: "Mirko", 215: "Nejire Hado",
-        216: "Tamaki Amajiki", 217: "Tomura Shigaraki", 218: "Mirio Togata", 219: "All For One", 220: "Himiko Toga",
-        221: "Dabi", 222: "Twice", 223: "Mr. Compress", 224: "Spinner", 225: "Overhaul (Kai Chisaki)",
-        226: "Stain", 227: "Gran Torino", 228: "Mount Lady", 229: "Present Mic",
-
-        230: "Gon Freecss", 231: "Killua Zoldyck", 232: "Kurapika", 233: "Leorio Paradinight", 234: "Hisoka Morow",
-        235: "Illumi Zoldyck", 236: "Chrollo Lucilfer", 237: "Feitan Portor", 238: "Phinks Magcub", 239: "Machi Komacine",
-        240: "Nobunaga Hazama", 241: "Shizuku Murasaki", 242: "Shalnak", 243: "Uvogin", 244: "Pakunoda",
-        245: "Franklin Bordeau", 246: "Bonolenov Ndongo", 247: "Meruem (Le Roi)", 248: "Neferpitou", 249: "Shaiapouf",
-        250: "Menthuthuyoupi", 251: "Isaac Netero", 252: "Biscuit Krueger", 253: "Kite", 254: "Ging Freecss",
-        255: "Silva Zoldyck", 256: "Zeno Zoldyck", 257: "Alluka Zoldyck", 258: "Kalluto Zoldyck", 259: "Razor",
-        260: "Knuckle Bine",
-
-        261: "Rukia Kuchiki", 262: "Ichigo Kurosaki", 263: "Yasutora Sado (Chad)", 264: "Orihime Inoue", 265: "Uryu Ishida",
-        266: "Renji Abarai", 267: "Kisuke Urahara", 268: "Yoruichi Shihoin", 269: "Sosuke Aizen", 270: "Gin Ichimaru",
-        271: "Kaname Tosen", 272: "Byakuya Kuchiki", 273: "Kenpachi Zaraki", 274: "Toshiro Hitsugaya", 275: "Shunsui Kyoraku",
-        276: "Jushiro Ukitake", 277: "Genryusai Shigekuni Yamamoto", 278: "Retsu Unohana", 279: "Mayuri Kurotsuchi", 280: "Soi Fon",
-        281: "Rangiku Matsumoto", 282: "Ikkaku Madarame", 283: "Yumichika Ayasegawa", 284: "Nelliel Tu Odelschwanck", 285: "Grimmjow Jaegerjaquez",
-        286: "Ulquiorra Cifer", 287: "Coyote Starrk", 288: "Baraggan Louisenbairn", 289: "Tier Harribel", 290: "Nnoitra Gilga",
-        291: "Szayelaporro Granz", 292: "Aaroniero Arruruerie", 293: "Yammy Llargo", 294: "Yhwach", 295: "Shinji Hirako",
-
-        296: "Light Yagami (Kira)", 297: "L Lawliet", 298: "Ryuk", 299: "Misa Amane", 300: "Near",
-        301: "Mello", 302: "Teru Mikami", 303: "Soichiro Yagami", 304: "Touta Matsuda", 305: "Rem",
-
-        306: "Edward Elric", 307: "Alphonse Elric", 308: "Winry Rockbell", 309: "Roy Mustang", 310: "Riza Hawkeye",
-        311: "Maes Hughes", 312: "Alex Louis Armstrong", 313: "Olivier Mira Armstrong", 314: "Ling Yao", 315: "Scar",
-        316: "Envy", 317: "Lust", 318: "Greed", 319: "Wrath (King Bradley)", 320: "Pride (Selim Bradley)",
-
-        321: "Yoichi Isagi", 322: "Meguru Bachira", 323: "Rensuke Kunigami", 324: "Hyoma Chigiri", 325: "Seishiro Nagi",
-        326: "Reo Mikage", 327: "Rin Itoshi", 328: "Sae Itoshi", 329: "Ryusei Shido", 330: "Shouei Barou",
-        331: "Eita Otoya", 332: "Kenyu Yukimiya", 333: "Jinpachi Ego", 334: "Anri Teieri", 335: "Gurimu Igarashi",
-        336: "Jingo Raichi", 337: "Gin Gagamaru", 338: "Asahi Naruhaya", 339: "Okuhito Iemon", 340: "Wataru Kuon",
-        341: "Ikki Niko", 342: "Junichi Wanima", 343: "Keisuke Wanima", 344: "Tabito Karasu", 345: "Zantetsu Tsurugi",
-        346: "Yo Hiyori", 347: "Nijiro Nanase", 348: "Kurona Ranze", 349: "Gen Fukaku", 350: "Oliver Aiku",
-        351: "Shuto Sendo", 352: "Kazuma Niou", 353: "Teppei Neru", 354: "Miroku Darai", 355: "Michael Kaiser",
-
-        356: "Tetsuya Kuroko", 357: "Taiga Kagami", 358: "Ryota Kise", 359: "Shintaro Midorima", 360: "Daiki Aomine",
-        361: "Atsushi Murasakibara", 362: "Seijuro Akashi", 363: "Satsuki Momoi", 364: "Junpei Hyuga", 365: "Shun Izuki",
-        366: "Shinji Koganei", 367: "Rinnosuke Mitobe", 368: "Teppei Kiyoshi", 369: "Yukio Kasamatsu", 370: "Kazunari Takao",
-        371: "Tatsuya Himuro", 372: "Shogo Haizaki", 373: "Makoto Hanamiya", 374: "Reo Mibuchi", 375: "Kotaro Hayama",
-        376: "Eikichi Nebuya", 377: "Chihiro Mayuzumi", 378: "Kagetora Aida", 379: "Alexandra Garcia", 380: "Yoshitaka Moriyama",
-        381: "Mitsuhiro Hayakawa", 382: "Nash", 383: "Shoichi Imayoshi", 384: "Kosuke Wakamatsu", 385: "Kuroko Junior",
-
-        386: "Kiyotaka Ayanokoji", 387: "Suzune Horikita", 388: "Kikyo Kushida", 389: "Airi Sakura", 390: "Kei Karuizawa",
-        391: "Yosuke Hirata", 392: "Rokusuke Koenji", 393: "Ken Sudo", 394: "Kanji Ike", 395: "Haruki Yamauchi",
-        396: "Kakeru Ryuen", 397: "Mio Ibuki", 398: "Albert Yamada", 399: "Daichi Ishizaki", 400: "Honami Ichinose",
-        401: "Arisu Sakayanagi", 402: "Kohei Katsuragi", 403: "Masayoshi Hashimoto", 404: "Manabu Horikita", 405: "Akane Tachibana",
-        406: "Sae Chabashira", 407: "Chie Hoshinomiya", 408: "Miyabi Nagumo", 409: "Takuya Yagami", 410: "Ichika Amasawa",
-        411: "Fuka Kiryuin", 412: "Hosen", 413: "Tsukishiro", 414: "Nanasse",
-
-        415: "Shinra Kusakabe", 416: "Arthur Boyle", 417: "Akitaru Obi", 418: "Takehisa Hinawa", 419: "Maki Oze",
-        420: "Iris", 421: "Tamaki Kotatsu", 422: "Viktor Licht", 423: "Vulcan Joseph", 424: "Lisa Isaribi",
-        425: "Yu", 426: "Benimaru Shinmon", 427: "Konro Sagamiya", 428: "Leonard Burns", 429: "Karim Flam",
-        430: "Rekka Hoshimiya", 431: "Foien Li", 432: "Takeru Noto (Juggernaut)", 433: "Princess Hibana", 434: "Joker",
-        435: "Sho Kusakabe", 436: "Haumea", 437: "Charon", 438: "Arrow", 439: "Yona",
-        440: "Giovanni", 441: "Inca Kasugatani", 442: "Ogun Montgomery", 443: "Le Grand Évangéliste",
-
-        444: "Shoyo Hinata", 445: "Tobio Kageyama", 446: "Kei Tsukishima", 447: "Daichi Sawamura", 448: "Koshi Sugawara",
-        449: "Asahi Azumane", 450: "Yu Nishinoya", 451: "Ryunosuke Tanaka", 452: "Tetsuro Kuroo", 453: "Kenma Kozume",
-        454: "Kotaro Bokuto", 455: "Keiji Akaashi", 456: "Toru Oikawa", 457: "Hajime Iwaizumi", 458: "Wakatoshi Ushijima",
-        459: "Satori Tendo", 460: "Atsumu Miya", 461: "Osamu Miya", 462: "Kiyoomi Sakusa", 463: "Korai Hoshiumi",
-        464: "Morisuke Yaku", 465: "Lev Haiba", 466: "Shinsuke Kita", 467: "Hitoka Yachi", 468: "Kiyoko Shimizu",
-
-        469: "Ken Kaneki",
-
-        470: "Sung Jin-Woo", 471: "Sung Il-Hwan", 472: "Yoo Jin-Ho", 473: "Han Song-Yi", 474: "Go Gun-Hee",
-        475: "Woo Jin-Chul", 476: "Cha Hae-In", 477: "Choi Jong-In", 478: "Baek Yoon-Ho", 479: "Min Byung-Gu",
-        480: "Ma Dong-Wook", 481: "Lee Ju-Hee", 482: "Song Chi-Yul", 483: "Kim Chul", 484: "Hwang Dong-Suk",
-        485: "Thomas Andre", 486: "Ashborn", 487: "L'Architecte", 488: "Le Monarque du Gel (Sillad)", 489: "Igris",
-        490: "Beru", 491: "Liu Zhigang", 492: "Christopher Reed", 493: "Goto Ryuji", 494: "Hwang Dong-Su",
-        495: "Yuri Orlov", 496: "Lennart Niermann",
-
-        497: "Lelouch", 498: "Yuuichi Katagiri", 499: "Cid Kagenou (Shadow)", 500: "Guts"
-    };
-
-    /* FONCTION POUR DÉTERMINER L'ANIME EN FONCTION DE L'ID */
-    function getAnimeName(id) {
-        if (id >= 1 && id <= 30) return "One Piece";
-        if (id >= 31 && id <= 75) return "Naruto";
-        if (id >= 76 && id <= 105) return "Dragon Ball";
-        if (id >= 106 && id <= 135) return "L'Attaque des Titans";
-        if (id >= 136 && id <= 164) return "Jujutsu Kaisen";
-        if (id >= 165 && id <= 195) return "Demon Slayer";
-        if (id >= 196 && id <= 229) return "My Hero Academia";
-        if (id >= 230 && id <= 260) return "Hunter x Hunter";
-        if (id >= 261 && id <= 295) return "Bleach";
-        if (id >= 296 && id <= 305) return "Death Note";
-        if (id >= 306 && id <= 320) return "Fullmetal Alchemist";
-        if (id >= 321 && id <= 355) return "Blue Lock";
-        if (id >= 356 && id <= 385) return "Kuroko no Basket";
-        if (id >= 386 && id <= 414) return "Classroom of the Elite";
-        if (id >= 415 && id <= 443) return "Fire Force";
-        if (id >= 444 && id <= 468) return "Haikyu!!";
-        if (id === 469) return "Tokyo Ghoul";
-        if (id >= 470 && id <= 496) return "Solo Leveling";
-        return "Autres Séries";
-    }
-
-    /* CRÉATION AUTOMATIQUE DE LA BASE DE DONNÉES DE 500 PERSOS */
-    const charactersDatabase = Object.keys(rawCharacters).map(id => {
-        const numId = parseInt(id);
-        return {
-            id: numId,
-            name: rawCharacters[numId],
-            anime: getAnimeName(numId),
-            img: `images/${numId}.jpg` // Pointe directement vers images/1.jpg à images/500.jpg
-        };
-    });
-
-    const allNames = charactersDatabase.map(c => c.name);
-
-    let currentCharacter = null;
-    let score = 0;
-    let streak = 0;
-    let isAnswered = false;
-
-    function loadNextCharacter() {
-        isAnswered = false;
-        document.getElementById('nextBtn').style.display = 'none';
-
-        const charImg = document.getElementById('charImage');
-        charImg.classList.remove('revealed');
-
-        // Tirage aléatoire parmi les 500 personnages
-        currentCharacter = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
-        
-        charImg.src = currentCharacter.img;
-        document.getElementById('animeHint').innerText = `Origine : ${currentCharacter.anime}`;
-
-        // Génération des 4 choix (1 vrai + 3 faux)
-        let options = [currentCharacter.name];
-        while (options.length < 4) {
-            let randomName = allNames[Math.floor(Math.random() * allNames.length)];
-            if (!options.includes(randomName)) {
-                options.push(randomName);
-            }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Silhouette - Otaku Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        .game-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
         }
 
-        options.sort(() => Math.random() - 0.5);
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--text-main, #ffffff);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
 
-        // Affichage des boutons
-        const grid = document.getElementById('optionsGrid');
-        grid.innerHTML = '';
+        .back-button:hover {
+            background: var(--blue-neon, #00d2ff);
+            border-color: var(--blue-neon, #00d2ff);
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
 
-        options.forEach(name => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = name;
-            btn.onclick = () => handleChoice(btn, name);
-            grid.appendChild(btn);
+        /* Tableau des scores */
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .score-card {
+            background: var(--panel-bg, rgba(15, 15, 25, 0.8));
+            border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+            padding: 10px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main, #ffffff);
+        }
+
+        .score-card span {
+            color: var(--blue-neon, #00d2ff);
+            font-size: 1.1rem;
+        }
+
+        /* Zone d'affichage de la silhouette */
+        .silhouette-box {
+            background: var(--panel-bg, rgba(15, 15, 25, 0.8));
+            border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-img {
+            max-height: 250px;
+            max-width: 100%;
+            object-fit: contain;
+            /* Transformation en silhouette noire */
+            filter: brightness(0) drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Classe appliquée lors du dévoilement de la réponse */
+        .character-img.revealed {
+            filter: brightness(1) drop-shadow(0 0 20px var(--blue-neon, #00d2ff));
+            transform: scale(1.05);
+        }
+
+        .anime-hint {
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-sub, #aaaaaa);
+            font-weight: 600;
+        }
+
+        /* Grille des boutons de choix */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            background: var(--panel-bg, rgba(15, 15, 25, 0.8));
+            border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+            color: var(--text-main, #ffffff);
+            padding: 16px 20px;
+            border-radius: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(8px);
+            text-align: center;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            border-color: var(--blue-neon, #00d2ff);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Réponses Vrai / Faux */
+        .option-btn.correct {
+            background: #2ed573 !important;
+            border-color: #2ed573 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
+        }
+
+        .option-btn.wrong {
+            background: #ff4757 !important;
+            border-color: #ff4757 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+
+        .next-btn {
+            background: var(--blue-neon, #00d2ff);
+            border: none;
+            color: #ffffff;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 0 auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.15);
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animated-background">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="mist"></div>
+    </div>
+
+    <div class="game-container">
+        <a href="index.html" class="back-button">← Retour au Hub</a>
+
+        <header class="hero-section" style="padding: 0 0 20px 0;">
+            <div class="logo-badge">MINI-JEU ANIME</div>
+            <h1>Guess the <span>Silhouette 👤</span></h1>
+            <p>Qui se cache derrière cette ombre mystère ?</p>
+        </header>
+
+        <div class="score-board">
+            <div class="score-card">Score : <span id="scoreText">0</span></div>
+            <div class="score-card">Série : <span id="streakText">🔥 0</span></div>
+        </div>
+
+        <div class="silhouette-box">
+            <img id="charImage" class="character-img" src="" alt="Silhouette Mystère">
+            <div class="anime-hint" id="animeHint">Origine : ???</div>
+        </div>
+
+        <div class="options-grid" id="optionsGrid">
+            </div>
+
+        <button class="next-btn" id="nextBtn" onclick="loadNextCharacter()">Personnage Suivant →</button>
+    </div>
+
+    <script>
+        /* MAPPING COMPLET DES 500 PERSONNAGES */
+        const rawCharacters = {
+            1: "Monkey D. Luffy", 2: "Roronoa Zoro", 3: "Nami", 4: "Usopp", 5: "Sanji Vinsmoke",
+            6: "Tony Tony Chopper", 7: "Nico Robin", 8: "Franky", 9: "Brook", 10: "Jinbe",
+            11: "Portgas D. Ace", 12: "Sabo", 13: "Shanks le Roux", 14: "Trafalgar D. Water Law", 15: "Eustass \"Captain\" Kid",
+            16: "Yamato", 17: "Kozuki Oden", 18: "Donquixote Doflamingo", 19: "Crocodile", 20: "Rob Lucci",
+            21: "Kaido", 22: "Charlotte Linlin (Big Mom)", 23: "Marshall D. Teach (Barbe Noire)", 24: "Edward Newgate (Barbe Blanche)", 25: "Gol D. Roger",
+            26: "Dracule Mihawk", 27: "Boa Hancock", 28: "Buggy le Clown", 29: "Marco le Phénix", 30: "Katakuri Charlotte",
+
+            31: "Naruto Uzumaki", 32: "Sasuke Uchiha", 33: "Sakura Haruno", 34: "Kakashi Hatake", 35: "Itachi Uchiha",
+            36: "Gaara", 37: "Jiraiya", 38: "Tsunade", 39: "Orochimaru", 40: "Shikamaru Nara",
+            41: "Hinata Hyuga", 42: "Neji Hyuga", 43: "Rock Lee", 44: "Might Guy", 45: "Minato Namikaze",
+            46: "Kyuubi", 47: "Obito Uchiha (Tobi)", 48: "Madara Uchiha", 49: "Pain (Nagato)", 50: "Konan",
+            51: "Deidara", 52: "Sasori", 53: "Hidan", 54: "Kakuzu", 55: "Kisame Hoshigaki",
+            56: "Zetsu", 57: "Hashirama Senju", 58: "Tobirama Senju", 59: "Hiruzen Sarutobi", 60: "Sai",
+            61: "Yamato (Tenzō)", 62: "Kiba Inuzuka", 63: "Shino Aburame", 64: "Choji Akimichi", 65: "Ino Yamanaka",
+            66: "Temari", 67: "Kankuro", 68: "Killer Bee", 69: "Zabuza Momochi", 70: "Kabuto",
+            71: "Asuma", 72: "Boruto Uzumaki", 73: "Sarada Uchiha", 74: "Mitsuki", 75: "Kawaki",
+
+            76: "Son Goku", 77: "Vegeta", 78: "Son Gohan", 79: "Trunks (Futur)", 80: "Piccolo",
+            81: "Krillin", 82: "Bulma", 83: "Yamcha", 84: "Tenshinhan", 85: "Chaozu",
+            86: "Kamé Sennin (Tortue Géniale)", 87: "Chichi", 88: "Videl", 89: "Son Goten", 90: "Trunks (Enfant)",
+            91: "Frieza (Freezer)", 92: "Cell", 93: "Majin Buu (Boubou)", 94: "Beerus", 95: "Whis",
+            96: "Broly", 97: "Bardock", 98: "Jiren", 99: "Hit", 100: "Goku Black",
+            101: "Zamasu", 102: "Caulifla", 103: "Kale", 104: "Cabba", 105: "C-17 (Android 17)",
+
+            106: "Eren Jaeger", 107: "Mikasa Ackerman", 108: "Levi Ackerman", 109: "Armin Arlert", 110: "Erwin Smith",
+            111: "Hange Zoë", 112: "Reiner Braun", 113: "Bertholdt Hoover", 114: "Annie Leonhart", 115: "Sasha Blouse",
+            116: "Jean Kirschtein", 117: "Connie Springer", 118: "Historia Reiss (Christa)", 119: "Ymir", 120: "Ymir (Le Titan Originel)",
+            121: "Zeke Jaeger", 122: "Oluo Bozado", 123: "Floch Forster", 124: "Gabi Braun", 125: "Falco Grice",
+            126: "Pieck Finger", 127: "Porco Galliard", 128: "Kenny Ackerman", 129: "Grisha Jaeger", 130: "Carla Jaeger",
+            131: "Rod Reiss", 132: "Dot Pixis", 133: "Keith Shadis", 134: "Marco Bott", 135: "Petra Ral",
+
+            136: "Yuji Itadori", 137: "Megumi Fushiguro", 138: "Nobara Kugisaki", 139: "Satoru Gojo", 140: "Ryomen Sukuna",
+            141: "Kento Nanami", 142: "Suguru Geto", 143: "Mahito", 144: "Jogo", 145: "Hanami",
+            146: "Toji Fushiguro", 147: "Maki Zenin", 148: "Kasumi Miwa", 149: "Toge Inumaki", 150: "Panda",
+            151: "Yuta Okkotsu", 152: "Aoi Todo", 153: "Mai Zenin", 154: "Kokichi Muta (Mechamaru)", 155: "Noritoshi Kamo",
+            156: "Momo Nishimiya", 157: "Utahime Iori", 158: "Mei Mei", 159: "Naobito Zenin", 160: "Choso",
+            161: "Eso", 162: "Rika Orimoto", 163: "Hiromi Higuruma", 164: "Hajime Kashimo",
+
+            165: "Tanjiro Kamado", 166: "Nezuko Kamado", 167: "Zenitsu Agatsuma", 168: "Inosuke Hashibira", 169: "Giyu Tomioka",
+            170: "Shinobu Kocho", 171: "Kyojuro Rengoku", 172: "Tengen Uzui", 173: "Muichiro Tokito", 174: "Mitsuri Kanroji",
+            175: "Gyomei Himejima", 176: "Obanai Iguro", 177: "Sanemi Shinazugawa", 178: "Genya Shinazugawa", 179: "Muzan Kibutsuji",
+            180: "Kokushibo", 181: "Doma", 182: "Akaza", 183: "Hantengu", 184: "Gyokko",
+            185: "Daki", 186: "Gyutaro", 187: "Kaigaku", 188: "Enmu", 189: "Rui",
+            190: "Kagaya Ubuyashiki", 191: "Sakonji Urokodaki", 192: "Sabito", 193: "Makomo", 194: "Hotaru Haganezuka",
+            195: "Yoriichi Tsugikuni",
+
+            196: "Izuku Midoriya (Deku)", 197: "Katsuki Bakugo", 198: "Shoto Todoroki", 199: "Ochaco Uraraka", 200: "Tenya Iida",
+            201: "Tsuyu Asui", 202: "Eijiro Kirishima", 203: "Mina Ashido", 204: "Denki Kaminari", 205: "Kyoka Jiro",
+            206: "Fumikage Tokoyami", 207: "Momo Yaoyorozu", 208: "Mezou Shoji", 209: "Hanta Sero", 210: "All Might (Toshinori Yagi)",
+            211: "Shota Aizawa (Eraser Head)", 212: "Endeavor", 213: "Hawks", 214: "Mirko", 215: "Nejire Hado",
+            216: "Tamaki Amajiki", 217: "Tomura Shigaraki", 218: "Mirio Togata", 219: "All For One", 220: "Himiko Toga",
+            221: "Dabi", 222: "Twice", 223: "Mr. Compress", 224: "Spinner", 225: "Overhaul (Kai Chisaki)",
+            226: "Stain", 227: "Gran Torino", 228: "Mount Lady", 229: "Present Mic",
+
+            230: "Gon Freecss", 231: "Killua Zoldyck", 232: "Kurapika", 233: "Leorio Paradinight", 234: "Hisoka Morow",
+            235: "Illumi Zoldyck", 236: "Chrollo Lucilfer", 237: "Feitan Portor", 238: "Phinks Magcub", 239: "Machi Komacine",
+            240: "Nobunaga Hazama", 241: "Shizuku Murasaki", 242: "Shalnak", 243: "Uvogin", 244: "Pakunoda",
+            245: "Franklin Bordeau", 246: "Bonolenov Ndongo", 247: "Meruem (Le Roi)", 248: "Neferpitou", 249: "Shaiapouf",
+            250: "Menthuthuyoupi", 251: "Isaac Netero", 252: "Biscuit Krueger", 253: "Kite", 254: "Ging Freecss",
+            255: "Silva Zoldyck", 256: "Zeno Zoldyck", 257: "Alluka Zoldyck", 258: "Kalluto Zoldyck", 259: "Razor",
+            260: "Knuckle Bine",
+
+            261: "Rukia Kuchiki", 262: "Ichigo Kurosaki", 263: "Yasutora Sado (Chad)", 264: "Orihime Inoue", 265: "Uryu Ishida",
+            266: "Renji Abarai", 267: "Kisuke Urahara", 268: "Yoruichi Shihoin", 269: "Sosuke Aizen", 270: "Gin Ichimaru",
+            271: "Kaname Tosen", 272: "Byakuya Kuchiki", 273: "Kenpachi Zaraki", 274: "Toshiro Hitsugaya", 275: "Shunsui Kyoraku",
+            276: "Jushiro Ukitake", 277: "Genryusai Shigekuni Yamamoto", 278: "Retsu Unohana", 279: "Mayuri Kurotsuchi", 280: "Soi Fon",
+            281: "Rangiku Matsumoto", 282: "Ikkaku Madarame", 283: "Yumichika Ayasegawa", 284: "Nelliel Tu Odelschwanck", 285: "Grimmjow Jaegerjaquez",
+            286: "Ulquiorra Cifer", 287: "Coyote Starrk", 288: "Baraggan Louisenbairn", 289: "Tier Harribel", 290: "Nnoitra Gilga",
+            291: "Szayelaporro Granz", 292: "Aaroniero Arruruerie", 293: "Yammy Llargo", 294: "Yhwach", 295: "Shinji Hirako",
+
+            296: "Light Yagami (Kira)", 297: "L Lawliet", 298: "Ryuk", 299: "Misa Amane", 300: "Near",
+            301: "Mello", 302: "Teru Mikami", 303: "Soichiro Yagami", 304: "Touta Matsuda", 305: "Rem",
+
+            306: "Edward Elric", 307: "Alphonse Elric", 308: "Winry Rockbell", 309: "Roy Mustang", 310: "Riza Hawkeye",
+            311: "Maes Hughes", 312: "Alex Louis Armstrong", 313: "Olivier Mira Armstrong", 314: "Ling Yao", 315: "Scar",
+            316: "Envy", 317: "Lust", 318: "Greed", 319: "Wrath (King Bradley)", 320: "Pride (Selim Bradley)",
+
+            321: "Yoichi Isagi", 322: "Meguru Bachira", 323: "Rensuke Kunigami", 324: "Hyoma Chigiri", 325: "Seishiro Nagi",
+            326: "Reo Mikage", 327: "Rin Itoshi", 328: "Sae Itoshi", 329: "Ryusei Shido", 330: "Shouei Barou",
+            331: "Eita Otoya", 332: "Kenyu Yukimiya", 333: "Jinpachi Ego", 334: "Anri Teieri", 335: "Gurimu Igarashi",
+            336: "Jingo Raichi", 337: "Gin Gagamaru", 338: "Asahi Naruhaya", 339: "Okuhito Iemon", 340: "Wataru Kuon",
+            341: "Ikki Niko", 342: "Junichi Wanima", 343: "Keisuke Wanima", 344: "Tabito Karasu", 345: "Zantetsu Tsurugi",
+            346: "Yo Hiyori", 347: "Nijiro Nanase", 348: "Kurona Ranze", 349: "Gen Fukaku", 350: "Oliver Aiku",
+            351: "Shuto Sendo", 352: "Kazuma Niou", 353: "Teppei Neru", 354: "Miroku Darai", 355: "Michael Kaiser",
+
+            356: "Tetsuya Kuroko", 357: "Taiga Kagami", 358: "Ryota Kise", 359: "Shintaro Midorima", 360: "Daiki Aomine",
+            361: "Atsushi Murasakibara", 362: "Seijuro Akashi", 363: "Satsuki Momoi", 364: "Junpei Hyuga", 365: "Shun Izuki",
+            366: "Shinji Koganei", 367: "Rinnosuke Mitobe", 368: "Teppei Kiyoshi", 369: "Yukio Kasamatsu", 370: "Kazunari Takao",
+            371: "Tatsuya Himuro", 372: "Shogo Haizaki", 373: "Makoto Hanamiya", 374: "Reo Mibuchi", 375: "Kotaro Hayama",
+            376: "Eikichi Nebuya", 377: "Chihiro Mayuzumi", 378: "Kagetora Aida", 379: "Alexandra Garcia", 380: "Yoshitaka Moriyama",
+            381: "Mitsuhiro Hayakawa", 382: "Nash", 383: "Shoichi Imayoshi", 384: "Kosuke Wakamatsu", 385: "Kuroko Junior",
+
+            386: "Kiyotaka Ayanokoji", 387: "Suzune Horikita", 388: "Kikyo Kushida", 389: "Airi Sakura", 390: "Kei Karuizawa",
+            391: "Yosuke Hirata", 392: "Rokusuke Koenji", 393: "Ken Sudo", 394: "Kanji Ike", 395: "Haruki Yamauchi",
+            396: "Kakeru Ryuen", 397: "Mio Ibuki", 398: "Albert Yamada", 399: "Daichi Ishizaki", 400: "Honami Ichinose",
+            401: "Arisu Sakayanagi", 402: "Kohei Katsuragi", 403: "Masayoshi Hashimoto", 404: "Manabu Horikita", 405: "Akane Tachibana",
+            406: "Sae Chabashira", 407: "Chie Hoshinomiya", 408: "Miyabi Nagumo", 409: "Takuya Yagami", 410: "Ichika Amasawa",
+            411: "Fuka Kiryuin", 412: "Hosen", 413: "Tsukishiro", 414: "Nanasse",
+
+            415: "Shinra Kusakabe", 416: "Arthur Boyle", 417: "Akitaru Obi", 418: "Takehisa Hinawa", 419: "Maki Oze",
+            420: "Iris", 421: "Tamaki Kotatsu", 422: "Viktor Licht", 423: "Vulcan Joseph", 424: "Lisa Isaribi",
+            425: "Yu", 426: "Benimaru Shinmon", 427: "Konro Sagamiya", 428: "Leonard Burns", 429: "Karim Flam",
+            430: "Rekka Hoshimiya", 431: "Foien Li", 432: "Takeru Noto (Juggernaut)", 433: "Princess Hibana", 434: "Joker",
+            435: "Sho Kusakabe", 436: "Haumea", 437: "Charon", 438: "Arrow", 439: "Yona",
+            440: "Giovanni", 441: "Inca Kasugatani", 442: "Ogun Montgomery", 443: "Le Grand Évangéliste",
+
+            444: "Shoyo Hinata", 445: "Tobio Kageyama", 446: "Kei Tsukishima", 447: "Daichi Sawamura", 448: "Koshi Sugawara",
+            449: "Asahi Azumane", 450: "Yu Nishinoya", 451: "Ryunosuke Tanaka", 452: "Tetsuro Kuroo", 453: "Kenma Kozume",
+            454: "Kotaro Bokuto", 455: "Keiji Akaashi", 456: "Toru Oikawa", 457: "Hajime Iwaizumi", 458: "Wakatoshi Ushijima",
+            459: "Satori Tendo", 460: "Atsumu Miya", 461: "Osamu Miya", 462: "Kiyoomi Sakusa", 463: "Korai Hoshiumi",
+            464: "Morisuke Yaku", 465: "Lev Haiba", 466: "Shinsuke Kita", 467: "Hitoka Yachi", 468: "Kiyoko Shimizu",
+
+            469: "Ken Kaneki",
+
+            470: "Sung Jin-Woo", 471: "Sung Il-Hwan", 472: "Yoo Jin-Ho", 473: "Han Song-Yi", 474: "Go Gun-Hee",
+            475: "Woo Jin-Chul", 476: "Cha Hae-In", 477: "Choi Jong-In", 478: "Baek Yoon-Ho", 479: "Min Byung-Gu",
+            480: "Ma Dong-Wook", 481: "Lee Ju-Hee", 482: "Song Chi-Yul", 483: "Kim Chul", 484: "Hwang Dong-Suk",
+            485: "Thomas Andre", 486: "Ashborn", 487: "L'Architecte", 488: "Le Monarque du Gel (Sillad)", 489: "Igris",
+            490: "Beru", 491: "Liu Zhigang", 492: "Christopher Reed", 493: "Goto Ryuji", 494: "Hwang Dong-Su",
+            495: "Yuri Orlov", 496: "Lennart Niermann",
+
+            497: "Lelouch", 498: "Yuuichi Katagiri", 499: "Cid Kagenou (Shadow)", 500: "Guts"
+        };
+
+        /* FONCTION POUR DÉTERMINER L'ANIME EN FONCTION DE L'ID */
+        function getAnimeName(id) {
+            if (id >= 1 && id <= 30) return "One Piece";
+            if (id >= 31 && id <= 75) return "Naruto";
+            if (id >= 76 && id <= 105) return "Dragon Ball";
+            if (id >= 106 && id <= 135) return "L'Attaque des Titans";
+            if (id >= 136 && id <= 164) return "Jujutsu Kaisen";
+            if (id >= 165 && id <= 195) return "Demon Slayer";
+            if (id >= 196 && id <= 229) return "My Hero Academia";
+            if (id >= 230 && id <= 260) return "Hunter x Hunter";
+            if (id >= 261 && id <= 295) return "Bleach";
+            if (id >= 296 && id <= 305) return "Death Note";
+            if (id >= 306 && id <= 320) return "Fullmetal Alchemist";
+            if (id >= 321 && id <= 355) return "Blue Lock";
+            if (id >= 356 && id <= 385) return "Kuroko no Basket";
+            if (id >= 386 && id <= 414) return "Classroom of the Elite";
+            if (id >= 415 && id <= 443) return "Fire Force";
+            if (id >= 444 && id <= 468) return "Haikyu!!";
+            if (id === 469) return "Tokyo Ghoul";
+            if (id >= 470 && id <= 496) return "Solo Leveling";
+            return "Autres Séries";
+        }
+
+        /* BASE DE DONNÉES DE 500 PERSOS */
+        const charactersDatabase = Object.keys(rawCharacters).map(id => {
+            const numId = parseInt(id);
+            return {
+                id: numId,
+                name: rawCharacters[numId],
+                anime: getAnimeName(numId),
+                img: `images/${numId}.jpg`
+            };
         });
-    }
 
-    function handleChoice(selectedBtn, chosenName) {
-        if (isAnswered) return;
-        isAnswered = true;
+        const allNames = charactersDatabase.map(c => c.name);
 
-        const charImg = document.getElementById('charImage');
-        charImg.classList.add('revealed'); // Dévoile la réponse en supprimant le filtre noir
+        let currentCharacter = null;
+        let score = 0;
+        let streak = 0;
+        let isAnswered = false;
 
-        const allButtons = document.querySelectorAll('.option-btn');
+        function loadNextCharacter() {
+            isAnswered = false;
+            document.getElementById('nextBtn').style.display = 'none';
 
-        if (chosenName === currentCharacter.name) {
-            selectedBtn.classList.add('correct');
-            score += 100;
-            streak++;
-        } else {
-            selectedBtn.classList.add('wrong');
-            streak = 0;
+            const charImg = document.getElementById('charImage');
+            charImg.classList.remove('revealed');
 
-            allButtons.forEach(btn => {
-                if (btn.innerText === currentCharacter.name) {
-                    btn.classList.add('correct');
+            // Tirage aléatoire
+            currentCharacter = charactersDatabase[Math.floor(Math.random() * charactersDatabase.length)];
+            
+            charImg.src = currentCharacter.img;
+            document.getElementById('animeHint').innerText = `Origine : ${currentCharacter.anime}`;
+
+            // Génération des 4 choix
+            let options = [currentCharacter.name];
+            while (options.length < 4) {
+                let randomName = allNames[Math.floor(Math.random() * allNames.length)];
+                if (!options.includes(randomName)) {
+                    options.push(randomName);
                 }
+            }
+
+            options.sort(() => Math.random() - 0.5);
+
+            // Affichage des boutons
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+
+            options.forEach(name => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = name;
+                btn.onclick = () => handleChoice(btn, name);
+                grid.appendChild(btn);
             });
         }
 
-        allButtons.forEach(btn => btn.disabled = true);
+        function handleChoice(selectedBtn, chosenName) {
+            if (isAnswered) return;
+            isAnswered = true;
 
-        document.getElementById('scoreText').innerText = score;
-        document.getElementById('streakText').innerText = `🔥 ${streak}`;
+            const charImg = document.getElementById('charImage');
+            charImg.classList.add('revealed');
 
-        document.getElementById('nextBtn').style.display = 'block';
-    }
+            const allButtons = document.querySelectorAll('.option-btn');
 
-    // Chargement automatique du thème
-    (function initTheme() {
-        const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
+            if (chosenName === currentCharacter.name) {
+                selectedBtn.classList.add('correct');
+                score += 100;
+                streak++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                streak = 0;
 
-    // Lancement de la première question
-    loadNextCharacter();
-</script>
+                allButtons.forEach(btn => {
+                    if (btn.innerText === currentCharacter.name) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            allButtons.forEach(btn => btn.disabled = true);
+
+            document.getElementById('scoreText').innerText = score;
+            document.getElementById('streakText').innerText = `🔥 ${streak}`;
+
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        // Chargement du thème
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        loadNextCharacter();
+    </script>
+</body>
+</html>
