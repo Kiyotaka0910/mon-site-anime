@@ -28,6 +28,12 @@
             <button class="theme-btn" onclick="setTheme('dark-fantasy', this)">🩸 Dark Fantasy</button>
             <button class="theme-btn" onclick="setTheme('synthwave', this)">🪩 Synthwave</button>
             <button class="theme-btn" onclick="setTheme('gold-shonen', this)">👑 Gold Shonen</button>
+            <button class="theme-btn" onclick="setTheme('sakura', this)">🌸 Sakura</button>
+            <button class="theme-btn" onclick="setTheme('saiyan', this)">💥 Saiyan</button>
+            <button class="theme-btn" onclick="setTheme('shadow', this)">💜 Shadow</button>
+            <button class="theme-btn" onclick="setTheme('eva', this)">🤖 EVA-01</button>
+            <button class="theme-btn" onclick="setTheme('crimson', this)">🩸 Crimson</button>
+            <button class="theme-btn" onclick="setTheme('shinobi', this)">🥷 Shinobi</button>
         </div>
     </header>
 
@@ -151,7 +157,7 @@
             if (btnElement) {
                 btnElement.classList.add('active');
             } else {
-                const activeBtn = document.querySelector(`.theme-btn[onclick*="${themeName}"]`);
+                const activeBtn = document.querySelector(`.theme-btn[onclick*="'${themeName}'"]`);
                 if (activeBtn) activeBtn.classList.add('active');
             }
         }
