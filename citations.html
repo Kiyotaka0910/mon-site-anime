@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citations Cultes Anime - Otaku Hub</title>
+    <title>Devine la Citation - Otaku Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        .quote-container {
+        .quiz-container {
             max-width: 800px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
             text-align: center;
         }
@@ -17,7 +17,7 @@
         .back-button {
             display: inline-flex;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: var(--text-main);
             text-decoration: none;
             font-weight: 600;
@@ -37,116 +37,136 @@
             transform: translateX(-5px);
         }
 
-        .quote-card {
+        /* En-tête des scores */
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .score-card {
             background: var(--panel-bg);
             border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 50px 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            padding: 10px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .score-card span {
+            color: var(--blue-neon);
+            font-size: 1.1rem;
+        }
+
+        /* Carte de la citation */
+        .quote-box {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(16px);
+            margin-bottom: 30px;
             position: relative;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
         }
 
         .quote-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--blue-neon);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             line-height: 1;
-            opacity: 0.8;
         }
 
         .quote-text {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 600;
             line-height: 1.6;
             color: var(--text-main);
-            margin-bottom: 25px;
             font-style: italic;
         }
 
-        .quote-author {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--blue-neon);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .quote-anime {
-            font-size: 0.95rem;
+        .quote-anime-tag {
+            display: inline-block;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             color: var(--text-sub);
-            margin-top: 5px;
             font-weight: 600;
         }
 
-        .actions-bar {
-            display: flex;
+        /* Grille d'options de choix */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            justify-content: center;
-            margin-top: 35px;
-            flex-wrap: wrap;
+            margin-bottom: 25px;
         }
 
-        .action-btn {
-            background: rgba(255, 255, 255, 0.06);
+        .option-btn {
+            background: var(--panel-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            padding: 14px 28px;
-            border-radius: 50px;
+            padding: 16px 20px;
+            border-radius: 16px;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.25s ease;
             backdrop-filter: blur(8px);
+            text-align: center;
         }
 
-        .action-btn.primary {
-            background: var(--blue-neon);
-            border-color: var(--blue-neon);
-            color: #ffffff;
-            box-shadow: 0 5px 20px rgba(46, 144, 255, 0.3);
-        }
-
-        .action-btn:hover {
+        .option-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--blue-neon);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .action-btn.primary:hover {
+        /* États de réponse */
+        .option-btn.correct {
+            background: #2ed573 !important;
+            border-color: #2ed573 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
+        }
+
+        .option-btn.wrong {
+            background: #ff4757 !important;
+            border-color: #ff4757 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+
+        .next-btn {
+            background: var(--blue-neon);
+            border: none;
+            color: #ffffff;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 0 auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
             filter: brightness(1.15);
         }
 
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--blue-neon);
-            color: #ffffff;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: all 0.4s ease;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -159,90 +179,135 @@
         <div class="mist"></div>
     </div>
 
-    <div class="quote-container">
+    <div class="quiz-container">
         <a href="index.html" class="back-button">← Retour au Hub</a>
 
-        <header class="hero-section" style="padding: 0 0 30px 0;">
-            <div class="logo-badge">INSPIRATION OTAKU</div>
-            <h1>Citations <span>Cultes 📜</span></h1>
-            <p>Découvre les répliques les plus marquantes, épiques et philosophiques de l'histoire de l'animation.</p>
+        <header class="hero-section" style="padding: 0 0 20px 0;">
+            <div class="logo-badge">QUIZ INFINI</div>
+            <h1>Qui a dit <span>ça ? 💬</span></h1>
+            <p>Retrouve le personnage qui a prononcé cette réplique culte !</p>
         </header>
 
-        <div class="quote-card">
-            <div class="quote-icon">“</div>
-            <div class="quote-text" id="quoteText">Chargement de la citation...</div>
-            <div class="quote-author" id="quoteAuthor">- Auteur</div>
-            <div class="quote-anime" id="quoteAnime">Anime</div>
+        <div class="score-board">
+            <div class="score-card">Score : <span id="scoreText">0</span></div>
+            <div class="score-card">Série : <span id="streakText">🔥 0</span></div>
         </div>
 
-        <div class="actions-bar">
-            <button class="action-btn primary" onclick="generateNewQuote()">
-                <span>🎲</span> Citation Suivante
-            </button>
-            <button class="action-btn" onclick="copyQuote()">
-                <span>📋</span> Copier
-            </button>
+        <div class="quote-box">
+            <div class="quote-icon">“</div>
+            <div class="quote-text" id="quoteText">Chargement...</div>
+            <div class="quote-anime-tag" id="animeTag">Anime</div>
         </div>
+
+        <div class="options-grid" id="optionsGrid">
+            </div>
+
+        <button class="next-btn" id="nextBtn" onclick="loadNextQuestion()">Question Suivante →</button>
     </div>
 
-    <div id="toast" class="toast">Citation copiée dans le presse-papier ! ✨</div>
-
     <script>
-        /* BANQUE DE CITATIONS DIVERSIFIÉE ET ÉTENDUE */
+        /* BASE DE DONNÉES DE CITATIONS */
         const quotesDatabase = [
             { text: "Si tu ne tentes rien, tu n'obtiendras jamais rien.", author: "Monkey D. Luffy", anime: "One Piece" },
-            { text: "Ce n'est pas parce que je suis faible que je vais abandonner. C'est parce que je suis faible que je dois me battre !", author: "Naruto Uzumaki", anime: "Naruto" },
-            { text: "Les gens meurent quand ils sont tués... mais ce n'est pas une raison pour renoncer à vivre !", author: "Shirou Emiya", anime: "Fate/stay night" },
-            { text: "Si tu gagnes, tu vis. Si tu meurs, tu perds. Si tu ne te bats pas, tu ne peux pas gagner !", author: "Eren Jaeger", anime: "Attack on Titan" },
-            { text: "La seule chose qu'on a le droit de faire, c'est de croire qu'on ne regrettera pas le choix qu'on a fait.", author: "Levi Ackerman", anime: "Attack on Titan" },
+            { text: "Ce n'est pas parce que je suis faible que je vais abandonner !", author: "Naruto Uzumaki", anime: "Naruto" },
+            { text: "Si tu gagnes, tu vis. Si tu ne te bats pas, tu ne peux pas gagner !", author: "Eren Jaeger", anime: "Attack on Titan" },
+            { text: "La seule chose qu'on a le droit de faire, c'est de croire qu'on ne regrettera pas notre choix.", author: "Levi Ackerman", anime: "Attack on Titan" },
             { text: "Dans ce monde, là où il y a de la lumière, il y a aussi de l'ombre.", author: "Madara Uchiha", anime: "Naruto Shippuden" },
             { text: "Ne cherche pas à être parfait, cherche à être unique.", author: "Satoru Gojo", anime: "Jujutsu Kaisen" },
             { text: "Une leçon sans douleur n'a pas de valeur.", author: "Edward Elric", anime: "Fullmetal Alchemist" },
             { text: "Je vais prendre une chips... et la MANGER !", author: "Light Yagami", anime: "Death Note" },
-            { text: "Le pouvoir ne s'obtient pas en le souhaitant, mais en travaillant dur pour l'atteindre.", author: "All Might", anime: "My Hero Academia" },
-            { text: "Rappelle-toi : la peur n'est pas le mal. Elle te montre simplement où sont tes limites.", author: "Gildarts Clive", anime: "Fairy Tail" },
+            { text: "Le pouvoir s'obtient en travaillant dur pour l'atteindre.", author: "All Might", anime: "My Hero Academia" },
             { text: "Même si je dois tout perdre, je ne reculerai jamais !", author: "Tanjiro Kamado", anime: "Demon Slayer" },
             { text: "Seuls ceux qui sont prêts à se faire tirer dessus devraient avoir le droit de tirer.", author: "Lelouch vi Britannia", anime: "Code Geass" },
             { text: "Il n'y a pas de honte à tomber, la vraie honte est de ne pas se relever.", author: "Midorima Shintaro", anime: "Kuroko no Basket" },
-            { text: "L'intelligence n'est pas de ne pas commettre d'erreurs, mais de savoir comment les corriger.", author: "L Lawliet", anime: "Death Note" },
             { text: "Repousse tes limites. Ici et maintenant !", author: "Yami Sukehiro", anime: "Black Clover" },
             { text: "Un homme ne meurt que lorsqu'on l'oublie.", author: "Dr. Hiluluk", anime: "One Piece" },
-            { text: "Si tu as le temps de penser à une fin belle, vis magnifiquement jusqu'à la fin !", author: "Sakata Gintoki", anime: "Gintama" },
             { text: "Ce n'est pas le monde qui est cruel, ce sont les gens qui s'y trouvent.", author: "Ken Kaneki", anime: "Tokyo Ghoul" },
-            { text: "Travailler dur est inutile pour ceux qui ne croient pas en eux-mêmes.", author: "Naruto Uzumaki", anime: "Naruto" }
+            { text: "Les gens meurent quand ils sont tués...", author: "Shirou Emiya", anime: "Fate/stay night" },
+            { text: "Tu es déjà mort.", author: "Kenshiro", anime: "Fist of the North Star" },
+            { text: "Je deviendrai le Roi des Pirates !", author: "Monkey D. Luffy", anime: "One Piece" },
+            { text: "L'intelligence n'est pas de ne pas faire d'erreurs, mais de savoir les corriger.", author: "L Lawliet", anime: "Death Note" },
+            { text: "Mon pouvoir dépasse les limites de ton imagination.", author: "Sukuna", anime: "Jujutsu Kaisen" },
+            { text: "Si tu as le temps de penser à une fin belle, vis magnifiquement jusqu'à la fin !", author: "Sakata Gintoki", anime: "Gintama" },
+            { text: "Je vais détruire tous les Titans jusqu'au dernier !", author: "Eren Jaeger", anime: "Attack on Titan" }
         ];
 
-        let history = [];
-        let currentQuote = null;
+        // Liste globale de tous les personnages possibles pour générer de fausses réponses
+        const allAuthors = [...new Set(quotesDatabase.map(q => q.author))];
 
-        function generateNewQuote() {
-            // Empêche la répétition immédiate
-            let availableQuotes = quotesDatabase.filter(q => q !== currentQuote);
+        let currentQuestion = null;
+        let score = 0;
+        let streak = 0;
+        let isAnswered = false;
+
+        function loadNextQuestion() {
+            isAnswered = false;
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // Choix aléatoire d'une citation
+            currentQuestion = quotesDatabase[Math.floor(Math.random() * quotesDatabase.length)];
+
+            // Affichage du texte et du nom de l'animé
+            document.getElementById('quoteText').innerText = `"${currentQuestion.text}"`;
+            document.getElementById('animeTag').innerText = `Anime : ${currentQuestion.anime}`;
+
+            // Génération des 4 options (1 bonne + 3 pièges)
+            let options = [currentQuestion.author];
             
-            // Tirage aléatoire
-            const randomIndex = Math.floor(Math.random() * availableQuotes.length);
-            currentQuote = availableQuotes[randomIndex];
+            while (options.length < 4) {
+                let randomAuthor = allAuthors[Math.floor(Math.random() * allAuthors.length)];
+                if (!options.includes(randomAuthor)) {
+                    options.push(randomAuthor);
+                }
+            }
 
-            // Mise à jour de l'affichage
-            document.getElementById('quoteText').innerText = `"${currentQuote.text}"`;
-            document.getElementById('quoteAuthor').innerText = `- ${currentQuote.author}`;
-            document.getElementById('quoteAnime').innerText = currentQuote.anime;
-        }
+            // Mélange des choix
+            options.sort(() => Math.random() - 0.5);
 
-        function copyQuote() {
-            if (!currentQuote) return;
-            const fullText = `"${currentQuote.text}" - ${currentQuote.author} (${currentQuote.anime})`;
-            navigator.clipboard.writeText(fullText).then(() => {
-                showToast();
+            // Affichage des boutons
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+
+            options.forEach(author => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = author;
+                btn.onclick = () => handleChoice(btn, author);
+                grid.appendChild(btn);
             });
         }
 
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+        function handleChoice(selectedBtn, chosenAuthor) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const allButtons = document.querySelectorAll('.option-btn');
+            
+            if (chosenAuthor === currentQuestion.author) {
+                selectedBtn.classList.add('correct');
+                score += 100;
+                streak++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                streak = 0;
+
+                // Révèle la bonne réponse en vert
+                allButtons.forEach(btn => {
+                    if (btn.innerText === currentQuestion.author) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            // Désactive tous les boutons après le clic
+            allButtons.forEach(btn => btn.disabled = true);
+
+            // Met à jour le tableau des scores
+            document.getElementById('scoreText').innerText = score;
+            document.getElementById('streakText').innerText = `🔥 ${streak}`;
+
+            // Affiche le bouton "Question Suivante"
+            document.getElementById('nextBtn').style.display = 'block';
         }
 
         // Chargement du thème sauvegardé
@@ -251,8 +316,8 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
 
-        // Première citation au chargement
-        generateNewQuote();
+        // Lancement de la première question
+        loadNextQuestion();
     </script>
 </body>
 </html>
