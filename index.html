@@ -1,822 +1,411 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Anime Tier List Hub</title>
-
     <link rel="stylesheet" href="style.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Reenie+Beanie&display=swap" rel="stylesheet">
-
 </head>
-
 <body>
 
-
-
     <div class="animated-background">
-
         <div class="cloud cloud-1"></div>
-
         <div class="cloud cloud-2"></div>
-
         <div class="cloud cloud-3"></div>
-
         <div class="mist"></div>
-
     </div>
-
-
 
     <div class="overlay-glow"></div>
 
-
-
     <header class="hero-section">
-
         <div class="logo-badge">OTAKU HUB</div>
-
         <h1>Anime Tier List <span>Creator 🏆</span></h1>
-
         <p>Deviens le juge suprême. Crée, personnalise et impose tes classements d'animés favoris !</p>
 
-
-
         <div class="theme-switcher">
-
             <button class="theme-btn active" onclick="setTheme('cyber', this)">💙 Cyber Neon</button>
-
             <button class="theme-btn" onclick="setTheme('dark-fantasy', this)">🩸 Dark Fantasy</button>
-
             <button class="theme-btn" onclick="setTheme('synthwave', this)">🪩 Synthwave</button>
-
             <button class="theme-btn" onclick="setTheme('gold-shonen', this)">👑 Gold Shonen</button>
-
             <button class="theme-btn" onclick="setTheme('sakura', this)">🌸 Sakura</button>
-
             <button class="theme-btn" onclick="setTheme('saiyan', this)">💥 Saiyan</button>
-
             <button class="theme-btn" onclick="setTheme('shadow', this)">💜 Shadow</button>
-
             <button class="theme-btn" onclick="setTheme('eva', this)">🤖 EVA-01</button>
-
             <button class="theme-btn" onclick="setTheme('crimson', this)">🩸 Crimson</button>
-
             <button class="theme-btn" onclick="setTheme('shinobi', this)">🥷 Shinobi</button>
-
         </div>
-
     </header>
 
-
-
     <main class="hub-container">
-
         
-
         <a href="tierlist-persos.html" class="card card-character">
-
             <div class="card-image">
-
                 <span class="category-tag">Shonen & Seinen</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Tier List : Personnages</h3>
-
                 <p>Classe les héros légendaires, les rivaux iconiques et les pires méchants de l'histoire.</p>
-
                 <div class="card-action">Lancer le classement →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="tierlist-openings.html" class="card card-opening">
-
             <div class="card-image">
-
                 <span class="category-tag">Bangers & OP</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Tier List : Openings</h3>
-
                 <p>De LiSA à Silhouette, trie les chefs-d'œuvre musicaux et trouve le meilleur banger.</p>
-
                 <div class="card-action">Lancer le classement →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="tierlist-endings.html" class="card card-ending">
-
             <div class="card-image">
-
                 <span class="category-tag">Outros & ED</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Tier List : Endings</h3>
-
                 <p>De Lost in Paradise à Akuma no Ko, classe les génériques de fin les plus mémorables.</p>
-
                 <div class="card-action">Lancer le classement →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="tierlist-osts.html" class="card card-ost">
-
             <div class="card-image">
-
                 <span class="category-tag">Épique & Combats</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Tier List : OSTs & Thèmes</h3>
-
                 <p>Classe les musiques de fond, thèmes de boss et compositions épiques d'animés.</p>
-
                 <div class="card-action">Lancer le classement →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="roulette.html" class="card card-roulette">
-
             <div class="card-image">
-
                 <span class="category-tag">Hasard & Fun</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>La Roulette Anime</h3>
-
                 <p>Tu ne sais pas quoi regarder ou écouter ? Laisse le destin décider pour toi !</p>
-
                 <div class="card-action">Lancer la roulette →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="face-a-face.html" class="card card-vs">
-
             <div class="card-image">
-
                 <span class="category-tag">Duel & Combat 🥊</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Mode Face-à-Face</h3>
-
                 <p>Fais s'affronter tes personnages et musiques préférés dans des duels à élimination directe !</p>
-
                 <div class="card-action">Lancer les duels →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="mini-jeu.html" class="card card-game">
-
             <div class="card-image">
-
                 <span class="category-tag">Quiz & Défi 🎮</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Devine l'Animé !</h3>
-
                 <p>Devine les animés grâce aux émojis, citations iconiques et indices mystères.</p>
-
                 <div class="card-action">Jouer au quiz →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="silhouette.html" class="card card-silhouette">
-
             <div class="card-image" style="background: linear-gradient(135deg, #090a0f, var(--blue-neon));">
-
                 <span class="category-tag">Ombre Mystère 👤</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Guess the Silhouette</h3>
-
                 <p>Reconnais le personnage qui se cache derrière son ombre parmi 500 héros et méchants d'animé !</p>
-
                 <div class="card-action">Jouer maintenant →</div>
-
             </div>
-
         </a>
-
-
 
         <a href="citations.html" class="card card-quotes">
-
             <div class="card-image" style="background: linear-gradient(135deg, var(--blue-neon), var(--pink-neon));">
-
                 <span class="category-tag">Sagesse & Épique 📜</span>
-
             </div>
-
             <div class="card-content">
-
                 <h3>Citations Cultes</h3>
-
                 <p>Génère des répliques épiques et inspirantes issues des meilleurs animés à partager.</p>
-
                 <div class="card-action">Découvrir →</div>
-
             </div>
-
         </a>
-
-
 
     </main>
 
-
-
     <footer>
-
         <p>Fait avec 🔥 par et pour les passionnés d'animés • 2026</p>
-
     </footer>
 
-
-
     <script>
-
         /* ==============================================
-
            1. GESTION DES THÈMES
-
         ============================================== */
-
         function setTheme(themeName, btnElement) {
-
             document.documentElement.setAttribute('data-theme', themeName);
-
             localStorage.setItem('otaku_theme', themeName);
 
-
-
             document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-
             if (btnElement) {
-
                 btnElement.classList.add('active');
-
             } else {
-
                 const activeBtn = document.querySelector(`.theme-btn[onclick*="'${themeName}'"]`);
-
                 if (activeBtn) activeBtn.classList.add('active');
-
             }
-
         }
-
-
 
         (function initTheme() {
-
             const savedTheme = localStorage.getItem('otaku_theme') || 'cyber';
-
             setTheme(savedTheme);
-
         })();
 
-
-
         /* ==============================================
-
            2. DÉTECTION ET LOGIQUE DES 5 EASTER EGGS
-
         ============================================== */
-
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
         let konamiIndex = 0;
-
         let typedKeys = '';
 
-
-
         document.addEventListener('keydown', (e) => {
-
             // Code Konami
-
             if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
-
                 konamiIndex++;
-
                 if (konamiIndex === konamiCode.length) {
-
                     activateSuperSaiyan();
-
                     konamiIndex = 0;
-
                 }
-
             } else {
-
                 konamiIndex = 0;
-
             }
-
-
 
             // Mots-clés GOJO & KIRA
-
             typedKeys += e.key.toLowerCase();
-
             if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
 
-
-
             if (typedKeys.endsWith('gojo')) {
-
                 activateInfiniteVoid();
-
                 typedKeys = '';
-
             }
-
             if (typedKeys.endsWith('kira')) {
-
                 activateDeathNote();
-
                 typedKeys = '';
-
             }
-
         });
 
-
-
         // --- EE 1 : MODE SUPER SAIYAN ---
-
         function activateSuperSaiyan() {
-
             document.body.classList.add('ee-shaking');
-
-
 
             const aura = document.createElement('div');
-
             aura.className = 'saiyan-aura-overlay';
-
             document.body.appendChild(aura);
 
-
-
             const sparks = [];
-
             for (let i = 0; i < 8; i++) {
-
                 const spark = document.createElement('div');
-
                 spark.className = 'saiyan-spark';
-
                 spark.style.top = Math.random() * 80 + 'vh';
-
                 spark.style.left = Math.random() * 80 + 'vw';
-
                 spark.style.animationDelay = (Math.random() * 0.3) + 's';
-
                 document.body.appendChild(spark);
-
                 sparks.push(spark);
-
             }
 
-
-
             setTimeout(() => {
-
                 document.body.classList.remove('ee-shaking');
-
                 aura.remove();
-
                 sparks.forEach(s => s.remove());
-
             }, 4500);
-
         }
 
-
-
         // --- EE 2 : GOJO INFINITE VOID ---
-
         function activateInfiniteVoid() {
-
             document.body.classList.add('ee-shaking');
 
-
-
             const overlay = document.createElement('div');
-
             overlay.className = 'gojo-overlay';
-
             overlay.innerHTML = `
-
                 <div class="gojo-cosmos-bg"></div>
-
                 <div class="gojo-container">
-
                     <svg class="gojo-svg-art" viewBox="0 0 200 120" fill="none">
-
                         <path d="M100 10 C 60 40, 40 80, 100 110 C 160 80, 140 40, 100 10 Z" stroke="#00f0ff" stroke-width="2" opacity="0.4" fill="rgba(0, 240, 255, 0.05)"/>
-
                         <ellipse cx="60" cy="55" rx="28" ry="12" fill="#00f0ff" />
-
                         <ellipse cx="140" cy="55" rx="28" ry="12" fill="#00f0ff" />
-
                         <circle cx="60" cy="55" r="7" fill="#ffffff" />
-
                         <circle cx="140" cy="55" r="7" fill="#ffffff" />
-
                         <path d="M70 105 Q100 85 130 105 Q100 120 70 105 Z" fill="#00f0ff" opacity="0.8"/>
-
                     </svg>
-
                     <h2 class="gojo-kanji">領域展開 : 無量空処</h2>
-
                     <p class="gojo-subtext">DOMAIN EXPANSION : INFINITE VOID</p>
-
                 </div>
-
             `;
-
-
 
             document.body.appendChild(overlay);
 
-
-
             setTimeout(() => document.body.classList.remove('ee-shaking'), 600);
 
-
-
             setTimeout(() => {
-
                 overlay.style.opacity = '0';
-
                 setTimeout(() => overlay.remove(), 800);
-
             }, 3800);
-
         }
 
-
-
         // --- EE 3 : DEATH NOTE ---
-
         function activateDeathNote() {
-
             const bookContainer = document.createElement('div');
-
             bookContainer.className = 'dn-book-container';
 
-
-
             bookContainer.innerHTML = `
-
                 <div class="dn-book">
-
                     <div class="dn-cover" id="dnCover">
-
                         <div class="dn-cover-title">DEATH NOTE</div>
-
                     </div>
-
                     <div class="dn-page">
-
                         <div style="font-size: 1rem; color: #888; margin-bottom: 15px;">How to use it...</div>
-
                         <div id="dnWrittenText" style="font-weight: bold; color: #900;"></div>
-
                     </div>
-
                     <div class="dn-pen">✒️</div>
-
                 </div>
-
             `;
-
-
 
             document.body.appendChild(bookContainer);
 
-
-
             setTimeout(() => {
-
                 const cover = document.getElementById('dnCover');
-
                 if (cover) cover.style.transform = 'rotateY(-140deg)';
-
                 bookContainer.classList.add('dn-writing-active');
-
             }, 900);
 
-
-
             const textToWrite = "Ton nom a été inscrit...";
-
             let charIndex = 0;
 
-
-
             setTimeout(() => {
-
                 const textContainer = document.getElementById('dnWrittenText');
-
                 const typingInterval = setInterval(() => {
-
                     if (textContainer && charIndex < textToWrite.length) {
-
                         textContainer.innerHTML += textToWrite.charAt(charIndex);
-
                         charIndex++;
-
                     } else {
-
                         clearInterval(typingInterval);
-
                     }
-
                 }, 100);
-
             }, 1800);
 
-
-
             setTimeout(() => {
-
                 document.body.style.transition = 'filter 0.5s';
-
                 document.body.style.filter = 'grayscale(1) contrast(2) invert(0.8)';
-
                 setTimeout(() => {
-
                     document.body.style.filter = 'none';
-
                     bookContainer.remove();
-
                 }, 800);
-
             }, 4500);
-
         }
-
-
 
         // --- EE 4 : MULTI-CLONAGE (Clic 7x sur le Logo) ---
-
         let logoClicks = 0;
-
         const logo = document.querySelector('.logo-badge');
-
         if (logo) {
-
             logo.addEventListener('click', () => {
-
                 logoClicks++;
-
                 if (logoClicks === 7) {
-
                     document.body.classList.add('ee-shaking');
-
                     logo.classList.add('chakra-charging');
 
-
-
                     const rect = logo.getBoundingClientRect();
-
                     const smoke = document.createElement('div');
-
                     smoke.className = 'ninja-smoke-puff';
-
                     smoke.style.top = (rect.top + rect.height / 2) + 'px';
-
                     smoke.style.left = (rect.left + rect.width / 2) + 'px';
-
                     document.body.appendChild(smoke);
 
-
-
                     const banner = document.createElement('div');
-
                     banner.className = 'ninja-banner';
-
                     banner.innerText = '🥷 KAGE BUNSHIN NO JUTSU !';
-
                     document.body.appendChild(banner);
 
-
-
                     setTimeout(() => {
-
                         document.body.classList.remove('ee-shaking');
-
                         logo.classList.remove('chakra-charging');
-
                         smoke.remove();
-
                     }, 700);
 
-
-
                     for (let i = 0; i < 14; i++) {
-
                         const clone = logo.cloneNode(true);
-
                         clone.style.position = 'fixed';
-
                         clone.style.top = (Math.random() * 80 + 10) + 'vh';
-
                         clone.style.left = (Math.random() * 80 + 10) + 'vw';
-
                         clone.style.zIndex = '9999';
-
                         clone.style.transition = 'all 0.3s ease';
-
                         clone.style.transform = `scale(${Math.random() * 0.4 + 0.8})`;
-
                         document.body.appendChild(clone);
 
-
-
                         setTimeout(() => {
-
                             clone.style.opacity = '0';
-
                             setTimeout(() => clone.remove(), 400);
-
                         }, 2400);
-
                     }
-
-
 
                     setTimeout(() => banner.remove(), 2500);
-
                     logoClicks = 0;
-
                 }
-
             });
-
         }
-
-
 
         // --- EE 5 : FESTIN DE RAMEN (Clic 5x sur le Footer) ---
-
         let fireClicks = 0;
-
         const footerText = document.querySelector('footer p');
-
         if (footerText) {
-
             footerText.addEventListener('click', () => {
-
                 fireClicks++;
-
                 if (fireClicks === 5) {
-
                     const bowl = document.createElement('div');
-
                     bowl.className = 'ramen-bowl-giant';
-
                     bowl.innerText = '🍜';
 
-
-
                     const steam = document.createElement('div');
-
                     steam.className = 'ramen-steam';
-
                     steam.innerText = '♨️';
 
-
-
                     const notice = document.createElement('div');
-
                     notice.className = 'ramen-notice';
-
                     notice.innerText = '🍥 FESTIN CHEZ ICHIRAKU ! 🍥';
 
-
-
                     document.body.appendChild(bowl);
-
                     document.body.appendChild(steam);
-
                     document.body.appendChild(notice);
 
-
-
                     const items = ['🍜', '🍥', '🥢', '🍱', '🍙'];
-
                     for (let i = 0; i < 35; i++) {
-
                         const drop = document.createElement('div');
-
                         drop.className = 'ramen-drop-item';
-
                         drop.innerText = items[i % items.length];
-
                         drop.style.left = Math.random() * 95 + 'vw';
-
                         drop.style.fontSize = (Math.random() * 20 + 25) + 'px';
-
                         drop.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
-
                         drop.style.animationDelay = (Math.random() * 0.8) + 's';
-
                         document.body.appendChild(drop);
 
-
-
                         setTimeout(() => drop.remove(), 3800);
-
                     }
 
-
-
                     setTimeout(() => {
-
                         bowl.remove();
-
                         steam.remove();
-
                         notice.remove();
-
                     }, 3800);
 
-
-
                     fireClicks = 0;
-
                 }
-
             });
-
         }
-
     </script>
 
-
-
 </body>
-
-</html> 
-
+</html>
