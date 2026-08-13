@@ -240,6 +240,7 @@ body {
     border: 1px solid var(--blue-neon);
     margin-bottom: 15px;
     transition: all 0.4s ease;
+    cursor: pointer;
 }
 
 .hero-section h1 {
@@ -655,7 +656,7 @@ footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99999;
+    z-index: 99998;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -696,6 +697,44 @@ footer {
     letter-spacing: 5px;
     font-weight: 600;
     text-shadow: 0 0 10px #ff0000;
+}
+
+/* --- ENTAILLES (SLASHS) DE SUKUNA --- */
+.sukuna-slash-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity 0.8s ease;
+}
+
+.sukuna-slash {
+    position: absolute;
+    width: 320px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ff0000, #ffffff, #ff0000, transparent);
+    box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+    border-radius: 50%;
+    opacity: 0;
+    animation: slashAnime 0.4s ease-out forwards;
+}
+
+@keyframes slashAnime {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.3);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleX(1);
+    }
 }
 
 @keyframes fadeInSukuna {
