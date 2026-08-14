@@ -112,7 +112,6 @@
     --card-border: rgba(0, 230, 118, 0.3);
 }
 
-
 /* --- CONFIGURATION GLOBALE --- */
 * {
     margin: 0;
@@ -241,6 +240,7 @@ body {
     margin-bottom: 15px;
     transition: all 0.4s ease;
     cursor: pointer;
+    user-select: none;
 }
 
 .hero-section h1 {
@@ -329,6 +329,7 @@ body {
     border: 1px solid var(--card-border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(12px);
+    position: relative;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
                 box-shadow 0.4s ease, 
                 border-color 0.4s ease,
@@ -431,6 +432,7 @@ footer {
     z-index: 1;
     transition: color 0.4s ease, border-color 0.4s ease;
     cursor: pointer;
+    user-select: none;
 }
 
 /* --- RESPONSIVE MOBILE --- */
@@ -532,9 +534,9 @@ footer {
 
 /* --- EASTER EGG : DEATH NOTE 3D --- */
 @keyframes dnAppear {
-    0% { transform: scale(0) rotateX(45deg); opacity: 0; }
-    70% { transform: scale(1.1) rotateX(0deg); opacity: 1; }
-    100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+    0% { transform: translate(-50%, -50%) scale(0) rotateX(45deg); opacity: 0; }
+    70% { transform: translate(-50%, -50%) scale(1.1) rotateX(0deg); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1) rotateX(0deg); opacity: 1; }
 }
 @keyframes penWrite {
     0% { transform: translate(0, 0) rotate(-20deg); }
@@ -651,95 +653,48 @@ footer {
 
 /* --- EASTER EGG : SUKUNA MALEVOLENT SHRINE --- */
 .sukuna-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99998;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    animation: fadeInSukuna 0.3s ease-out forwards;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 99998; display: flex; justify-content: center; align-items: center;
+    overflow: hidden; animation: fadeInSukuna 0.3s ease-out forwards;
     pointer-events: none;
 }
-
 .sukuna-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle, rgba(139, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.95) 70%, #050000 100%);
     animation: pulseSukunaBg 2s infinite alternate;
 }
-
 .sukuna-container {
-    position: relative;
-    text-align: center;
-    z-index: 2;
+    position: relative; text-align: center; z-index: 2;
     animation: scaleUpSukuna 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
-
 .sukuna-kanji {
-    font-size: 3.5rem;
-    color: #ff2222;
-    font-weight: 800;
+    font-size: 3.5rem; color: #ff2222; font-weight: 800;
     text-shadow: 0 0 20px #ff0000, 0 0 40px #660000, 0 0 60px #ff0000;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    margin-bottom: 10px; letter-spacing: 2px;
 }
-
 .sukuna-subtext {
-    font-size: 1.2rem;
-    color: #ffcccc;
-    letter-spacing: 5px;
-    font-weight: 600;
+    font-size: 1.2rem; color: #ffcccc; letter-spacing: 5px; font-weight: 600;
     text-shadow: 0 0 10px #ff0000;
 }
 
 /* --- ENTAILLES (SLASHS) DE SUKUNA --- */
 .sukuna-slash-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 999999; /* S'assure de passer au-dessus de tout */
-    overflow: hidden;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 999999; overflow: hidden;
 }
-
 .sukuna-slash {
-    position: absolute;
-    width: 80vw; /* Longueur de la lame */
-    height: 5px;
+    position: absolute; width: 80vw; height: 5px;
     background: linear-gradient(90deg, transparent 0%, #ff1a1a 20%, #ffffff 50%, #ff1a1a 80%, transparent 100%);
     box-shadow: 0 0 15px #ff0000, 0 0 35px #ff0000, 0 0 50px #ffffff;
-    border-radius: 4px;
-    opacity: 0;
-    transform-origin: center center;
-    /* Utilise la variable --angle définie par le JS */
+    border-radius: 4px; opacity: 0; transform-origin: center center;
     transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(0);
     animation: slashAnime 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
-
 @keyframes slashAnime {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(0);
-    }
-    30% {
-        opacity: 1;
-        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1.3);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1);
-    }
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(0); }
+    30% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1.3); }
+    100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1); }
 }
-
 
 /* ==============================================
    3. NOUVEAUX EASTER EGGS
@@ -756,18 +711,12 @@ body.time-stop * {
 
 /* --- 2. ONE PIECE : HAKI DU CONQUÉRANT --- */
 .haki-wave {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: fixed; top: 50%; left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 120vmax;
-    height: 120vmax;
-    border-radius: 50%;
+    width: 120vmax; height: 120vmax; border-radius: 50%;
     background: radial-gradient(circle, rgba(180, 0, 0, 0.85) 0%, rgba(10, 0, 0, 0.95) 70%);
-    border: 8px solid #ff0000;
-    box-shadow: 0 0 50px #ff0000;
-    z-index: 999999;
-    pointer-events: none;
+    border: 8px solid #ff0000; box-shadow: 0 0 50px #ff0000;
+    z-index: 999999; pointer-events: none;
     animation: hakiExpand 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
 @keyframes hakiExpand {
@@ -783,16 +732,10 @@ body.time-stop * {
 
 /* --- 3. ATTACK ON TITAN : ÉCLAIR TITAN --- */
 .titan-strike {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 100vh;
-    background: #ffffff;
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 100vh; background: #ffffff;
     box-shadow: 0 0 30px #ffe600, 0 0 80px #ffaa00, 0 0 150px #ff3300;
-    z-index: 999999;
-    pointer-events: none;
+    z-index: 999999; pointer-events: none;
     animation: titanFlash 0.45s ease-out forwards;
 }
 @keyframes titanFlash {
@@ -801,11 +744,9 @@ body.time-stop * {
     100% { opacity: 0; width: 0px; }
 }
 .titan-smoke {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: radial-gradient(circle, rgba(255, 170, 0, 0.35) 0%, rgba(10, 5, 0, 0.85) 80%);
-    z-index: 999998;
-    pointer-events: none;
+    z-index: 999998; pointer-events: none;
     animation: titanSmokeFade 1.8s ease-out forwards;
 }
 @keyframes titanSmokeFade {
@@ -814,30 +755,19 @@ body.time-stop * {
 }
 
 /* --- 4. POKÉMON : CAPTURE DE CARTE --- */
-.card-container-relative {
-    position: relative;
-}
 .pokeball-anim {
-    position: absolute;
-    top: 50%; left: 50%;
+    position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%) scale(0);
     width: 60px; height: 60px;
     background: linear-gradient(to bottom, #ff1a1a 50%, #ffffff 50%);
-    border: 4px solid #111;
-    border-radius: 50%;
-    z-index: 100;
-    pointer-events: none;
+    border: 4px solid #111; border-radius: 50%;
+    z-index: 100; pointer-events: none;
     animation: pokeballCapture 1.4s ease-out forwards;
 }
 .pokeball-anim::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 16px; height: 16px;
-    background: #fff;
-    border: 3px solid #111;
-    border-radius: 50%;
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); width: 16px; height: 16px;
+    background: #fff; border: 3px solid #111; border-radius: 50%;
 }
 @keyframes pokeballCapture {
     0% { transform: translate(-50%, -300%) scale(1); opacity: 1; }
@@ -855,26 +785,17 @@ body.time-stop * {
 
 /* --- 5. DRAGON BALL : LES 7 DRAGON BALLS --- */
 .dragon-ball {
-    position: absolute;
-    width: 26px;
-    height: 26px;
+    position: fixed; width: 30px; height: 30px;
     background: radial-gradient(circle at 35% 35%, #fff7a1, #ffd700 40%, #ff7700 100%);
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 99;
-    box-shadow: 0 0 12px #ffd700, inset 0 -2px 4px rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: #cc0000;
-    font-weight: 900;
-    user-select: none;
+    border-radius: 50%; cursor: pointer; z-index: 99999;
+    box-shadow: 0 0 15px #ffd700, inset 0 -2px 4px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #cc0000; font-weight: 900; user-select: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .dragon-ball:hover {
-    transform: scale(1.35) rotate(15deg);
-    box-shadow: 0 0 20px #ffea00;
+    transform: scale(1.4) rotate(15deg);
+    box-shadow: 0 0 25px #ffea00;
 }
 body.shenron-sky {
     background-color: #010a04 !important;
@@ -882,24 +803,15 @@ body.shenron-sky {
     transition: background 1.5s ease !important;
 }
 .shenron-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none;
-    z-index: 999990;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 999990; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
     animation: shenronFadeIn 1s ease forwards;
 }
 .shenron-text {
-    color: #43ff75;
-    font-size: 2.2rem;
-    font-weight: 900;
+    color: #43ff75; font-size: 2.2rem; font-weight: 900;
     text-shadow: 0 0 20px #00ff44, 0 0 40px #00aa33;
-    letter-spacing: 4px;
-    text-align: center;
-    padding: 0 20px;
+    letter-spacing: 4px; text-align: center; padding: 0 20px;
 }
 @keyframes shenronFadeIn {
     from { opacity: 0; transform: scale(0.8); }
