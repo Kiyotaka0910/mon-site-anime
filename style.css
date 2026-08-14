@@ -689,3 +689,125 @@ footer {
     30% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1.3); }
     100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scaleX(1); }
 }
+
+/* ==============================================
+   3. NOUVEAUX EASTER EGGS
+============================================== */
+
+/* --- 1. JOJO : ZA WARUDO (TIME STOP) --- */
+body.time-stop {
+    filter: invert(1) hue-rotate(180deg) grayscale(0.4) !important;
+    transition: filter 0.2s ease;
+}
+body.time-stop * {
+    animation-play-state: paused !important;
+}
+
+/* --- 2. ONE PIECE : HAKI DU CONQUÉRANT --- */
+.haki-wave {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 120vmax; height: 120vmax; border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 0, 0, 0.85) 0%, rgba(10, 0, 0, 0.95) 70%);
+    border: 8px solid #ff0000; box-shadow: 0 0 50px #ff0000;
+    z-index: 999999; pointer-events: none;
+    animation: hakiExpand 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+@keyframes hakiExpand {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    50% { opacity: 0.9; }
+    100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+.haki-faint .card {
+    transform: translateY(25px) rotate(4deg) !important;
+    opacity: 0.25 !important;
+    transition: transform 0.8s ease, opacity 0.8s ease !important;
+}
+
+/* --- 3. ATTACK ON TITAN : ÉCLAIR TITAN --- */
+.titan-strike {
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 100vh; background: #ffffff;
+    box-shadow: 0 0 30px #ffe600, 0 0 80px #ffaa00, 0 0 150px #ff3300;
+    z-index: 999999; pointer-events: none;
+    animation: titanFlash 0.45s ease-out forwards;
+}
+@keyframes titanFlash {
+    0% { opacity: 0; width: 4px; }
+    20% { opacity: 1; width: 60px; }
+    100% { opacity: 0; width: 0px; }
+}
+.titan-smoke {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: radial-gradient(circle, rgba(255, 170, 0, 0.35) 0%, rgba(10, 5, 0, 0.85) 80%);
+    z-index: 999998; pointer-events: none;
+    animation: titanSmokeFade 1.8s ease-out forwards;
+}
+@keyframes titanSmokeFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* --- 4. POKÉMON : CAPTURE DE CARTE --- */
+.pokeball-anim {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 60px; height: 60px;
+    background: linear-gradient(to bottom, #ff1a1a 50%, #ffffff 50%);
+    border: 4px solid #111; border-radius: 50%;
+    z-index: 100; pointer-events: none;
+    animation: pokeballCapture 1.4s ease-out forwards;
+}
+.pokeball-anim::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); width: 16px; height: 16px;
+    background: #fff; border: 3px solid #111; border-radius: 50%;
+}
+@keyframes pokeballCapture {
+    0% { transform: translate(-50%, -300%) scale(1); opacity: 1; }
+    30% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) rotate(-20deg); }
+    70% { transform: translate(-50%, -50%) rotate(20deg); }
+    85% { transform: translate(-50%, -50%) rotate(-10deg); }
+    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+.card-captured {
+    transform: scale(0) rotate(360deg) !important;
+    opacity: 0 !important;
+    transition: transform 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.5s ease !important;
+}
+
+/* --- 5. DRAGON BALL : LES 7 DRAGON BALLS --- */
+.dragon-ball {
+    position: fixed; width: 30px; height: 30px;
+    background: radial-gradient(circle at 35% 35%, #fff7a1, #ffd700 40%, #ff7700 100%);
+    border-radius: 50%; cursor: pointer; z-index: 99999;
+    box-shadow: 0 0 15px #ffd700, inset 0 -2px 4px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #cc0000; font-weight: 900; user-select: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dragon-ball:hover {
+    transform: scale(1.4) rotate(15deg);
+    box-shadow: 0 0 25px #ffea00;
+}
+body.shenron-sky {
+    background-color: #010a04 !important;
+    background-image: radial-gradient(circle, rgba(0, 60, 25, 0.9) 0%, #000502 100%) !important;
+    transition: background 1.5s ease !important;
+}
+.shenron-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 999990; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    animation: shenronFadeIn 1s ease forwards;
+}
+.shenron-text {
+    color: #43ff75; font-size: 2.2rem; font-weight: 900;
+    text-shadow: 0 0 20px #00ff44, 0 0 40px #00aa33;
+    letter-spacing: 4px; text-align: center; padding: 0 20px;
+}
+@keyframes shenronFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
