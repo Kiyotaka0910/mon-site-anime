@@ -186,16 +186,18 @@
             }
 
             // Mots-clés au clavier
-            typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 15) typedKeys = typedKeys.slice(-15);
+            if (e.key.length === 1) {
+                typedKeys += e.key.toLowerCase();
+                if (typedKeys.length > 15) typedKeys = typedKeys.slice(-15);
 
-            if (typedKeys.endsWith('gojo')) { activateInfiniteVoid(); typedKeys = ''; }
-            if (typedKeys.endsWith('kira')) { activateDeathNote(); typedKeys = ''; }
-            if (typedKeys.endsWith('sukuna')) { activateSukuna(); typedKeys = ''; }
-            if (typedKeys.endsWith('jojo')) { activateTimeStop(); typedKeys = ''; }
-            if (typedKeys.endsWith('haki')) { activateHaki(); typedKeys = ''; }
-            if (typedKeys.endsWith('titan')) { activateTitan(); typedKeys = ''; }
-            if (typedKeys.endsWith('shenron')) { activateShenron(); typedKeys = ''; }
+                if (typedKeys.endsWith('gojo')) { activateInfiniteVoid(); typedKeys = ''; }
+                if (typedKeys.endsWith('kira')) { activateDeathNote(); typedKeys = ''; }
+                if (typedKeys.endsWith('sukuna')) { activateSukuna(); typedKeys = ''; }
+                if (typedKeys.endsWith('jojo')) { activateTimeStop(); typedKeys = ''; }
+                if (typedKeys.endsWith('haki')) { activateHaki(); typedKeys = ''; }
+                if (typedKeys.endsWith('titan')) { activateTitan(); typedKeys = ''; }
+                if (typedKeys.endsWith('shenron')) { activateShenron(); typedKeys = ''; }
+            }
         });
 
         // Événement Double-Clic sur les cartes (Pokémon)
@@ -203,6 +205,7 @@
             document.querySelectorAll('.card').forEach(card => {
                 card.addEventListener('dblclick', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     captureCard(card);
                 });
             });
@@ -458,70 +461,80 @@
 
         // --- EE 7 : JOJO ZA WARUDO (Tape "jojo") ---
         function activateTimeStop() {
-            document.body.classList.add('time-stop');
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#00ffff; font-family:sans-serif; text-align:center; pointer-events:none; transition:opacity 0.5s;';
+            overlay.innerHTML = '<h1 style="font-size:4rem; text-shadow:0 0 20px #00ffff, 0 0 40px #00ffff; margin:0;">⏳ ZA WARUDO !</h1><p style="font-size:1.8rem; color:#fff; letter-spacing:3px; margin-top:15px;">LE TEMPS S\'ARRÊTE...</p>';
+            document.body.appendChild(overlay);
+
+            document.body.style.transition = 'filter 0.3s';
+            document.body.style.filter = 'invert(1) hue-rotate(180deg) contrast(1.5)';
+
             setTimeout(() => {
-                document.body.classList.remove('time-stop');
-            }, 4000);
+                document.body.style.filter = 'none';
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 500);
+            }, 3500);
         }
 
         // --- EE 8 : ONE PIECE HAKI (Tape "haki") ---
         function activateHaki() {
-            document.body.classList.add('ee-shaking');
-
             const wave = document.createElement('div');
-            wave.className = 'haki-wave';
+            wave.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:10px; height:10px; border-radius:50%; background:radial-gradient(circle, rgba(255,0,50,0.9) 0%, rgba(0,0,0,0.95) 70%); z-index:99999; pointer-events:none; transition:all 0.7s cubic-bezier(0.1, 0.8, 0.3, 1); box-shadow:0 0 50px red;';
             document.body.appendChild(wave);
 
-            const container = document.querySelector('.hub-container');
-            if (container) container.classList.add('haki-faint');
-
-            setTimeout(() => document.body.classList.remove('ee-shaking'), 700);
+            const banner = document.createElement('div');
+            banner.style.cssText = 'position:fixed; top:40%; width:100%; text-align:center; color:#ff0033; font-size:3.5rem; font-weight:800; text-shadow:0 0 20px #ff0000, 0 0 40px #000; z-index:100000; pointer-events:none; font-family:sans-serif; transition:opacity 0.5s;';
+            banner.innerHTML = '⚡ HAKI DU ROI CONQUÉRANT ! ⚡';
+            document.body.appendChild(banner);
 
             setTimeout(() => {
-                wave.remove();
-                if (container) container.classList.remove('haki-faint');
-            }, 3500);
+                wave.style.width = '250vw';
+                wave.style.height = '250vw';
+            }, 50);
+
+            setTimeout(() => {
+                wave.style.opacity = '0';
+                banner.style.opacity = '0';
+                setTimeout(() => { wave.remove(); banner.remove(); }, 500);
+            }, 3000);
         }
 
         // --- EE 9 : ATTACK ON TITAN (Tape "titan") ---
         function activateTitan() {
-            document.body.classList.add('ee-shaking');
-
-            const strike = document.createElement('div');
-            strike.className = 'titan-strike';
-
-            const smoke = document.createElement('div');
-            smoke.className = 'titan-smoke';
-
-            document.body.appendChild(strike);
-            document.body.appendChild(smoke);
-
-            setTimeout(() => document.body.classList.remove('ee-shaking'), 500);
+            const flash = document.createElement('div');
+            flash.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:#fff7b3; z-index:99999; opacity:1; transition:opacity 0.8s ease-out; pointer-events:none; display:flex; justify-content:center; align-items:center; flex-direction:column; font-family:sans-serif;';
+            flash.innerHTML = '<div style="font-size:7rem; filter:drop-shadow(0 0 20px #ffaa00);">⚡⚡⚡</div><h1 style="color:#8b0000; font-size:3.5rem; font-weight:800; text-shadow:2px 2px 10px #000, 0 0 20px #ff0000; margin-top:10px;">ATTACK ON TITAN !</h1>';
+            document.body.appendChild(flash);
 
             setTimeout(() => {
-                strike.remove();
-                smoke.remove();
-            }, 2000);
+                flash.style.opacity = '0';
+                setTimeout(() => flash.remove(), 800);
+            }, 1800);
         }
 
         // --- EE 10 : POKÉMON (Double-clique sur n'importe quelle carte) ---
         function captureCard(cardElement) {
-            if (cardElement.classList.contains('card-captured')) return;
+            if (cardElement.dataset.captured === 'true') return;
+            cardElement.dataset.captured = 'true';
 
             cardElement.style.position = 'relative';
 
             const pokeball = document.createElement('div');
-            pokeball.className = 'pokeball-anim';
+            pokeball.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%) scale(0); font-size:5rem; z-index:100; transition:transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events:none; filter:drop-shadow(0 0 15px rgba(255,0,0,0.8));';
+            pokeball.innerText = '🔴';
             cardElement.appendChild(pokeball);
 
             setTimeout(() => {
-                cardElement.classList.add('card-captured');
-            }, 400);
+                pokeball.style.transform = 'translate(-50%, -50%) scale(1.6)';
+            }, 50);
 
             setTimeout(() => {
-                pokeball.remove();
-                cardElement.classList.remove('card-captured');
-            }, 3500);
+                pokeball.style.transform = 'translate(-50%, -50%) scale(0)';
+                setTimeout(() => {
+                    pokeball.remove();
+                    delete cardElement.dataset.captured;
+                }, 400);
+            }, 2500);
         }
 
         // --- EE 11 : DRAGON BALLS & SHENRON (Tape "shenron") ---
@@ -534,9 +547,13 @@
             for (let i = 1; i <= total; i++) {
                 const ball = document.createElement('div');
                 ball.className = 'dragon-ball';
+                ball.style.cssText = 'position:fixed; width:50px; height:50px; background:radial-gradient(circle at 35% 35%, #ffd700, #ff8c00); border-radius:50%; display:flex; justify-content:center; align-items:center; color:#cc0000; font-size:11px; font-weight:bold; box-shadow:0 0 15px #ffa500, inset -2px -2px 6px rgba(0,0,0,0.5); cursor:pointer; z-index:99999; user-select:none; transition:transform 0.2s;';
                 ball.innerText = '★'.repeat(i);
                 ball.style.top = (Math.random() * 70 + 15) + 'vh';
                 ball.style.left = (Math.random() * 80 + 10) + 'vw';
+
+                ball.addEventListener('mouseover', () => ball.style.transform = 'scale(1.2)');
+                ball.addEventListener('mouseout', () => ball.style.transform = 'scale(1)');
 
                 ball.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -552,20 +569,19 @@
         }
 
         function summonShenron() {
-            document.body.classList.add('shenron-sky');
-
             const overlay = document.createElement('div');
-            overlay.className = 'shenron-overlay';
+            overlay.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,30,0,0.92); z-index:100000; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#00ff44; font-family:sans-serif; text-align:center; transition:opacity 1s;';
             overlay.innerHTML = `
-                <div style="font-size: 6rem; filter: drop-shadow(0 0 25px #00ff44);">🐉</div>
-                <h2 class="shenron-text">SHENRON A ÉTÉ INVOQUÉ !</h2>
+                <div style="font-size: 7rem; filter: drop-shadow(0 0 25px #00ff44);">🐉</div>
+                <h2 style="font-size: 3rem; text-shadow: 0 0 20px #00ff44; margin-top: 20px;">SHENRON A ÉTÉ INVOQUÉ !</h2>
+                <p style="color: #ffffff; font-size: 1.5rem; letter-spacing: 2px;">TON VŒU A ÉTÉ EXAUCÉ !</p>
             `;
             document.body.appendChild(overlay);
 
             setTimeout(() => {
-                overlay.remove();
-                document.body.classList.remove('shenron-sky');
-            }, 5000);
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 1000);
+            }, 4000);
         }
     </script>
 
