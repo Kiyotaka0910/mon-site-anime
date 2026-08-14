@@ -185,25 +185,30 @@
                 konamiIndex = 0;
             }
 
-            // Mots-clés GOJO, KIRA & SUKUNA
+            // Mots-clés au clavier
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10);
+            if (typedKeys.length > 15) typedKeys = typedKeys.slice(-15);
 
-            if (typedKeys.endsWith('gojo')) {
-                activateInfiniteVoid();
-                typedKeys = '';
-            }
-            if (typedKeys.endsWith('kira')) {
-                activateDeathNote();
-                typedKeys = '';
-            }
-            if (typedKeys.endsWith('sukuna')) {
-                activateSukuna();
-                typedKeys = '';
-            }
+            if (typedKeys.endsWith('gojo')) { activateInfiniteVoid(); typedKeys = ''; }
+            if (typedKeys.endsWith('kira')) { activateDeathNote(); typedKeys = ''; }
+            if (typedKeys.endsWith('sukuna')) { activateSukuna(); typedKeys = ''; }
+            if (typedKeys.endsWith('jojo')) { activateTimeStop(); typedKeys = ''; }
+            if (typedKeys.endsWith('haki')) { activateHaki(); typedKeys = ''; }
+            if (typedKeys.endsWith('titan')) { activateTitan(); typedKeys = ''; }
+            if (typedKeys.endsWith('shenron')) { activateShenron(); typedKeys = ''; }
         });
 
-        // --- EE 1 : MODE SUPER SAIYAN ---
+        // Événement Double-Clic sur les cartes (Pokémon)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    captureCard(card);
+                });
+            });
+        });
+
+        // --- EE 1 : MODE SUPER SAIYAN (Konami Code) ---
         function activateSuperSaiyan() {
             document.body.classList.add('ee-shaking');
 
@@ -229,7 +234,7 @@
             }, 4500);
         }
 
-        // --- EE 2 : GOJO INFINITE VOID ---
+        // --- EE 2 : GOJO INFINITE VOID (Tape "gojo") ---
         function activateInfiniteVoid() {
             document.body.classList.add('ee-shaking');
 
@@ -261,7 +266,7 @@
             }, 3800);
         }
 
-        // --- EE 3 : DEATH NOTE ---
+        // --- EE 3 : DEATH NOTE (Tape "kira") ---
         function activateDeathNote() {
             const bookContainer = document.createElement('div');
             bookContainer.className = 'dn-book-container';
@@ -312,7 +317,7 @@
             }, 4500);
         }
 
-        // --- EE 4 : SUKUNA MALEVOLENT SHRINE (AVEC TAILLES DE PARTOUT) ---
+        // --- EE 4 : SUKUNA MALEVOLENT SHRINE (Tape "sukuna") ---
         function activateSukuna() {
             document.body.classList.add('ee-shaking');
 
@@ -327,7 +332,6 @@
             `;
             document.body.appendChild(overlay);
 
-            // Génération dynamique des entailles sur tout l'écran
             const slashContainer = document.createElement('div');
             slashContainer.className = 'sukuna-slash-container';
             document.body.appendChild(slashContainer);
@@ -337,7 +341,7 @@
                 slash.className = 'sukuna-slash';
                 slash.style.top = Math.random() * 100 + 'vh';
                 slash.style.left = Math.random() * 100 + 'vw';
-                slash.style.transform = `rotate(${Math.random() * 360}deg)`;
+                slash.style.setProperty('--angle', `${Math.random() * 360}deg`);
                 slash.style.animationDelay = (Math.random() * 0.8) + 's';
                 slashContainer.appendChild(slash);
             }
@@ -450,6 +454,118 @@
                     fireClicks = 0;
                 }
             });
+        }
+
+        // --- EE 7 : JOJO ZA WARUDO (Tape "jojo") ---
+        function activateTimeStop() {
+            document.body.classList.add('time-stop');
+            setTimeout(() => {
+                document.body.classList.remove('time-stop');
+            }, 4000);
+        }
+
+        // --- EE 8 : ONE PIECE HAKI (Tape "haki") ---
+        function activateHaki() {
+            document.body.classList.add('ee-shaking');
+
+            const wave = document.createElement('div');
+            wave.className = 'haki-wave';
+            document.body.appendChild(wave);
+
+            const container = document.querySelector('.hub-container');
+            if (container) container.classList.add('haki-faint');
+
+            setTimeout(() => document.body.classList.remove('ee-shaking'), 700);
+
+            setTimeout(() => {
+                wave.remove();
+                if (container) container.classList.remove('haki-faint');
+            }, 3500);
+        }
+
+        // --- EE 9 : ATTACK ON TITAN (Tape "titan") ---
+        function activateTitan() {
+            document.body.classList.add('ee-shaking');
+
+            const strike = document.createElement('div');
+            strike.className = 'titan-strike';
+
+            const smoke = document.createElement('div');
+            smoke.className = 'titan-smoke';
+
+            document.body.appendChild(strike);
+            document.body.appendChild(smoke);
+
+            setTimeout(() => document.body.classList.remove('ee-shaking'), 500);
+
+            setTimeout(() => {
+                strike.remove();
+                smoke.remove();
+            }, 2000);
+        }
+
+        // --- EE 10 : POKÉMON (Double-clique sur n'importe quelle carte) ---
+        function captureCard(cardElement) {
+            if (cardElement.classList.contains('card-captured')) return;
+
+            cardElement.style.position = 'relative';
+
+            const pokeball = document.createElement('div');
+            pokeball.className = 'pokeball-anim';
+            cardElement.appendChild(pokeball);
+
+            setTimeout(() => {
+                cardElement.classList.add('card-captured');
+            }, 400);
+
+            setTimeout(() => {
+                pokeball.remove();
+                cardElement.classList.remove('card-captured');
+            }, 3500);
+        }
+
+        // --- EE 11 : DRAGON BALLS & SHENRON (Tape "shenron") ---
+        function activateShenron() {
+            if (document.querySelector('.dragon-ball')) return;
+
+            let collected = 0;
+            const total = 7;
+
+            for (let i = 1; i <= total; i++) {
+                const ball = document.createElement('div');
+                ball.className = 'dragon-ball';
+                ball.innerText = '★'.repeat(i);
+                ball.style.top = (Math.random() * 70 + 15) + 'vh';
+                ball.style.left = (Math.random() * 80 + 10) + 'vw';
+
+                ball.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    ball.remove();
+                    collected++;
+                    if (collected === total) {
+                        summonShenron();
+                    }
+                });
+
+                document.body.appendChild(ball);
+            }
+        }
+
+        function summonShenron() {
+            document.body.classList.add('shenron-sky');
+
+            const overlay = document.createElement('div');
+            overlay.className = 'shenron-overlay';
+            overlay.innerHTML = `
+                <div style="font-size: 6rem; filter: drop-shadow(0 0 25px #00ff44);">🐉</div>
+                <h2 class="shenron-text">SHENRON A ÉTÉ INVOQUÉ !</h2>
+            `;
+            document.body.appendChild(overlay);
+
+            setTimeout(() => {
+                overlay.remove();
+                document.body.classList.remove('shenron-sky');
+            }, 5000);
         }
     </script>
 
